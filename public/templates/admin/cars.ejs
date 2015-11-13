@@ -1,0 +1,14 @@
+<div class="page-header">
+    <h1>Cars</h1>
+</div>
+
+<div ng-repeat="item in cars | orderBy: 'price'">
+    <h3><a href="#/cars/{{$index}}">{{item.model}}, {{item.year}}</a></h3>
+    <p>Doors: {{item.doors}}</p>
+    <p ng-show="item.airConditioner">Air Conditioner</p>
+    <p ng-show="item.autoTransmission">Automatic Transmission</p>
+    <p>Price per day: ${{item.price}}</p>
+    <hr>
+</div>
+
+<a href="#/car/addCar"><button>Add car</button></a>

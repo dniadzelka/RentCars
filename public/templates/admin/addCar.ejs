@@ -1,0 +1,21 @@
+<div class="page-header">
+    <h1>Add a new car</h1>
+</div>
+
+<form ng-submit="addCar()">
+    <input type="text" placeholder="Model" ng-model="model">
+    <br>
+    <input type="text" placeholder="Year" ng-model="year">
+    <br>
+    <input type="text" placeholder="Number of doors" ng-model="doors">
+    <br>
+    <input type="text" placeholder="VIN number" ng-model="vin">
+    <br>
+    <input type="text" placeholder="Price" ng-model="price">
+    <br>
+    <input type="checkbox" ng-model="airConditioner">air conditioner
+    <br>
+    <input type="checkbox" ng-model="autoTransmission">automatic transmission
+    <br>
+    <button type="submit">Add car</button>
+</form>
