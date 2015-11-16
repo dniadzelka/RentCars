@@ -3,8 +3,6 @@ angular.module('addCarModule').controller('addCarCtrl', [
     'cars',
     function ($scope, cars) {
 
-        $scope.cars = cars.cars;
-
         $scope.addCar = function() {
 
             //temporary validation
@@ -34,7 +32,7 @@ angular.module('addCarModule').controller('addCarCtrl', [
             $scope.vin = '';
             $scope.price = '';
 
-            $scope.cars.push(obj);
+            cars.create(obj);
         };
     }
 ]);

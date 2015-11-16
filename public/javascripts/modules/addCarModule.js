@@ -6,7 +6,7 @@ addCarModule.config([
     '$stateProvider',
     function($stateProvider) {
         $stateProvider.state('addCar', {
-            url: '/car/addCar',
+            url: '/cars/addCar',
             templateUrl: '/templates/admin/addCar.ejs',
             controller: 'addCarCtrl'
         });

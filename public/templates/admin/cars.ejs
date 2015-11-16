@@ -3,7 +3,7 @@
 </div>
 
 <div ng-repeat="item in cars | orderBy: 'price'">
-    <h3><a href="#/cars/{{$index}}">{{item.model}}, {{item.year}}</a></h3>
+    <h3><a href="#/cars/aboutCar_{{item._id}}">{{item.model}}, {{item.year}}</a></h3>
     <p>Doors: {{item.doors}}</p>
     <p ng-show="item.airConditioner">Air Conditioner</p>
     <p ng-show="item.autoTransmission">Automatic Transmission</p>
@@ -11,4 +11,4 @@
     <hr>
 </div>
 
-<a href="#/car/addCar"><button>Add car</button></a>
+<a href="#/cars/addCar"><button>Add car</button></a>

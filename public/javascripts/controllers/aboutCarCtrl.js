@@ -1,11 +1,10 @@
 angular.module('aboutCarModule').controller('aboutCarCtrl', [
     '$scope',
-    '$stateParams',
+    'carInfo',
     'cars',
-    function($scope, $stateParams, cars) {
+    function($scope, carInfo, cars) {
 
-        $scope.car = cars.cars[$stateParams.id];
-
+        $scope.car = carInfo;    
         $scope.addOrder = function () {
 
             //temporary validation
@@ -21,7 +20,16 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
                 finishLocation: $scope.finishLocation
             };
 
-            $scope.car.orders.push(obj);
+            cars.addOrder(carInfo._id, obj).success(function(data) {
+                console.log(data);
+                $scope.car.orders.push(data);
+            });
+
+            $scope.from = '';
+            $scope.to = '';
+            $scope.startLocation = '';
+            $scope.finishLocation = '';
+
         }
     }
 ]);

@@ -9,7 +9,12 @@ carsModule.config([
         $stateProvider.state('cars', {
             url: '/cars',
             templateUrl: '/templates/admin/cars.ejs',
-            controller: 'carsCtrl'
+            controller: 'carsCtrl',
+            resolve: {
+               carsPromise: ['cars', function(cars){
+                   return cars.getAll();
+               }]
+            }         
         });
         $urlRouterProvider.otherwise('cars');
     }

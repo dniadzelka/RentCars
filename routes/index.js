@@ -2,30 +2,77 @@ var express = require('express');
 var router = express.Router();
 
 var mongoose = require('mongoose');
-var Post = mongoose.model('Post');
-var Comment = mongoose.model('Comment');
+var Car = mongoose.model('Car');
+var Order = mongoose.model('Order');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    res.render('index', {
+        title: 'Express'
+    });
 });
 
-router.get('/posts', function(req, res, next) {
-  Post.find(function(err, posts){
-    if(err){ return next(err); }
+router.get('/allcars', function(req, res, next) {
+    Car.find(function(err, cars) {
+        if (err) {
+            return next(err);
+        }
 
-    res.json(posts);
-  });
+        res.json(cars);
+    });
 });
 
-router.post('/posts', function(req, res, next) {
-  var post = new Post(req.body);
+router.post('/allcars', function(req, res, next) {
+    console.log(req.body);
+    var car = new Car(req.body);
 
-  post.save(function(err, post){
-    if(err){ return next(err); }
+    car.save(function(err, car) {
+        if (err) {
+            return next(err);
+        }
 
-    res.json(post);
-  });
+        res.json(car);
+    });
+});
+
+router.param('car', function(req, res, next, id) {
+    var query = Car.findById(id);
+
+    query.exec(function(err, car) {
+        if (err) {
+            return next(err);
+        }
+        if (!car) {
+            return next(new Error('can\'t find car'));
+        }
+
+        req.car = car;
+        return next();
+    });
+});
+
+router.get('/allcars/:car', function(req, res) {
+    res.json(req.car);
+});
+
+router.post('/allcars/:car/allorders', function(req, res, next) {
+    var order = new Order(req.borderody);
+    //reference from order to car
+    order.car = req.car;
+
+    order.save(function(err, order){
+
+        if(err){ return next(err); }
+
+        // because ref to car !!!
+        req.car.orders.push(order);
+
+        req.car.save(function(err, car) {
+            if(err){ return next(err); }
+            console.log(order);
+            res.json(order);
+        });
+    });
 });
 
 module.exports = router;
