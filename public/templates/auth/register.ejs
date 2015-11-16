@@ -2,14 +2,17 @@
     <span>{{ error.message }}</span>
 </div>
 
-<form ng-submit="register()" style="margin-top:30px;">
-    <h3>Register</h3>
-
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
+<div class="row">
+    <div class="col-md-2 col-md-offset-5 login-form">
+        <form ng-submit="register()">
+            <h3 class="text-center">Sign up in seconds</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+            </div>
+            <button type="submit" class="btn btn-primary signin-submit">Sign me up!</button>
+        </form>
     </div>
-    <div class="form-group">
-        <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
-    </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
+</div>

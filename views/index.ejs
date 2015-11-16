@@ -1,41 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+    <link rel="stylesheet" href="/libs/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/auth/login.css">
+
     <head>
         <!--<base href="/">-->
         <meta charset="utf-8">
         <title>SOme title</title>
-
-        <script src="/libs/angular.js"></script>
-        <script src="/libs/angular-ui-router.js"></script>
-
-        <script src="/javascripts/angularApp.js"></script>
-
-        <script src="/javascripts/modules/aboutCarModule.js"></script>
-        <script src="/javascripts/modules/addCarModule.js"></script>
-        <script src="/javascripts/modules/carsModule.js"></script>
-        <script src="/javascripts/modules/authModule.js"></script>
-
-        <script src="/javascripts/controllers/aboutCarCtrl.js"></script>
-        <script src="/javascripts/controllers/addCarCtrl.js"></script>
-        <script src="/javascripts/controllers/carsCtrl.js"></script>
-        <script src="/javascripts/controllers/authCtrl.js"></script>
-        <script src="/javascripts/controllers/navigationCtrl.js"></script>
-
-        <script src="/javascripts/services/carsService.js"></script>
-        <script src="/javascripts/services/authService.js"></script>
-
-        <link rel="stylesheet" href="/libs/bootstrap.css">
-
     </head>
+
+    <script src="/libs/angular.js"></script>
+    <script src="/libs/angular-ui-router.js"></script>
+
+    <script src="/javascripts/angularApp.js"></script>
+
+    <script src="/javascripts/modules/aboutCarModule.js"></script>
+    <script src="/javascripts/modules/addCarModule.js"></script>
+    <script src="/javascripts/modules/carsModule.js"></script>
+    <script src="/javascripts/modules/authModule.js"></script>
+
+    <script src="/javascripts/controllers/aboutCarCtrl.js"></script>
+    <script src="/javascripts/controllers/addCarCtrl.js"></script>
+    <script src="/javascripts/controllers/carsCtrl.js"></script>
+    <script src="/javascripts/controllers/authCtrl.js"></script>
+    <script src="/javascripts/controllers/navigationCtrl.js"></script>
+
+    <script src="/javascripts/services/carsService.js"></script>
+    <script src="/javascripts/services/authService.js"></script>
+    <script src="/javascripts/services/filereader.js"></script>
+
+    <script src="/javascripts/directives/ngFileSelect.js"></script>
+
     <body ng-app="rentCarsApp">
-        <nav class="navbar navbar-default pull-right" ng-controller="navigationCtrl">
-            <ul class="nav navbar-nav">
-                <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
-                <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-                <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-                <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-            </ul>
-        </nav>
+        <div>
+            <nav class="navbar navbar-default pull-right" ng-controller="navigationCtrl">
+                <ul class="nav navbar-nav">
+                    <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+                    <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+                    <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+                    <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+
         <ui-view></ui-view>
+
     </body>
 </html>

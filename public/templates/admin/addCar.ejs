@@ -13,6 +13,13 @@
     <br>
     <input type="text" placeholder="Price" ng-model="price">
     <br>
+    <input type="file" ng-file-select="onFileSelect($files)">
+     <!--  <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
+    <b>Preview:</b><br />
+    <i ng-hide="imageSrc">No image choosed</i>
+    <img ng-src="{{imageSrc}}" /><br/>
+    <b>Progress:</b>
+    <progress value="{{progress}}"></progress>
     <input type="checkbox" ng-model="airConditioner">air conditioner
     <br>
     <input type="checkbox" ng-model="autoTransmission">automatic transmission
