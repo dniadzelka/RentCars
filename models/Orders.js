@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 var OrderShema = new mongoose.Schema({
-	from: String,
-	to: String,
+	from: Date,
+	to: Date,
 	startLocation: String,
 	finishLocation: String,
 	car: { type: mongoose.Schema.Types.ObjectId, ref: 'Car'}

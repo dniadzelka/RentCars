@@ -4,7 +4,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     'cars',
     function($scope, carInfo, cars) {
 
-        $scope.car = carInfo;    
+        $scope.car = carInfo;
         $scope.addOrder = function () {
 
             //temporary validation

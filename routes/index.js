@@ -52,11 +52,15 @@ router.param('car', function(req, res, next, id) {
 });
 
 router.get('/allcars/:car', function(req, res) {
-    res.json(req.car);
+    //load all comments associated with car
+    req.car.populate('orders', function(err, car) {
+        if (err) { return next(err); }
+        res.json(car);
+    });
 });
 
 router.post('/allcars/:car/allorders', function(req, res, next) {
-    var order = new Order(req.borderody);
+    var order = new Order(req.body);
     //reference from order to car
     order.car = req.car;
 
@@ -66,10 +70,8 @@ router.post('/allcars/:car/allorders', function(req, res, next) {
 
         // because ref to car !!!
         req.car.orders.push(order);
-
         req.car.save(function(err, car) {
             if(err){ return next(err); }
-            console.log(order);
             res.json(order);
         });
     });
