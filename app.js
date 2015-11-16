@@ -4,10 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var mongoose = require('mongoose');
+var passport = require('passport');
 require('./models/Cars');
 require('./models/Orders');
+require('./models/Users');
+require('./config/passport');
 
 //This will open a connection with the cars database running on our Mongo server.
 mongoose.connect('mongodb://localhost/allcars');
@@ -30,6 +32,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/users', users);
