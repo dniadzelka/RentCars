@@ -17,3 +17,7 @@
     width: 100px;
     height: 3px;
 }
+
+.row {
+    margin: 0;
+}

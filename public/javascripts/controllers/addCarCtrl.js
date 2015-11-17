@@ -18,13 +18,10 @@ angular.module('addCarModule').controller('addCarCtrl', [
         });
 
         $scope.addCar = function() {
+            console.log(obj);
+            $scope.airConditioner = false;
+            $scope.autoTransmission = false;
 
-            //temporary validation
-            if (!$scope.model || $scope.model === '') { return; };
-            if (!$scope.year || $scope.year === '') { return; };
-            if (!$scope.doors || $scope.doors === '') { return; };
-            if (!$scope.price || $scope.price === '') { return; };
-            if (!$scope.vin || $scope.vin === '') { return; };
 
             var obj = {
                 model: $scope.model,
@@ -34,7 +31,7 @@ angular.module('addCarModule').controller('addCarCtrl', [
                 autoTransmission: $scope.autoTransmission,
                 vin: $scope.vin,
                 price: $scope.price,
-                image: 'Some img',
+                image: $scope.imageSrc,
                 orders: []
             };
 
@@ -45,6 +42,9 @@ angular.module('addCarModule').controller('addCarCtrl', [
             $scope.autoTransmission = false;
             $scope.vin = '';
             $scope.price = '';
+            $scope.imageSrc = '';
+
+            console.log(obj);
 
             cars.create(obj);
         };
