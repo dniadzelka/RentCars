@@ -1,28 +1,58 @@
-<div class="page-header">
-    <h1>Add a new car</h1>
+<div>
+    <h1 class="text-center">Add a new car</h1>
 </div>
 
-<form ng-submit="addCar()">
-    <input type="text" placeholder="Model" ng-model="model">
-    <br>
-    <input type="text" placeholder="Year" ng-model="year">
-    <br>
-    <input type="text" placeholder="Number of doors" ng-model="doors">
-    <br>
-    <input type="text" placeholder="VIN number" ng-model="vin">
-    <br>
-    <input type="text" placeholder="Price" ng-model="price">
-    <br>
-    <input type="file" ng-file-select="onFileSelect($files)">
-     <!--  <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
-    <b>Preview:</b><br />
-    <i ng-hide="imageSrc">No image choosed</i>
-    <img ng-src="{{imageSrc}}" /><br/>
-    <b>Progress:</b>
-    <progress value="{{progress}}"></progress>
-    <input type="checkbox" ng-model="airConditioner">air conditioner
-    <br>
-    <input type="checkbox" ng-model="autoTransmission">automatic transmission
-    <br>
-    <button type="submit">Add car</button>
-</form>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form ng-submit="addCar()">
+            <div class="form-group">
+                <label for="addCarModel">Car model</label>
+                <input type="text" class="form-control" id="addCarModel" placeholder="Car model" ng-model="model">
+            </div>
+
+            <div class="form-group">
+                <label for="addCarYear">Year</label>
+                <input type="text" class="form-control" id="addCarYear" placeholder="Yaer" ng-model="year">
+            </div>
+
+            <div class="form-group">
+                <label for="addCarNumDoors">Number of doors</label>
+                <input type="number" min="1" max="10" class="form-control" id="addCarNumDoors" placeholder="Doors number" ng-model="doors">
+            </div>
+
+            <div class="form-group">
+                <label for="addCarVin">Vin number</label>
+                <input type="text" class="form-control" id="addCarVin" placeholder="Vin number" ng-model="vin">
+            </div>
+
+            <div class="form-group">
+                <label for="addCarPrice">Price</label>
+                <input type="number" min="0" class="form-control" id="addCarPrice" placeholder="Price" ng-model="price">
+            </div>
+
+            <div class="form-group">
+                <label for="addCarImage">Image</label>
+                <input type="file" id="addCarImage" ng-file-select="onFileSelect($files)">
+                <i ng-hide="imageSrc" class="help-block">No image choosed</i>
+                <div ng-hide="!imageSrc" class="addCarContainer">
+                    <img class="addCarImg" ng-hide="!imageSrc" ng-src="{{imageSrc}}">
+                </div>
+                <uib-progressbar class="addCarProgressImg" ng-hide="!imageSrc" value="progress" max="max"></uib-progressbar>
+            </div>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="airConditioner"> Air conditioner
+                </label>
+            </div>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="autoTransmission"> Automatic transmission
+                </label>
+            </div>
+
+            <button type="submit">Add car</button>
+        </form>
+    </div>
+</div>

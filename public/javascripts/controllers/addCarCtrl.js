@@ -4,14 +4,16 @@ angular.module('addCarModule').controller('addCarCtrl', [
     'fileReader',
     function ($scope, cars, fileReader) {
 
+        $scope.max = 100;
+        $scope.progress = 0;
+
         $scope.getFile = function () {
-            $scope.progress = 0;
             fileReader.readAsDataUrl($scope.file, $scope).then(function(result) {
                 $scope.imageSrc = result;
             });
         };
 
-        $scope.$on("fileProgress", function(e, progress) {
+        $scope.$on('fileProgress', function(progress) {
             $scope.progress = progress.loaded / progress.total;
         });
 

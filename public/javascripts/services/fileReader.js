@@ -2,6 +2,7 @@ angular.module('addCarModule').factory('fileReader', [
     '$q',
     '$log',
     function($q, $log) {
+
         var onLoad = function(reader, deferred, scope) {
             return function() {
                 scope.$apply(function() {
@@ -20,7 +21,7 @@ angular.module('addCarModule').factory('fileReader', [
 
         var onProgress = function(reader, scope) {
             return function(event) {
-                scope.$broadcast("fileProgress", {
+                scope.$broadcast('fileProgress', {
                     total: event.total,
                     loaded: event.loaded
                 });
