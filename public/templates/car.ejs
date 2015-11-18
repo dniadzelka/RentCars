@@ -1,0 +1,9 @@
+<div class="carItem">
+    <h2 class="text-center carModel"><a href="#/cars/aboutCar_{{item._id}}">{{item.model}}</a></h2>
+    <img class="carImg" src="{{item.image}}">
+    <p>Year: {{item.year}}</p>
+    <p>Doors: {{item.doors}}</p>
+    <p ng-show="item.airConditioner">Air Conditioner</p>
+    <p ng-show="item.autoTransmission">Automatic Transmission</p>
+    <p>Price per day: ${{item.price}}</p>
+</div>

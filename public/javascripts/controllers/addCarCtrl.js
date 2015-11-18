@@ -18,10 +18,6 @@ angular.module('addCarModule').controller('addCarCtrl', [
         });
 
         $scope.addCar = function() {
-            console.log(obj);
-            $scope.airConditioner = false;
-            $scope.autoTransmission = false;
-
 
             var obj = {
                 model: $scope.model,

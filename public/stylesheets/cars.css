@@ -4,3 +4,16 @@
     display:block;
     margin:auto;
 }
+
+.carItem {
+    height: 380px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    background-color: #F6F4F1;
+}
+
+.carItem .carModel {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
