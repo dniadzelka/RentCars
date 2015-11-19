@@ -10,8 +10,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#/cars/">Cars</a></li>
-                <li><a href="#/cars/addCar">Add car</a></li>
+                <li ng-class="{ active: isActive('/cars')}"><a href="#/cars">Cars</a></li>
+                <li ng-class="{ active: isActive('/cars/addCar')}"><a href="#/cars/addCar">Add car</a></li>
                 <li><a href="#">Clients</a></li>
                 <li><a href="#">Orders</a></li>
                 <li><a href="#">Feedbacks</a></li>
@@ -21,8 +21,8 @@
                 <li><input type="text" placeholder="Search" class="searchNavBar"></li>
                 <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
                 <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-                <li ng-hide="isLoggedIn()"><a href="#/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li ng-hide="isLoggedIn()"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                <li ng-class="{ active: isActive('/register')}" ng-hide="isLoggedIn()"><a href="#/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li ng-class="{ active: isActive('/login')}" ng-hide="isLoggedIn()"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
             </ul>
         </div>
