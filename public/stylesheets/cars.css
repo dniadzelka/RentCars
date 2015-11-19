@@ -17,3 +17,20 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+.carItem a {
+    text-decoration: none;
+    decoration: none;
+}
+
+.carItem:hover {
+    background-color: #e2dcd2;
+}
+
+.innerDivCarItem {
+    height: 380px;
+}
+
+.noCars {
+    margin-top: 10%;
+}

@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="/stylesheets/auth/login.css">
     <link rel="stylesheet" href="/stylesheets/addCar.css">
     <link rel="stylesheet" href="/stylesheets/cars.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/navBar.css">
 
     <head>
         <!--<base href="/">-->
@@ -15,6 +17,9 @@
     <script src="/libs/angular.js"></script>
     <script src="/libs/angular-ui-router.js"></script>
     <script src="/libs/ui-bootstrap-tpls.js"></script>
+    <script src="/libs/jquery.js"></script>
+    <script src="/libs/bootstrap.js"></script>
+
 
     <script src="/javascripts/angularApp.js"></script>
 
@@ -37,18 +42,33 @@
     <script src="/javascripts/directives/ngCar.js"></script>
 
     <body ng-app="rentCarsApp">
-        <div>
-            <nav class="navbar navbar-default pull-right" ng-controller="navigationCtrl">
-                <ul class="nav navbar-nav">
-                    <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
-                    <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-                    <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-                    <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-                </ul>
-            </nav>
-        </div>
 
-        <ui-view></ui-view>
+        <div class="wrapper">
+            <div ng-controller="navigationCtrl">
+                <div ng-include="navigation.url"></div>
+            </div>
+
+
+            <!--
+
+            <div>
+                <nav class="navbar navbar-default pull-right" ng-controller="navigationCtrl">
+                    <ul class="nav navbar-nav">
+
+                    </ul>
+                </nav>
+            </div>
+
+            -->
+
+
+            <ui-view></ui-view>
+
+            <footer>
+                <h5 class="text-center">&copy 2015 Dzmitry Niadzelka, Exadel</h5>
+            </footer>
+
+        </div>
 
     </body>
 </html>
