@@ -21,3 +21,7 @@
 .row {
     margin: 0;
 }
+
+.add-car-submit {
+    width: 150px;
+}

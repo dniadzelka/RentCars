@@ -1,5 +1,6 @@
 {
   "name": "RentCars",
+  "main": "app.js",
   "description": "MEAN",
   "dependencies": {
     "angularjs": "~1.3.10",
