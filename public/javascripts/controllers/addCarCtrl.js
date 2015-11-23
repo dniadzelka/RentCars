@@ -6,6 +6,7 @@ angular.module('addCarModule').controller('addCarCtrl', [
 
         $scope.max = 100;
         $scope.progress = 0;
+        $scope.currentYear = new Date().getFullYear();
 
         $scope.getFile = function () {
             fileReader.readAsDataUrl($scope.file, $scope).then(function(result) {
@@ -27,20 +28,11 @@ angular.module('addCarModule').controller('addCarCtrl', [
                 autoTransmission: $scope.autoTransmission,
                 vin: $scope.vin,
                 price: $scope.price,
-                image: $scope.imageSrc,
+                image: $scope.imageSrc || '/images/noCar.png',
                 orders: []
             };
 
-            $scope.model = '';
-            $scope.year = '';
-            $scope.doors = '';
-            $scope.airConditioner = false;
-            $scope.autoTransmission = false;
-            $scope.vin = '';
-            $scope.price = '';
-            $scope.imageSrc = '';
-
-            console.log(obj);
+            console.log(obj)
 
             cars.create(obj);
         };

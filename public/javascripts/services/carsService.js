@@ -1,7 +1,8 @@
 angular.module('rentCarsApp').factory('cars', [
     '$http',
+    '$location',
     'auth',
-    function($http, auth) {
+    function($http, $location, auth) {
 
         var obj = {
             cars: []
@@ -16,6 +17,7 @@ angular.module('rentCarsApp').factory('cars', [
         obj.create = function(car) {
             return $http.post('/allcars', car).success(function(data){
                 obj.cars.push(data);
+                $location.path('/allcars');
             });
         };
 

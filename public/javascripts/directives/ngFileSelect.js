@@ -1,4 +1,4 @@
-angular.module('addCarModule').directive('ngFileSelect', function() {
+angular.module('rentCarsApp').directive('ngFileSelect', function() {
     return {
         link: function($scope, el) {
             el.bind('change', function(e) {
