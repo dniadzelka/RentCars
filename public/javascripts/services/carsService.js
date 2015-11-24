@@ -28,6 +28,7 @@ angular.module('rentCarsApp').factory('cars', [
         };
 
         obj.addOrder = function(id, order) {
+                        console.log(order);
             return $http.post('/allcars/' + id + '/allorders', order);
         }
 

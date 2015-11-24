@@ -21,7 +21,7 @@ angular.module('addCarModule').controller('addCarCtrl', [
         $scope.addCar = function() {
 
             var obj = {
-                model: $scope.model,
+                model: angular.uppercase($scope.model),
                 year: $scope.year,
                 doors: $scope.doors,
                 airConditioner: $scope.airConditioner,
