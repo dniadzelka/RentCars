@@ -48,7 +48,7 @@
 
                 <div class="form-group">
                     <label for="addCarImage">Image</label>
-                    <input type="file" name="addCarImage" id="addCarImage" ng-file-select>
+                    <input type="file" accept="image/*" name="addCarImage" id="addCarImage" ng-file-select>
                     <i ng-hide="imageSrc" class="help-block">No image choosed</i>
                     <div ng-hide="!imageSrc" class="addCarContainer">
                         <img class="addCarImg" ng-hide="!imageSrc" ng-src="{{imageSrc}}">

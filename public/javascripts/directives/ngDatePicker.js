@@ -21,8 +21,6 @@ angular.module('rentCarsApp').directive('ngDatePicker', function ($parse) {
                     viewMode: 'years',
                     format: 'YYYY-MM-DD'
                 });
-
-                scope.from =
             });
         }
     };
