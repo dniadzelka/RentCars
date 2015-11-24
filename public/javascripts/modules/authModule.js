@@ -10,8 +10,6 @@ authModule.config([
             templateUrl: '/templates/auth/login.ejs',
             controller: 'authCtrl',
             onEnter: ['$state', 'auth', function($state, auth){
-                console.log('magic!');
-                console.log(auth);
                 if(auth.isLoggedIn()){
                     $state.go('home');
                 }

@@ -12,9 +12,9 @@
             <ul class="nav navbar-nav">
                 <li ng-class="{ active: isActive('/cars')}"><a href="#/cars">Cars</a></li>
                 <li ng-class="{ active: isActive('/cars/addCar')}"><a href="#/cars/addCar">Add car</a></li>
-                <li><a href="#">Clients</a></li>
-                <li><a href="#">Orders</a></li>
-                <li><a href="#">Feedbacks</a></li>
+                <li ng-class="{ active: isActive('/clients')}"><a href="#/clients">Clients</a></li>
+                <li ng-class="{ active: isActive('/orders')}"><a href="#/orders">Orders</a></li>
+                <li ng-class="{ active: isActive('/feedbacks')}"><a href="#/feedbacks">Feedbacks</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><input type="text" placeholder="Search" class="searchNavBar"></li>
