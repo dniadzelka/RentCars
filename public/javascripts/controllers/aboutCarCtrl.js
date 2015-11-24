@@ -5,15 +5,14 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     function($scope, carInfo, cars) {
 
         $scope.car = carInfo;
-        $scope.from = 'ha';
-        $scope.to = 'ha';
 
         $scope.addOrder = function () {
 
-                            console.log($scope.from);
-                            console.log($scope.to);
-                            console.log($scope.startLocation);
-                            console.log($scope.finishLocation);
+        console.log($scope.from);
+        console.log($scope.to);
+        console.log($scope.startLocation);
+        console.log($scope.finishLocation);
+        console.log($scope.dateBirth);
 
 
             //temporary validation

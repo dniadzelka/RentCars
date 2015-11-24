@@ -31,9 +31,7 @@ angular.module('addCarModule').controller('addCarCtrl', [
                 image: $scope.imageSrc || '/images/noCar.png',
                 orders: []
             };
-
-            console.log(obj)
-
+            
             cars.create(obj);
         };
     }
