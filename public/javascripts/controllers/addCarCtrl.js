@@ -26,12 +26,12 @@ angular.module('addCarModule').controller('addCarCtrl', [
                 doors: $scope.doors,
                 airConditioner: $scope.airConditioner,
                 autoTransmission: $scope.autoTransmission,
-                vin: $scope.vin,
+                vin: angular.uppercase($scope.vin),
                 price: $scope.price,
-                image: $scope.imageSrc || '/images/noCar.png',
+                image: $scope.imageSrc || '/img/noCar.png',
                 orders: []
             };
-            
+
             cars.create(obj);
         };
     }

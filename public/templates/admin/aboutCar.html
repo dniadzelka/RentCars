@@ -31,6 +31,7 @@
                 <div class="col-md-12 addCarHeader">
                     <h3>Add a new order for "{{car.model}}" car:</h3>
                 </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="datetimepicker1">From</label>
@@ -58,7 +59,12 @@
                         <label for="endPoint">End point</label>
                         <input type="text" ng-model="finishLocation" placeholder="Location finish" class="form-control" name="endPoint">
                     </div>
+                    <div class="form-group">
+                        <label for="addInfo">Additional information</label>
+                        <input type="text" ng-model="addInfo" placeholder="Additional information" class="form-control" name="addInfo">
+                    </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="firstName">First name</label>
@@ -79,13 +85,19 @@
                     </div>
                     <div class="form-group">
                         <label for="docNumber">Document number</label>
-                        <input type="text" ng-model="docNumber" placeholder="Document number" class="form-control" name="docNumber">
+                        <input minlength="7" maxlength="16" type="text" ng-model="docNumber" placeholder="Document number" class="form-control" name="docNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone number</label>
+                        <br>
+                        <input type="tel" autocomplete="off" id="aboutCarPhoneNumber" ng-model="phoneNumber" placeholder="Phone number" class="form-control" name="phoneNumber" ng-phone-helper>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary pull-right">Add order</button>
                 </div>
             </div>
+
         </form>
     </div>
 </div>

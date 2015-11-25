@@ -2,3 +2,11 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.iti-flag {background-image: url("/img/flags.png");}
+
+.intl-tel-input {
+    width: 100%;
+}
+
+.intl-tel-input input.iti-invalid-key {background-color: #FFC7C7;}
