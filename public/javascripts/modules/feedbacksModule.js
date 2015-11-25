@@ -8,7 +8,7 @@ feedbacksModule.config([
     function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('feedbacks', {
             url: '/feedbacks',
-            templateUrl: '/templates/admin/feedbacks.ejs',
+            templateUrl: '/templates/admin/feedbacks.html',
             //controller: 'clientsCtrl',
             resolve: {
                //clientsPromise: ['clients', function(clients){

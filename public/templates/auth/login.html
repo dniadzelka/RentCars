@@ -1,0 +1,21 @@
+<div class="wrappered">
+    <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error.message }}</span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-5 login-form">
+            <form ng-submit="logIn()">
+                <h3 class="text-center">Sign in</h3>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+                </div>
+
+                <button type="submit" class="btn btn-primary signin-submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+</div>

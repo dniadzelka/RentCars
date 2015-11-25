@@ -1,0 +1,91 @@
+<div class="wrappered">
+    <div class="page-header text-center">
+        <h2>{{car.model}}, {{car.year}}</h2>
+    </div>
+
+    <h2 ng-hide="car.orders.length" class="text-center">
+        <small>
+            There are no orders for "{{car.model}}" car!
+        </small>
+        <hr>
+    </h2>
+
+    <table style="width:100%" ng-show="car.orders.length">
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Location start</th>
+            <th>location finish</th>
+        </tr>
+        <tr ng-repeat="order in car.orders | orderBy:'-from'">
+            <td>{{order.from}}</td>
+            <td>{{order.to}}</td>
+            <td>{{order.startLocation}}</td>
+            <td>{{order.finishLocation}}</td>
+        </tr>
+    </table>
+
+    <div class="row">
+        <form ng-submit="addOrder()">
+            <div class="col-md-8 col-md-offset-2" ng-date-picker>
+                <div class="col-md-12 addCarHeader">
+                    <h3>Add a new order for "{{car.model}}" car:</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="datetimepicker1">From</label>
+                        <div class="input-group date" id="datetimepicker1">
+                            <input type="text" ng-model="from" placeholder="YYYY-MM-DD HH:mm" class="form-control" name="datetimepicker1">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="datetimepicker2">To</label>
+                        <div class="input-group date" id="datetimepicker2">
+                            <input type="text" ng-model="to" placeholder="YYYY-MM-DD HH:mm" class="form-control" name="datetimepicker2">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="startPoint">Start point</label>
+                        <input type="text" ng-model="startLocation" placeholder="Location start" class="form-control" name="startPoint">
+                    </div>
+                    <div class="form-group">
+                        <label for="endPoint">End point</label>
+                        <input type="text" ng-model="finishLocation" placeholder="Location finish" class="form-control" name="endPoint">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="firstName">First name</label>
+                        <input type="text" ng-model="firstName" placeholder="First name" class="form-control" name="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last name</label>
+                        <input type="text" ng-model="lastName" placeholder="Last name" class="form-control" name="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="dateBirth">Date of birth</label>
+                        <div class='input-group date' id='datetimepicker3'>
+                            <input type="text" ng-model="dateBirth" placeholder="YYYY-MM-DD" class="form-control" name="dateBirth">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="docNumber">Document number</label>
+                        <input type="text" ng-model="docNumber" placeholder="Document number" class="form-control" name="docNumber">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary pull-right">Add order</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

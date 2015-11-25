@@ -8,7 +8,7 @@ carsModule.config([
     function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('cars', {
             url: '/cars',
-            templateUrl: '/templates/admin/cars.ejs',
+            templateUrl: '/templates/admin/cars.html',
             controller: 'carsCtrl',
             resolve: {
                carsPromise: ['cars', function(cars){

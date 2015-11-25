@@ -8,7 +8,7 @@ clientsModule.config([
     function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('clients', {
             url: '/clients',
-            templateUrl: '/templates/admin/clients.ejs',
+            templateUrl: '/templates/admin/clients.html',
             //controller: 'clientsCtrl',
             resolve: {
                //clientsPromise: ['clients', function(clients){
