@@ -5,7 +5,7 @@
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form name="addCarForm" ng-attemt ng-add-car-validation="addCar()" novalidate>
+            <form name="addCarForm" ng-attempt ng-validation="addCar()" novalidate>
                 <div class="form-group" ng-class="{'has-error': addCarForm.addCarModel.$invalid && (addCarForm.addCarModel.$dirty || attempt.addCarForm.attempted)}">
                     <label for="addCarModel">Car model</label>
                     <input type="text" class="form-control" name="addCarModel" id="addCarModel" placeholder="Car model" ng-model="model" required>

@@ -1,9 +1,10 @@
-angular.module('rentCarsApp').directive('ngAddCarValidation', ['$parse', function ($parse) {
+angular.module('rentCarsApp').directive('ngValidation', ['$parse', function ($parse) {
     return {
         restrict: 'A',
         require: 'form',
         link: function (scope, elem, attributes, formController) {
-            var fn = $parse(attributes.ngAddCarValidation);
+            //Converts Angular expression into a function
+            var fn = $parse(attributes.ngValidation);
 
             elem.bind('submit', function (event) {
 
@@ -11,7 +12,7 @@ angular.module('rentCarsApp').directive('ngAddCarValidation', ['$parse', functio
                     return false;
 
                 scope.$apply(function() {
-                    fn(scope, {$event:event});
+                    fn(scope, { $event: event });
                 });
 
             });

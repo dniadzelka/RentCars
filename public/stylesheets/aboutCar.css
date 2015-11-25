@@ -3,6 +3,10 @@
     margin-bottom: 20px;
 }
 
+.ordersAboutCar {
+    width: 100%;
+}
+
 .iti-flag {background-image: url("/img/flags.png");}
 
 .intl-tel-input {
