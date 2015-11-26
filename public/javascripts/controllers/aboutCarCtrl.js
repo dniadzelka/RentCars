@@ -5,21 +5,11 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     function($scope, carInfo, cars) {
 
         $scope.car = carInfo;
+        $scope.sortType = 'from';
+        $scope.sortReverse = false;
+        $scope.searchOrders = '';
 
         $scope.addOrder = function () {
-
-        console.log($scope.from);
-        console.log($scope.to);
-        console.log($scope.startLocation);
-        console.log($scope.finishLocation);
-        console.log($scope.dateBirth);
-
-
-            //temporary validation
-            if (!$scope.from || $scope.from === '') {return;}
-            if (!$scope.to || $scope.to === '') {return;}
-            if (!$scope.startLocation || $scope.startLocation === '') {return;}
-            if (!$scope.finishLocation || $scope.finishLocation === '') {return;}
 
             var obj = {
                 from: new Date($scope.from),
