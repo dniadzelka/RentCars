@@ -36,7 +36,13 @@
                     <div class="form-group" ng-class="{'has-error': addOrderForm.datetimepicker1.$invalid && (addOrderForm.datetimepicker1.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="datetimepicker1">From</label>
                         <div class="input-group date" id="datetimepicker1">
-                            <input type="text" ng-model="from" placeholder="YYYY-MM-DD HH:mm" class="form-control" name="datetimepicker1" required>
+                            <input type="text"
+                                id="aboutCarDateInput1"
+                                ng-model="from"
+                                placeholder="YYYY-MM-DD HH:mm"
+                                class="form-control"
+                                name="datetimepicker1"
+                                required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -46,7 +52,13 @@
                     <div class="form-group" ng-class="{'has-error': addOrderForm.datetimepicker2.$invalid && (addOrderForm.datetimepicker2.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="datetimepicker2">To</label>
                         <div class="input-group date" id="datetimepicker2">
-                            <input type="text" ng-model="to" placeholder="YYYY-MM-DD HH:mm" class="form-control" name="datetimepicker2" required>
+                            <input type="text"
+                                id="aboutCarDateInput2"
+                                ng-model="to"
+                                placeholder="YYYY-MM-DD HH:mm"
+                                class="form-control"
+                                name="datetimepicker2"
+                                required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -87,7 +99,13 @@
                     <div class="form-group" ng-class="{'has-error': addOrderForm.dateBirth.$invalid && (addOrderForm.dateBirth.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="dateBirth">Date of birth</label>
                         <div class='input-group date' id='datetimepicker3'>
-                            <input type="text" ng-model="dateBirth" placeholder="YYYY-MM-DD" class="form-control" name="dateBirth" required>
+                            <input type="text"
+                                id="aboutCarDateInput3"
+                                ng-model="dateBirth"
+                                placeholder="YYYY-MM-DD"
+                                class="form-control"
+                                name="dateBirth"
+                                required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -104,8 +122,19 @@
                     <div class="form-group" ng-class="{'has-error': addOrderForm.phoneNumber.$invalid && (addOrderForm.phoneNumber.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="phoneNumber">Phone number</label>
                         <br>
-                        <input type="tel" autocomplete="off" id="aboutCarPhoneNumber" ng-model="phoneNumber" placeholder="Phone number" class="form-control" name="phoneNumber" ng-phone-helper required>
+                        <input type="tel"
+                            autocomplete="off"
+                            id="aboutCarPhoneNumber"
+                            ng-model="phoneNumber"
+                            placeholder="Phone number"
+                            class="form-control"
+                            name="phoneNumber"
+                            ng-phone-helper
+                            maxlength="30"
+                            minlength="14"
+                            required>
                         <span class="help-block" ng-show="addOrderForm.phoneNumber.$error.required">Required</span>
+                        <span class="help-block" ng-show="addOrderForm.phoneNumber.$error.minlength">Too short phone number.</span>
                     </div>
                 </div>
                 <div class="col-md-12">

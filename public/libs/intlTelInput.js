@@ -19,7 +19,7 @@ https://github.com/Bluefieldscom/intl-tel-input.git
     var pluginName = "intlTelInput", id = 1, // give each instance it's own id for namespaced event handling
     defaults = {
         // typing digits after a valid number will be added to the extension part of the number
-        allowExtensions: false,
+        allowExtensions: true,
         // automatically format the number according to the selected country
         autoFormat: true,
         // if there is just a dial code in the input: remove it on blur, and re-add it on focus
