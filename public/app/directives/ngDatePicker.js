@@ -5,54 +5,54 @@ angular.module('rentCarsApp').directive('ngDatePicker', function ($parse) {
 
                 $(function () {
 
-                var datePicker1 = $('#datetimepicker1');
-                var datePicker2 = $('#datetimepicker2');
-                var datePicker3 = $('#datetimepicker3');
+                var datePickerFrom = $('#addOrderDatePickerFrom');
+                var datePickerTo = $('#addOrderDatePickerTo');
+                var datePickerBirth = $('#addOrderDatePickerBirth');
 
-                var datePickerInput1 = $('#aboutCarDateInput1');
-                var datePickerInput2 = $('#aboutCarDateInput2');
-                var datePickerInput3 = $('#aboutCarDateInput3');
+                var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
+                var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
+                var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
 
-                datePicker1.datetimepicker({
+                datePickerFrom.datetimepicker({
                     format: 'YYYY-MM-DD HH:mm',
                     minDate: moment()
                 });
 
-                datePicker2.datetimepicker({
+                datePickerTo.datetimepicker({
                     format: 'YYYY-MM-DD HH:mm',
                     minDate: moment().date(moment().date() + 1)
                 });
-                datePicker3.datetimepicker({
+                datePickerBirth.datetimepicker({
                     viewMode: 'years',
                     format: 'YYYY-MM-DD',
                     maxDate: moment().subtract(18, "years"),
                     minDate: '1900-01-01 00:00'
                 });
 
-                datePicker1.on("dp.change", function (e) {
-                    datePicker2.data("DateTimePicker").minDate(e.date);
+                datePickerFrom.on("dp.change", function (e) {
+                    datePickerTo.data("DateTimePicker").minDate(e.date);
                     scope.from = e.date.format('YYYY-MM-DD HH:mm');
                 });
 
-                datePickerInput1.on("input", function (e) {
-                    scope.from = datePickerInput1.val();
+                inputDatePickerFrom.on("input", function (e) {
+                    scope.from = inputDatePickerFrom.val();
                 });
 
-                datePicker2.on("dp.change", function (e) {
-                    datePicker1.data("DateTimePicker").maxDate(e.date);
+                datePickerTo.on("dp.change", function (e) {
+                    datePickerFrom.data("DateTimePicker").maxDate(e.date);
                     scope.to = e.date.format('YYYY-MM-DD HH:mm');
                 });
 
-                datePickerInput2.on("input", function (e) {
-                    scope.to = datePickerInput2.val();
+                inputDatePickerTo.on("input", function (e) {
+                    scope.to = inputDatePickerTo.val();
                 });
 
-                datePicker3.on("dp.change", function (e) {
+                datePickerBirth.on("dp.change", function (e) {
                     scope.dateBirth = e.date.format('YYYY-MM-DD');
                 });
 
-                datePickerInput3.on("input", function (e) {
-                    scope.dateBirth = datePickerInput3.val();
+                inputDatePickerBirth.on("input", function (e) {
+                    scope.dateBirth = inputDatePickerBirth.val();
                 });
 
             });

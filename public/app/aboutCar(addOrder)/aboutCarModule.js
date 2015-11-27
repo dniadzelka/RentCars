@@ -7,7 +7,7 @@ aboutCarModule.config([
     function($stateProvider) {
         $stateProvider.state('aboutCar', {
             url: '/cars/aboutCar_{id}',
-            templateUrl: 'app/aboutCar/aboutCar.html',
+            templateUrl: 'app/aboutCar(addOrder)/aboutCar.html',
             controller: 'aboutCarCtrl',
             resolve : {
             	carInfo: ['$stateParams', 'cars', function($stateParams, cars) {

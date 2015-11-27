@@ -130,9 +130,9 @@
                 <div class="col-md-6">
                     <div class="form-group" ng-class="{'has-error': addOrderForm.datetimepicker1.$invalid && (addOrderForm.datetimepicker1.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="datetimepicker1">From</label>
-                        <div class="input-group date" id="datetimepicker1">
+                        <div class="input-group date" id="addOrderDatePickerFrom">
                             <input type="text"
-                                id="aboutCarDateInput1"
+                                id="inputDatePickerFrom"
                                 ng-model="from"
                                 placeholder="YYYY-MM-DD HH:mm"
                                 class="form-control"
@@ -146,9 +146,9 @@
                     </div>
                     <div class="form-group" ng-class="{'has-error': addOrderForm.datetimepicker2.$invalid && (addOrderForm.datetimepicker2.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="datetimepicker2">To</label>
-                        <div class="input-group date" id="datetimepicker2">
+                        <div class="input-group date" id="addOrderDatePickerTo">
                             <input type="text"
-                                id="aboutCarDateInput2"
+                                id="inputDatePickerTo"
                                 ng-model="to"
                                 placeholder="YYYY-MM-DD HH:mm"
                                 class="form-control"
@@ -188,14 +188,14 @@
                         <label for="lastName">Last name</label>
                         <input minlength="3" maxlength="16" type="text" ng-model="lastName" placeholder="Last name" class="form-control" name="lastName" required>
                         <span class="help-block" ng-show="addOrderForm.lastName.$error.required">Required</span>
-                        <span class="help-block" ng-show="addOrderForm.lastName.$error.minlength">Last name must have 7 characters at least.</span>
+                        <span class="help-block" ng-show="addOrderForm.lastName.$error.minlength">Last name must have 3 characters at least.</span>
                         <span class="help-block" ng-show="addOrderForm.lastName.$error.maxlength">Last name might have 16 characters as maximum.</span>
                     </div>
                     <div class="form-group" ng-class="{'has-error': addOrderForm.dateBirth.$invalid && (addOrderForm.dateBirth.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="dateBirth">Date of birth</label>
-                        <div class='input-group date' id='datetimepicker3'>
+                        <div class='input-group date' id='addOrderDatePickerBirth'>
                             <input type="text"
-                                id="aboutCarDateInput3"
+                                id="inputDatePickerBirth"
                                 ng-model="dateBirth"
                                 placeholder="YYYY-MM-DD"
                                 class="form-control"
