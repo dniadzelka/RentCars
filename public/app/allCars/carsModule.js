@@ -8,14 +8,15 @@ carsModule.config([
     function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('cars', {
             url: '/cars',
-            templateUrl: '/templates/admin/cars.html',
+            templateUrl: 'app/allCars/cars.html',
             controller: 'carsCtrl',
             resolve: {
                carsPromise: ['cars', function(cars){
                    return cars.getAll();
                }]
-            }         
+            }
         });
+
         $urlRouterProvider.otherwise('cars');
     }
 ]);

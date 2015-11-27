@@ -3,7 +3,7 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
     '$location',
     'auth',
     function ($scope, $location, auth) {
-        $scope.navigation = {url: '/templates/navBar.html'};
+        $scope.navigation = {url: 'app/navigationBar/navBar.html'};
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.currentUser = auth.currentUser;
         $scope.logOut = auth.logOut;

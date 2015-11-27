@@ -7,7 +7,7 @@ authModule.config([
     function($stateProvider) {
         $stateProvider.state('login', {
             url: '/login',
-            templateUrl: '/templates/auth/login.html',
+            templateUrl: 'app/authentification/login.html',
             controller: 'authCtrl',
             onEnter: ['$state', 'auth', function($state, auth){
                 if(auth.isLoggedIn()){
@@ -17,7 +17,7 @@ authModule.config([
         })
         .state('register', {
             url: '/register',
-            templateUrl: '/templates/auth/register.html',
+            templateUrl: 'app/authentification/register.html',
             controller: 'authCtrl',
             onEnter: ['$state', 'auth', function($state, auth){
                 if(auth.isLoggedIn()){
