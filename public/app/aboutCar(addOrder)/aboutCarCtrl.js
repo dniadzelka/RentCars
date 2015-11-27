@@ -38,9 +38,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
             cars.addOrder(carInfo._id, obj).success(function(data) {
                 $scope.car.orders.push(data);
 
-                $scope.addOrderForm.$dirty = false;
-                $scope.addOrderForm.$pristine = true;
-                $scope.addOrderForm.$submitted = false;
+                $scope.addOrderForm;
             });
 
         }

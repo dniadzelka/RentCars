@@ -128,37 +128,37 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-group" ng-class="{'has-error': addOrderForm.datetimepicker1.$invalid && (addOrderForm.datetimepicker1.$dirty || attempt.addOrderForm.attempted)}">
-                        <label for="datetimepicker1">From</label>
+                    <div class="form-group" ng-class="{'has-error': addOrderForm.from.$invalid && (addOrderForm.from.$dirty || attempt.addOrderForm.attempted)}">
+                        <label for="from">From</label>
                         <div class="input-group date" id="addOrderDatePickerFrom">
                             <input type="text"
                                 id="inputDatePickerFrom"
                                 ng-model="from"
                                 placeholder="YYYY-MM-DD HH:mm"
                                 class="form-control"
-                                name="datetimepicker1"
+                                name="from"
                                 required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        <span class="help-block" ng-show="addOrderForm.datetimepicker1.$error.required">Required</span>
+                        <span class="help-block" ng-show="addOrderForm.from.$error.required">Required</span>
                     </div>
-                    <div class="form-group" ng-class="{'has-error': addOrderForm.datetimepicker2.$invalid && (addOrderForm.datetimepicker2.$dirty || attempt.addOrderForm.attempted)}">
-                        <label for="datetimepicker2">To</label>
+                    <div class="form-group" ng-class="{'has-error': addOrderForm.to.$invalid && (addOrderForm.to.$dirty || attempt.addOrderForm.attempted)}">
+                        <label for="to">To</label>
                         <div class="input-group date" id="addOrderDatePickerTo">
                             <input type="text"
                                 id="inputDatePickerTo"
                                 ng-model="to"
                                 placeholder="YYYY-MM-DD HH:mm"
                                 class="form-control"
-                                name="datetimepicker2"
+                                name="to"
                                 required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        <span class="help-block" ng-show="addOrderForm.datetimepicker2.$error.required">Required</span>
+                        <span class="help-block" ng-show="addOrderForm.to.$error.required">Required</span>
                     </div>
                     <div class="form-group" ng-class="{'has-error': addOrderForm.startPoint.$invalid && (addOrderForm.startPoint.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="startPoint">Start point</label>
