@@ -3,6 +3,10 @@
     margin-bottom: 20px;
 }
 
+.aboutCarTitle {
+    margin-bottom: 30px;
+}
+
 .ordersAboutCar {
     width: 100%;
 }
@@ -11,6 +15,10 @@
 
 .intl-tel-input {
     width: 100%;
+}
+
+.editCar, .deleteCar {
+    font-size: 10px;
 }
 
 .intl-tel-input input.iti-invalid-key {background-color: #FFC7C7;}

@@ -1,13 +1,29 @@
 angular.module('aboutCarModule').controller('aboutCarCtrl', [
     '$scope',
+    '$location',
     'carInfo',
     'cars',
-    function($scope, carInfo, cars) {
+    function($scope, $location, carInfo, cars) {
 
         $scope.car = carInfo;
+
+        /* Sort orders table */
         $scope.sortType = 'from';
         $scope.sortReverse = false;
         $scope.searchOrders = '';
+
+        /* Modal pop-up */
+        $scope.showModal = false;
+        $scope.toggleModal = function () {
+            $scope.showModal = !$scope.showModal;
+        };
+
+        $scope.removeCar = function (id) {
+            cars.removeCar(id).success(function(data) {
+                $scope.showModal = false;
+                $location.path('/allcars');
+            });
+        }
 
         $scope.addOrder = function () {
 

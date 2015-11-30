@@ -16,7 +16,7 @@ angular.module('rentCarsApp').factory('cars', [
 
         obj.create = function(car) {
             return $http.post('/allcars', car).success(function(data){
-                obj.cars.push(data);
+                //obj.cars.push(data);
                 $location.path('/allcars');
             });
         };
@@ -28,8 +28,11 @@ angular.module('rentCarsApp').factory('cars', [
         };
 
         obj.addOrder = function(id, order) {
-                        console.log(order);
             return $http.post('/allcars/' + id + '/allorders', order);
+        }
+
+        obj.removeCar = function(id) {
+            return $http.delete('/allcars/' + id);
         }
 
         return obj;

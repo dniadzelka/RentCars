@@ -78,6 +78,14 @@ router.post('/allcars/:car/allorders', function(req, res, next) {
     });
 });
 
+router.delete('/allcars/:car', function(req, res, next) {
+      var id = req.params.car;
+      Car.remove({ _id: id }, function (err) {
+          if (err) return handleError(err);
+          return res.json({ _id: id });
+      });
+});
+
 router.post('/register', function(req, res, next){
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});

@@ -1,16 +1,30 @@
 <div class="wrappered">
-    <div class="page-header text-center">
-        <h2>{{car.model}}, {{car.year}}</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center aboutCarTitle">
+                {{car.model}}, {{car.year}}
+                <a href="" ng-click="toggleModal()" ><span class="fa fa-trash-o pull-right deleteCar"></span></a>
+                <a href=""><span class="fa fa-pencil pull-right editCar"></span></a>
+            </h2>
+        </div>
     </div>
 
-    <h2 ng-hide="car.orders.length" class="text-center">
+    <ng-modal-pop-up title="Delete car" visible="showModal">
+        <h3>Do you realy want to delete {{car.model}}, {{car.year}}?</h3>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" ng-click="removeCar(car._id)">Delete car</button>
+        </div>
+    </ng-modal-pop-up>
+
+        <h2 ng-hide="car.orders.length" class="text-center">
         <small>
             There are no orders for "{{car.model}}" car!
         </small>
         <hr>
     </h2>
 
-    <div class="row">
+    <div class="row" ng-show="car.orders.length">
         <div class="col-md-12">
 
             <form>
