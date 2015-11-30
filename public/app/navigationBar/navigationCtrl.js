@@ -8,6 +8,10 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
         $scope.currentUser = auth.currentUser;
         $scope.logOut = auth.logOut;
 
+        $scope.doSearch = function () {
+            console.log($scope.searchExpression);
+        }
+
         $scope.isActive = function (viewLocation) {
             var result = (viewLocation === $location.path());
             return result;

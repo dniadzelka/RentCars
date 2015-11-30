@@ -17,7 +17,15 @@
                 <li ng-class="{ active: isActive('/feedbacks')}"><a href="#/feedbacks">Feedbacks</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><input type="text" placeholder="Search" class="searchNavBar"></li>
+                <li>
+                    <input type="text"
+                        placeholder="Search"
+                        class="searchNavBar"
+                        ng-change="doSearch()"
+                        ng-model="searchExpression"
+                        ng-model-options="{ debounce: 400 }">
+                    </input>
+                </li>
                 <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
                 <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
                 <li ng-class="{ active: isActive('/register')}" ng-hide="isLoggedIn()"><a href="#/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
