@@ -3,8 +3,8 @@
         <div class="col-md-12">
             <h2 class="text-center aboutCarTitle">
                 {{car.model}}, {{car.year}}
-                <a href="" ng-click="toggleModal()" ><span class="fa fa-trash-o pull-right deleteCar"></span></a>
-                <a href=""><span class="fa fa-pencil pull-right editCar"></span></a>
+                <a href="" ng-click="toggleModal()"><span class="fa fa-trash-o pull-right deleteCar"></span></a>
+                <a href="#/cars/editCar_{{car._id}}"><span class="fa fa-pencil pull-right editCar"></span></a>
             </h2>
         </div>
     </div>

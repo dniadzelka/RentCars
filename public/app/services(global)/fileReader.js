@@ -1,4 +1,4 @@
-angular.module('addCarModule').factory('fileReader', [
+angular.module('rentCarsApp').factory('fileReader', [
     '$q',
     '$log',
     function($q, $log) {

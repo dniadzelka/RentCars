@@ -21,7 +21,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
         $scope.removeCar = function (id) {
             cars.removeCar(id).success(function(data) {
                 $scope.showModal = false;
-                $location.path('/allcars');
+                $location.path('/cars');
             });
         }
 
@@ -40,7 +40,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
                 phoneNumber: $scope.phoneNumber
             };
 
-            $scope.from = '';
+            /*$scope.from = '';
             $scope.to = '';
             $scope.startLocation = '';
             $scope.finishLocation = '';
@@ -49,7 +49,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
             $scope.lastName = '';
             $scope.dateBirth = '';
             $scope.docNumber = '';
-            $scope.phoneNumber = '';
+            $scope.phoneNumber = '';*/
 
             cars.addOrder(carInfo._id, obj).success(function(data) {
                 $scope.car.orders.push(data);

@@ -23,8 +23,16 @@ router.get('/allcars', function(req, res, next) {
     });
 });
 
+router.get('/doSearch', function(req, res) {
+        if (req.query.expression) {
+            var regex = new RegExp(req.query.expression, 'i');
+            Order.find({ docNumber: regex }, function (err, q) {
+                res.json(q);
+            });
+        }
+});
+
 router.post('/allcars', function(req, res, next) {
-    console.log(req.body);
     var car = new Car(req.body);
 
     car.save(function(err, car) {
@@ -49,6 +57,16 @@ router.param('car', function(req, res, next, id) {
 
         req.car = car;
         return next();
+    });
+});
+
+router.get('/allcars/:car', function(req, res) {
+    //load all comments associated with car
+    req.car.populate('orders', function(err, car) {
+        if (err) {
+            return next(err);
+        }
+        res.json(car);
     });
 });
 

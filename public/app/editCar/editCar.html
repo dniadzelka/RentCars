@@ -1,0 +1,75 @@
+<div class="wrappered">
+    <div class="page-header">
+        <h1 class="text-center">Edit {{car.model}}, {{car.year}}</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form name="editCarForm" ng-attempt ng-validation="editCar()" novalidate>
+                <div class="form-group" ng-class="{'has-error': editCarForm.editCarModel.$invalid && (editCarForm.editCarModel.$dirty || attempt.editCarForm.attempted)}">
+                    <label for="editCarModel">Car model</label>
+                    <input type="text" class="form-control" name="editCarModel" id="editCarModel" placeholder="Car model" ng-model="model" required>
+                    <span class="help-block" ng-show="editCarForm.editCarModel.$error.required">Required</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': editCarForm.editCarYear.$invalid && (editCarForm.editCarYear.$dirty || attempt.editCarForm.attempted)}">
+                    <label for="editCarYear">Year</label>
+                    <input type="number" min="1900" max="{{currentYear}}" class="form-control" name="editCarYear" id="editCarYear" placeholder="Yaer" ng-model="year" required>
+                    <span class="help-block" ng-show="editCarForm.editCarYear.$error.required">Required</span>
+                    <span class="help-block" ng-show="editCarForm.editCarYear.$error.number">This field must contains only numbers.</span>
+                    <span class="help-block" ng-show="editCarForm.editCarYear.$error.min">Sorry, min year is 1900.</span>
+                    <span class="help-block" ng-show="editCarForm.editCarYear.$error.max">Sorry, max year is {{currentYear}}.</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': editCarForm.editCarNumDoors.$invalid && (editCarForm.editCarNumDoors.$dirty || attempt.editCarForm.attempted)}">
+                    <label for="editCarNumDoors">Number of doors</label>
+                    <input type="number" min="0" max="10" class="form-control" name="editCarNumDoors" id="editCarNumDoors" placeholder="Doors number" ng-model="doors" required>
+                    <span class="help-block" ng-show="editCarForm.editCarNumDoors.$error.required">Required</span>
+                    <span class="help-block" ng-show="editCarForm.editCarNumDoors.$error.number">This field must contains only numbers.</span>
+                    <span class="help-block" ng-show="editCarForm.editCarNumDoors.$error.min">Sorry, min count is 0.</span>
+                    <span class="help-block" ng-show="editCarForm.editCarNumDoors.$error.max">Sorry, max count is 10.</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': editCarForm.editCarVin.$invalid && (editCarForm.editCarVin.$dirty || attempt.editCarForm.attempted)}">
+                    <label for="editCarVin">Vin number</label>
+                    <input type="text" maxlength="16" minlength="16" class="form-control" name="editCarVin" id="editCarVin" placeholder="Vin number" ng-model="vin" required>
+                    <span class="help-block" ng-show="editCarForm.editCarVin.$error.required">Required</span>
+                    <span class="help-block" ng-show="editCarForm.editCarVin.$error.minlength">Vin code must have 16 characters.</span>
+                    <span class="help-block" ng-show="editCarForm.editCarVin.$error.maxlength">Vin code must have 16 characters.</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': editCarForm.editCarPrice.$invalid && (editCarForm.editCarPrice.$dirty || attempt.editCarForm.attempted)}">
+                    <label for="editCarPrice">Price</label>
+                    <input type="number" min="0" class="form-control" name="editCarPrice" id="editCarPrice" placeholder="Price" ng-model="price" required>
+                    <span class="help-block" ng-show="editCarForm.editCarPrice.$error.required">Required</span>
+                    <span class="help-block" ng-show="editCarForm.editCarPrice.$error.number">This field must contains only numbers.</span>
+                    <span class="help-block" ng-show="editCarForm.editCarPrice.$error.min">Sorry, min price is 0.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="editCarImage">Image</label>
+                    <input type="file" accept="image/*" name="editCarImage" id="editCarImage" ng-file-select>
+                    <i ng-hide="imageSrc" class="help-block">No image choosed</i>
+                    <div ng-hide="!imageSrc" class="editCarContainer">
+                        <img class="editCarImg" ng-hide="!imageSrc" ng-src="{{imageSrc}}">
+                    </div>
+                    <uib-progressbar class="editCarProgressImg" ng-hide="!imageSrc" value="progress" max="max"></uib-progressbar>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="airConditioner"> Air conditioner
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="autoTransmission"> Automatic transmission
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary edit-car-submit">Edit car</button>
+            </form>
+        </div>
+    </div>
+</div>
