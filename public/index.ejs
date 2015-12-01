@@ -32,6 +32,9 @@
     <!-- datePicker -->
     <script type="text/javascript" src="/libs/moment.js"></script>
     <script type="text/javascript" src="/libs/bootstrap-datetimepicker.min.js"></script>
+    <!-- spinner -->
+    <script type="text/javascript" src="/libs/angular-spinner.js"></script>
+    <script type="text/javascript" src="/libs/spin.js"></script>
 
 
     <script type="text/javascript" src="/app/mainModule/angularApp.js"></script>
@@ -66,13 +69,14 @@
 
     <body ng-app="rentCarsApp">
 
-        <div class="wrapper">
+        <span us-spinner="{radius:30, width:8, length: 16}"></span>
 
+        <div class="wrapper">
             <div ng-controller="navigationCtrl">
                 <div ng-include="navigation.url"></div>
             </div>
 
-            <ui-view></ui-view>
+            <ui-view ng-hide="globalSearch"></ui-view>
 
             <footer>
                 <h5 class="text-center">&copy 2015 <a href="https://github.com/culogordo">Dzmitry Niadzelka</a>, Exadel</h5>

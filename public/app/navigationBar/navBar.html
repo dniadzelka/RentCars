@@ -35,3 +35,113 @@
         </div>
     </div>
 </nav>
+
+<div class="row searchResults wrappered" ng-show="globalSearch">
+    <div class="col-md-12">
+
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </div>
+
+                    <input type="text" class="form-control" placeholder="Searh in orders" ng-model="searchOrders">
+
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>
+                        <a href="#" ng-click="sortType = 'from'; sortReverse = !sortReverse">
+                            From
+                            <span ng-show="sortType == 'from' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'from' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'to'; sortReverse = !sortReverse">
+                            To
+                            <span ng-show="sortType == 'to' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'to' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'startLocation'; sortReverse = !sortReverse">
+                            Start location
+                            <span ng-show="sortType == 'startLocation' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'startLocation' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'finishLocation'; sortReverse = !sortReverse">
+                            Finish location
+                            <span ng-show="sortType == 'finishLocation' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'finishLocation' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'addInfo'; sortReverse = !sortReverse">
+                            Info
+                            <span ng-show="sortType == 'addInfo' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'addInfo' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'firstName'; sortReverse = !sortReverse">
+                            First name
+                            <span ng-show="sortType == 'firstName' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'firstName' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'lastName'; sortReverse = !sortReverse">
+                            Last name
+                            <span ng-show="sortType == 'lastName' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'lastName' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'dateBirth'; sortReverse = !sortReverse">
+                            Birth date
+                            <span ng-show="sortType == 'dateBirth' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'dateBirth' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'docNumber'; sortReverse = !sortReverse">
+                            Document
+                            <span ng-show="sortType == 'docNumber' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'docNumber' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'phoneNumber'; sortReverse = !sortReverse">
+                            Phone
+                            <span ng-show="sortType == 'phoneNumber' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'phoneNumber' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="order in data | orderBy:sortType:sortReverse | filter:searchOrders">
+                    <td>{{ order.from }}</td>
+                    <td>{{ order.to }}</td>
+                    <td>{{ order.startLocation }}</td>
+                    <td>{{ order.finishLocation }}</td>
+                    <td>{{ order.addInfo }}</td>
+                    <td>{{ order.firstName }}</td>
+                    <td>{{ order.lastName }}</td>
+                    <td>{{ order.dateBirth }}</td>
+                    <td>{{ order.docNumber }}</td>
+                    <td>{{ order.phoneNumber }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

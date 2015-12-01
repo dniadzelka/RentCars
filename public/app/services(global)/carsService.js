@@ -9,13 +9,13 @@ angular.module('rentCarsApp').factory('cars', [
         };
 
         obj.getAll = function () {
-            return $http.get('/allcars').success(function(data) {
+            return $http.get('/getAllcars').success(function(data) {
                 angular.copy(data, obj.cars);
             });
         };
 
         obj.create = function (car) {
-            return $http.post('/allcars', car).success(function(data){
+            return $http.post('/postCar', car).success(function(data){
                 $location.path('/cars');
             });
         };

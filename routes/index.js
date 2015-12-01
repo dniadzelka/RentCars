@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/allcars', function(req, res, next) {
+router.get('/getAllcars', function(req, res, next) {
     Car.find(function(err, cars) {
         if (err) {
             return next(err);
@@ -32,7 +32,7 @@ router.get('/doSearch', function(req, res) {
         }
 });
 
-router.post('/allcars', function(req, res, next) {
+router.post('/postCar', function(req, res, next) {
     var car = new Car(req.body);
 
     car.save(function(err, car) {
@@ -130,7 +130,7 @@ router.post('/register', function(req, res, next) {
     User.find({username : user.username}, function (err, docs) {
         if (docs.length) {
             var errorMessage = 'User "' + user.username + '" is already exist!';
-            return res.status(400).json({
+            return res.status(500).json({
                 message: errorMessage
             });
         } else {
