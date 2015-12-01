@@ -55,7 +55,9 @@ router.param('car', function(req, res, next, id) {
 router.get('/allcars/:car', function(req, res) {
     //load all comments associated with car
     req.car.populate('orders', function(err, car) {
-        if (err) { return next(err); }
+        if (err) {
+            return next(err);
+        }
         res.json(car);
     });
 });
@@ -65,59 +67,88 @@ router.post('/allcars/:car/allorders', function(req, res, next) {
     //reference from order to car
     order.car = req.car;
 
-    order.save(function(err, order){
+    order.save(function(err, order) {
 
-        if(err){ return next(err); }
+        if (err) {
+            return next(err);
+        }
 
         // because ref to car !!!
         req.car.orders.push(order);
         req.car.save(function(err, car) {
-            if(err){ return next(err); }
+            if (err) {
+                return next(err);
+            }
             res.json(order);
         });
     });
 });
 
 router.delete('/allcars/:car', function(req, res, next) {
-      var id = req.params.car;
-      Car.remove({ _id: id }, function (err) {
-          if (err) return handleError(err);
-          return res.json({ _id: id });
-      });
+    var id = req.params.car;
+    Car.remove({
+        _id: id
+    }, function(err) {
+        if (err) return handleError(err);
+        return res.json({
+            _id: id
+        });
+    });
 });
 
-router.post('/register', function(req, res, next){
-  if(!req.body.username || !req.body.password){
-    return res.status(400).json({message: 'Please fill out all fields'});
-  }
-
-  var user = new User();
-
-  user.username = req.body.username;
-
-  user.setPassword(req.body.password)
-
-  user.save(function (err){
-    if(err){ return next(err); }
-
-    return res.json({token: user.generateJWT()})
-  });
-});
-
-router.post('/login', function(req, res, next){
-  if(!req.body.username || !req.body.password){
-    return res.status(400).json({message: 'Please fill out all fields'});
-  }
-
-  passport.authenticate('local', function(err, user, info){
-    if(err){ return next(err); }
-
-    if(user){
-      return res.json({token: user.generateJWT()});
-    } else {
-      return res.status(401).json(info);
+router.post('/register', function(req, res, next) {
+    if (!req.body.username || !req.body.password) {
+        return res.status(400).json({
+            message: 'Please fill out all fields'
+        });
     }
-  })(req, res, next);
+
+    var user = new User();
+
+    user.username = req.body.username;
+
+    user.setPassword(req.body.password)
+
+    User.find({username : user.username}, function (err, docs) {
+        if (docs.length) {
+            var errorMessage = 'User "' + user.username + '" is already exist!';
+            return res.status(400).json({
+                message: errorMessage
+            });
+        } else {
+            user.save(function(err) {
+                if (err) {
+                    return next(err);
+                }
+
+                return res.json({
+                    token: user.generateJWT()
+                })
+            });
+        }
+    });
+});
+
+router.post('/login', function(req, res, next) {
+    if (!req.body.username || !req.body.password) {
+        return res.status(400).json({
+            message: 'Please fill out all fields'
+        });
+    }
+
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return next(err);
+        }
+
+        if (user) {
+            return res.json({
+                token: user.generateJWT()
+            });
+        } else {
+            return res.status(401).json(info);
+        }
+    })(req, res, next);
 });
 
 module.exports = router;

@@ -11,7 +11,7 @@ authModule.config([
             controller: 'authCtrl',
             onEnter: ['$state', 'auth', function($state, auth){
                 if(auth.isLoggedIn()){
-                    $state.go('home');
+                    $state.go('cars');
                 }
             }]
         })
@@ -21,7 +21,7 @@ authModule.config([
             controller: 'authCtrl',
             onEnter: ['$state', 'auth', function($state, auth){
                 if(auth.isLoggedIn()){
-                    $state.go('home');
+                    $state.go('cars');
                 }
             }]
         });

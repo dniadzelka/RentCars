@@ -9,7 +9,7 @@ angular.module('authModule').controller('authCtrl', [
             auth.register($scope.user).error(function(error){
                 $scope.error = error;
             }).then(function(){
-                $state.go('home');
+                $state.go('cars');
             });
         };
 
@@ -17,7 +17,7 @@ angular.module('authModule').controller('authCtrl', [
             auth.logIn($scope.user).error(function(error){
                 $scope.error = error;
             }).then(function(){
-                $state.go('home');
+                $state.go('cars');
             });
         };
     }])
