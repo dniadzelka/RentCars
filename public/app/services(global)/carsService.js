@@ -20,6 +20,12 @@ angular.module('rentCarsApp').factory('cars', [
             });
         };
 
+        obj.editCar = function (car) {
+            return $http.put('/editCar', car).success(function(data){
+                $location.path('/cars');
+            });
+        };
+
         obj.getCarInfo = function (id) {
             return $http.get('/allcars/' + id).then(function(res) {
                 return res.data;

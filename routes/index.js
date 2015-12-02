@@ -44,6 +44,16 @@ router.post('/postCar', function(req, res, next) {
     });
 });
 
+router.put('/editCar', function(req, res, next) {
+    var query = { '_id' : req.body._id };
+    Car.findOneAndUpdate(query, req.body, { upsert : true }, function (err, doc) {
+        if (err) {
+            return res.send(500, { error: err });
+        }
+        return res.send(req.body);
+    });
+});
+
 router.param('car', function(req, res, next, id) {
     var query = Car.findById(id);
 
@@ -57,16 +67,6 @@ router.param('car', function(req, res, next, id) {
 
         req.car = car;
         return next();
-    });
-});
-
-router.get('/allcars/:car', function(req, res) {
-    //load all comments associated with car
-    req.car.populate('orders', function(err, car) {
-        if (err) {
-            return next(err);
-        }
-        res.json(car);
     });
 });
 

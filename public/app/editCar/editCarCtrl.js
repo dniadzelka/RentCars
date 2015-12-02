@@ -8,7 +8,17 @@ angular.module('editCarModule').controller('editCarCtrl', [
 
         $scope.car = carInfo;
 
-        console.log('23123');
+        console.log($scope.car);
+
+        /*$scope.model = $scope.car.model;
+        $scope.year = $scope.car.year;
+        $scope.doors = $scope.car.doors;
+        $scope.airConditioner = $scope.car.airConditioner;
+        $scope.autoTransmission = $scope.car.autoTransmission;
+        $scope.vin = $scope.car.vin;
+        $scope.price = $scope.car.price;
+        $scope.imageSrc = $scope.car.image;
+        $scope.orders = $scope.car.orders;*/
 
         $scope.max = 100;
         $scope.progress = 0;
@@ -26,7 +36,7 @@ angular.module('editCarModule').controller('editCarCtrl', [
 
         $scope.editCar = function() {
 
-            var obj = {
+            /*var obj = {
                 model: angular.uppercase($scope.model),
                 year: $scope.year,
                 doors: $scope.doors,
@@ -35,10 +45,10 @@ angular.module('editCarModule').controller('editCarCtrl', [
                 vin: angular.uppercase($scope.vin),
                 price: $scope.price,
                 image: $scope.imageSrc || '/img/noCar.png',
-                orders: []
-            };
+                orders: $scope.orders
+            };*/
 
-            cars.create(obj);
+            cars.editCar($scope.car);
         };
     }
 ]);
