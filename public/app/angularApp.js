@@ -1,5 +1,5 @@
 var rentCarsApp = angular.module('rentCarsApp', ['carsModule', 'aboutCarModule', 'addCarModule',
-								'editCarModule', 'authModule', 'clientsModule', 'feedbacksModule',
+								'authModule', 'editCarModule', 'feedbacksModule',
 								'ordersModule', 'ui.bootstrap', 'angularSpinner']);
 
 /*

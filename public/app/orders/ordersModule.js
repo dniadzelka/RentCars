@@ -4,16 +4,11 @@ var ordersModule = angular.module('ordersModule', [
 
 ordersModule.config([
     '$stateProvider',
-    '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
+    function ($stateProvider) {
         $stateProvider.state('orders', {
             url: '/orders',
             templateUrl: 'app/orders/orders.html',
-            //controller: 'clientsCtrl',
             resolve: {
-               //clientsPromise: ['clients', function(clients){
-                //    return clients.getAll();
-               //}]
             }
         });
     }
