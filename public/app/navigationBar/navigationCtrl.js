@@ -29,7 +29,6 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
                     $scope.data = data;
                     $rootScope.globalSearch = true;
                 }
-                console.log(data);
             });
         }
 

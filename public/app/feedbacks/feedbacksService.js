@@ -9,7 +9,7 @@ angular.module('feedbacksModule').factory('feedbacks', [
 
         obj.getFeedbacks = function () {
             return $http.get('/getFeedbacks').success(function(data) {
-                angular.copy(data, obj.cars);
+                angular.copy(data, obj.feedbacks);
             });
         }
 

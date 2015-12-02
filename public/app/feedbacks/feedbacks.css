@@ -5,3 +5,19 @@
 textarea {
     resize: none;
 }
+
+a.left.carousel-control,
+a.right.carousel-control {
+    background: white;
+}
+
+span.glyphicon.glyphicon-chevron-left,
+span.glyphicon.glyphicon-chevron-right {
+    color: black;
+}
+
+.feedbackItem {
+    background-color: #F6F4F1;
+    height : 300px;
+    margin-left: 0, auto;
+}

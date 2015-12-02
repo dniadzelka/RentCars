@@ -5,11 +5,15 @@
 
     <div ng-if="feedbacks.length">
         <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
-            <uib-slide ng-repeat="slide in slides" active="slide.active">
-                <img ng-src="{{slide.image}}" style="margin:auto;">
-                <div class="carousel-caption">
-                    <h4>Slide {{$index}}</h4>
-                    <p>{{slide.text}}</p>
+            <uib-slide ng-repeat="item in feedbacks" active="item.active">
+                <div class="row feedbackItem">
+                    <div class="col-md-4">
+                        <img ng-src="img/user.png">
+                    </div>
+                    <div class="col-md-8">
+                        <span>{{item.name}}</span>
+                        <p>{{item.text}}</p>
+                    </div>
                 </div>
             </uib-slide>
         </uib-carousel>

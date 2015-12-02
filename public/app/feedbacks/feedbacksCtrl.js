@@ -4,6 +4,7 @@ angular.module('feedbacksModule').controller('feedbacksCtrl',[
     function($scope, feedbacks) {
 
         $scope.o = {};
+        $scope.feedbacks = feedbacks.feedbacks;
 
         /* Modal pop-up */
         $scope.showModal = false;
@@ -18,9 +19,6 @@ angular.module('feedbacksModule').controller('feedbacksCtrl',[
                 text: $scope.o.text,
                 approved: false
             }
-
-            console.log(obj);
-
             feedbacks.createFeedback(obj).success(function(data) {
                 $scope.toggleModal();
             });
@@ -28,8 +26,9 @@ angular.module('feedbacksModule').controller('feedbacksCtrl',[
 
         $scope.myInterval = 5000;
         $scope.noWrapSlides = false;
-        var slides = $scope.slides = [];
-        $scope.addSlide = function() {
+
+        
+        /*$scope.addSlide = function() {
             var newWidth = 600 + slides.length + 1;
             slides.push({
                 image: '//placekitten.com/' + newWidth + '/300',
@@ -38,6 +37,8 @@ angular.module('feedbacksModule').controller('feedbacksCtrl',[
         };
         for (var i = 0; i < 4; i++) {
             $scope.addSlide();
-        }
+        }*/
+
+
     }]
 );
