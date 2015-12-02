@@ -5,54 +5,7 @@ var passport = require('passport');
 var Car = mongoose.model('Car');
 var Order = mongoose.model('Order');
 var User = mongoose.model('User');
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', {
-        title: 'Express'
-    });
-});
-
-router.get('/getAllcars', function(req, res, next) {
-    Car.find(function(err, cars) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(cars);
-    });
-});
-
-router.get('/doSearch', function(req, res) {
-        if (req.query.expression) {
-            var regex = new RegExp(req.query.expression, 'i');
-            Order.find({ docNumber: regex }, function (err, q) {
-                res.json(q);
-            });
-        }
-});
-
-router.post('/postCar', function(req, res, next) {
-    var car = new Car(req.body);
-
-    car.save(function(err, car) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(car);
-    });
-});
-
-router.put('/editCar', function(req, res, next) {
-    var query = { '_id' : req.body._id };
-    Car.findOneAndUpdate(query, req.body, { upsert : true }, function (err, doc) {
-        if (err) {
-            return res.send(500, { error: err });
-        }
-        return res.send(req.body);
-    });
-});
+var Feedback = mongoose.model('Feedback');
 
 router.param('car', function(req, res, next, id) {
     var query = Car.findById(id);
@@ -70,13 +23,67 @@ router.param('car', function(req, res, next, id) {
     });
 });
 
-router.get('/allcars/:car', function(req, res) {
+
+router.get('/', function(req, res, next) {
+    res.render('index', {
+        title: 'Express'
+    });
+});
+
+router.get('/getAllcars', function(req, res, next) {
+    Car.find(function(err, cars) {
+        if (err) {
+            return next(err);
+        }
+        res.json(cars);
+    });
+});
+
+router.get('/getFeedbacks', function(req, res, next) {
+    Feedback.find(function(err, feedbacks) {
+        if (err) {
+            return next(err);
+        }
+        res.json(feedbacks);
+    });
+});
+
+router.get('/gerSearchResult', function(req, res) {
+        if (req.query.expression) {
+            var regex = new RegExp(req.query.expression, 'i');
+            Order.find({ docNumber: regex }, function (err, q) {
+                res.json(q);
+            });
+        }
+});
+
+router.get('/allcars/:car', function(req, res, next) {
     //load all comments associated with car
     req.car.populate('orders', function(err, car) {
         if (err) {
             return next(err);
         }
         res.json(car);
+    });
+});
+
+router.post('/postCar', function(req, res, next) {
+    var car = new Car(req.body);
+    car.save(function (err, car) {
+        if (err) {
+            return next(err);
+        }
+        res.json(car);
+    });
+});
+
+router.post('/postFeedback', function(req, res, next) {
+    var feedback = new Feedback(req.body);
+    feedback.save(function (err, feedback) {
+        if (err) {
+            return next(err);
+        }
+        res.json(feedback);
     });
 });
 
@@ -102,17 +109,25 @@ router.post('/allcars/:car/allorders', function(req, res, next) {
     });
 });
 
-router.delete('/allcars/:car', function(req, res, next) {
-    var id = req.params.car;
-    Car.remove({
-        _id: id
-    }, function(err) {
-        if (err) return handleError(err);
-        return res.json({
-            _id: id
-        });
+router.put('/editCar', function(req, res, next) {
+    var query = { '_id' : req.body._id };
+    Car.findOneAndUpdate(query, req.body, { upsert : true }, function (err, doc) {
+        if (err) {
+            return next(err);
+        }
+        return res.send(req.body);
     });
 });
+
+router.delete('/allcars/:car', function(req, res, next) {
+    var id = req.params.car;
+    Car.remove({ _id: id }, function(err) {
+        if (err) return next(err);
+        return res.json({ _id: id });
+    });
+});
+
+/* ------------------AUTHENTIFICATION--------------------------- */
 
 router.post('/register', function(req, res, next) {
     if (!req.body.username || !req.body.password) {

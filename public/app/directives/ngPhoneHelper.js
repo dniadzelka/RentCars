@@ -3,10 +3,17 @@ angular.module('rentCarsApp').directive('ngPhoneHelper', function ($parse) {
         restrict: 'A',
         link: function (scope) {
 
-            var phoneNumberInput1 = $('#aboutCarPhoneNumber');
-            phoneNumberInput1.intlTelInput();
-            phoneNumberInput1.on('input', function(e) {
-                scope.phoneNumber = phoneNumberInput1.val();
+            var aboutCarPhoneNumber = $('#aboutCarPhoneNumber');
+            aboutCarPhoneNumber.intlTelInput();
+            aboutCarPhoneNumber.on('input', function(e) {
+                scope.phoneNumber = aboutCarPhoneNumber.val();
+                if (!scope.$$phase) scope.$apply();
+            });
+
+            var feedbackPhoneNumber = $('#feedbackPhoneNumber');
+            feedbackPhoneNumber.intlTelInput();
+            feedbackPhoneNumber.on('input', function(e) {
+                scope.o.phoneNumber = feedbackPhoneNumber.val();
                 if (!scope.$$phase) scope.$apply();
             });
 

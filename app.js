@@ -9,6 +9,7 @@ var passport = require('passport');
 require('./models/Cars');
 require('./models/Orders');
 require('./models/Users');
+require('./models/Feedbacks');
 require('./config/passport');
 
 //This will open a connection with the cars database running on our Mongo server.
