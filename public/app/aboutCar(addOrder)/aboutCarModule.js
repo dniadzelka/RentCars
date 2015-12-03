@@ -1,4 +1,5 @@
 var aboutCarModule = angular.module('aboutCarModule', [
+    'angularSpinner',
     'ui.router'
 ]);
 

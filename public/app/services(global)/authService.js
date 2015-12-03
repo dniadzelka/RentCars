@@ -1,7 +1,8 @@
 angular.module('rentCarsApp').factory('auth', [
     '$http',
     '$window',
-    function($http, $window){
+    'usSpinnerService',
+    function($http, $window, usSpinnerService) {
         var auth = {};
 
         auth.saveToken = function (token){
@@ -33,13 +34,17 @@ angular.module('rentCarsApp').factory('auth', [
         };
 
         auth.register = function(user){
+            usSpinnerService.spin('mainSpinner');
             return $http.post('/register', user).success(function(data){
+                usSpinnerService.stop('mainSpinner');
                 auth.saveToken(data.token);
             });
         };
 
         auth.logIn = function(user){
+            usSpinnerService.spin('mainSpinner');
             return $http.post('/login', user).success(function(data){
+                usSpinnerService.stop('mainSpinner');
                 auth.saveToken(data.token);
             });
         };

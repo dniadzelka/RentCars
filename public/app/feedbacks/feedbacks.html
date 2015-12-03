@@ -3,7 +3,7 @@
         <h1 class="text-center">Feedbacks</h1>
     </div>
 
-    <div ng-if="feedbacks.length">
+    <div ng-if="feedbacks.length" class="row">
         <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
             <uib-slide ng-repeat="item in feedbacks" active="item.active">
                 <div class="row feedbackItem">
@@ -17,6 +17,7 @@
                 </div>
             </uib-slide>
         </uib-carousel>
+        <button class="btn btn-primary pull-right " ng-click="toggleModal()">Keep feedback</button>
     </div>
 
     <ng-modal-pop-up title="Keep feedback" visible="showModal">

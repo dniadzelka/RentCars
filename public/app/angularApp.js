@@ -1,6 +1,6 @@
-var rentCarsApp = angular.module('rentCarsApp', ['carsModule', 'aboutCarModule', 'addCarModule',
-								'authModule', 'editCarModule', 'feedbacksModule',
-								'ordersModule', 'ui.bootstrap', 'angularSpinner']);
+var rentCarsApp = angular.module('rentCarsApp', ['angularSpinner', 'carsModule', 'aboutCarModule',
+												'addCarModule', 'authModule', 'editCarModule',
+												'feedbacksModule', 'ordersModule', 'ui.bootstrap']);
 
 /*
 rentCarsApp.config(['$locationProvider', function($locationProvider) {

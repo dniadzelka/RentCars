@@ -4,7 +4,8 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
     'auth',
     'doSearchService',
     '$rootScope',
-    function ($scope, $location, auth, doSearchService, $rootScope) {
+    'usSpinnerService',
+    function ($scope, $location, auth, doSearchService, $rootScope, usSpinnerService) {
         $scope.navigation = {url: 'app/navigationBar/navBar.html'};
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.currentUser = auth.currentUser;
@@ -25,6 +26,7 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
                 $rootScope.globalSearch = false;
             }
             doSearchService($scope.searchExpression.text).success(function (data) {
+                usSpinnerService.stop('mainSpinner');
                 if (data) {
                     $scope.data = data;
                     $rootScope.globalSearch = true;

@@ -1,7 +1,8 @@
-angular.module('feedbacksModule').controller('feedbacksCtrl',[
+angular.module('feedbacksModule').controller('feedbacksCtrl', [
     '$scope',
     'feedbacks',
-    function($scope, feedbacks) {
+    'usSpinnerService',
+    function($scope, feedbacks, usSpinnerService) {
 
         $scope.o = {};
         $scope.feedbacks = feedbacks.feedbacks;
@@ -20,6 +21,8 @@ angular.module('feedbacksModule').controller('feedbacksCtrl',[
                 approved: false
             }
             feedbacks.createFeedback(obj).success(function(data) {
+                usSpinnerService.stop('mainSpinner');
+                feedbacks.pushFeedback(data);
                 $scope.toggleModal();
             });
         }
@@ -27,7 +30,7 @@ angular.module('feedbacksModule').controller('feedbacksCtrl',[
         $scope.myInterval = 5000;
         $scope.noWrapSlides = false;
 
-        
+
         /*$scope.addSlide = function() {
             var newWidth = 600 + slides.length + 1;
             slides.push({

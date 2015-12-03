@@ -3,7 +3,8 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     '$location',
     'carInfo',
     'cars',
-    function($scope, $location, carInfo, cars) {
+    'usSpinnerService',
+    function($scope, $location, carInfo, cars, usSpinnerService) {
 
         $scope.car = carInfo;
 
@@ -20,6 +21,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
         $scope.removeCar = function (id) {
             cars.removeCar(id).success(function(data) {
+                usSpinnerService.stop('mainSpinner');
                 $scope.showModal = false;
                 $location.path('/cars');
             });
@@ -52,9 +54,8 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
             $scope.phoneNumber = '';*/
 
             cars.addOrder(carInfo._id, obj).success(function(data) {
+                usSpinnerService.stop('mainSpinner');
                 $scope.car.orders.push(data);
-
-                $scope.addOrderForm;
             });
 
         }

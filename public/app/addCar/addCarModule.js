@@ -1,5 +1,6 @@
 var addCarModule = angular.module('addCarModule', [
-    'ui.router'
+    'ui.router',
+    'angularSpinner'
 ]);
 
 addCarModule.config([
