@@ -18,19 +18,19 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
         $scope.sortReverse = false;
         $scope.searchOrders = '';
 
-
-
         $scope.doSearch = function () {
             if ($scope.searchExpression.text === '') {
                 $scope.data = null;
                 $rootScope.globalSearch = false;
+                return;
             }
-            doSearchService($scope.searchExpression.text).success(function (data) {
+            doSearchService($scope.searchExpression.text).then(function (data) {
                 usSpinnerService.stop('mainSpinner');
-                if (data) {
-                    $scope.data = data;
-                    $rootScope.globalSearch = true;
-                }
+                $scope.data = data;
+                $rootScope.globalSearch = true;
+            }, function (reason) {
+                usSpinnerService.stop('mainSpinner');
+                alert('Some error in input search!');
             });
         }
 

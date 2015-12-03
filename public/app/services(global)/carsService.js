@@ -25,9 +25,9 @@ angular.module('rentCarsApp').factory('cars', [
             });
         };
 
-        obj.editCar = function (car) {
+        obj.editCar = function (id, car) {
             usSpinnerService.spin('mainSpinner');
-            return $http.put('/editCar', car).success(function(data){
+            return $http.put('/editCar_' + id, car).success(function(data){
                 usSpinnerService.stop('mainSpinner');
                 $location.path('/cars');
             });
@@ -35,7 +35,7 @@ angular.module('rentCarsApp').factory('cars', [
 
         obj.getCarInfo = function (id) {
             usSpinnerService.spin('mainSpinner');
-            return $http.get('/allcars/' + id).then(function(res) {
+            return $http.get('/allcars/getCar_' + id).then(function(res) {
                 usSpinnerService.stop('mainSpinner');
                 return res.data;
             });
@@ -48,7 +48,7 @@ angular.module('rentCarsApp').factory('cars', [
 
         obj.removeCar = function (id) {
             usSpinnerService.spin('mainSpinner');
-            return $http.delete('/allcars/' + id);
+            return $http.delete('/allcars/deleteCar_' + id);
         }
 
         return obj;

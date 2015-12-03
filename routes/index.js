@@ -48,16 +48,26 @@ router.get('/getFeedbacks', function(req, res, next) {
     });
 });
 
-router.get('/gerSearchResult', function(req, res) {
-        if (req.query.expression) {
-            var regex = new RegExp(req.query.expression, 'i');
-            Order.find({ docNumber: regex }, function (err, q) {
-                res.json(q);
-            });
+router.get('/getSearchResult', function(req, res, next) {
+
+    var reg = new RegExp(req.query.expression, 'i');
+    Order.find().or([
+        { startLocation : reg},
+        { finishLocation : reg},
+        { addInfo : reg},
+        { firstName : reg},
+        { lastName : reg },
+        { docNumber: reg },
+        { phoneNumber : reg}
+    ]).exec(function(err, q) {
+        if (err) {
+            return next(err);
         }
+        res.json(q);
+    });
 });
 
-router.get('/allcars/:car', function(req, res, next) {
+router.get('/allcars/getCar_:car', function(req, res, next) {
     //load all comments associated with car
     req.car.populate('orders', function(err, car) {
         if (err) {
@@ -109,8 +119,9 @@ router.post('/allcars/:car/allorders', function(req, res, next) {
     });
 });
 
-router.put('/editCar', function(req, res, next) {
-    var query = { '_id' : req.body._id };
+router.put('/editCar_:car', function(req, res, next) {
+    var id = req.params.car;
+    var query = { '_id' : id };
     Car.findOneAndUpdate(query, req.body, { upsert : true }, function (err, doc) {
         if (err) {
             return next(err);
@@ -119,7 +130,7 @@ router.put('/editCar', function(req, res, next) {
     });
 });
 
-router.delete('/allcars/:car', function(req, res, next) {
+router.delete('/allcars/deleteCar_:car', function(req, res, next) {
     var id = req.params.car;
     Car.remove({ _id: id }, function(err) {
         if (err) return next(err);

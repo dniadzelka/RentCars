@@ -23,7 +23,7 @@ angular.module('editCarModule').controller('editCarCtrl', [
         });
 
         $scope.editCar = function() {
-            cars.editCar($scope.car);
+            cars.editCar($scope.car._id, $scope.car);
         };
     }
 ]);
