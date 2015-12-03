@@ -21,10 +21,6 @@ angular.module('feedbacksModule').factory('feedbacks', [
             return $http.post('/postFeedback', feedback);
         }
 
-        obj.pushFeedback = function (data) {
-            obj.feedbacks.push(data);
-        }
-
         return obj;
     }
 ]);

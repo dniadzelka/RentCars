@@ -3,22 +3,36 @@
         <h1 class="text-center">Feedbacks</h1>
     </div>
 
-    <div ng-if="feedbacks.length" class="row">
-        <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
-            <uib-slide ng-repeat="item in feedbacks" active="item.active">
-                <div class="row feedbackItem">
-                    <div class="col-md-4">
-                        <img ng-src="img/user.png">
+    <div class="row" ng-show="feedbacks.length">
+        <div class="col-md-10 col-md-offset-1">
+            <slick settings="slickConfig"
+                infinite=true
+                slides-to-show=3
+                slides-to-scroll=3
+                speed=600
+                touch-move=true
+                slides-to-scroll=3
+                autoplay=true
+                autoplaySpeed=3000>
+
+                <div ng-repeat="item in feedbacks" class="row feedbackItem">
+                    <div class="col-md-3">
+                        <img ng-src="img/user.png" class="feedbackImg">
                     </div>
-                    <div class="col-md-8">
-                        <span>{{item.name}}</span>
-                        <p>{{item.text}}</p>
+                    <div class="col-md-9">
+                        <div class="feedbackText">
+                            <span><i class="fa fa-user"></i> {{item.name}}</span>
+                            <p>{{item.text}}</p>
+                        </div>
                     </div>
                 </div>
-            </uib-slide>
-        </uib-carousel>
-        <button class="btn btn-primary pull-right " ng-click="toggleModal()">Keep feedback</button>
+            </slick>
+            <button class="btn btn-primary pull-right" ng-click="toggleModal()">Keep feedback</button>
+        </div>
     </div>
+
+
+
 
     <ng-modal-pop-up title="Keep feedback" visible="showModal">
         <form name="feedbackForm" ng-attempt ng-validation="addFeedback()" novalidate>
