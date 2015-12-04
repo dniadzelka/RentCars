@@ -1,127 +1,3 @@
-angular.module('aboutCarModule').controller('aboutCarCtrl', [
-    '$scope',
-    '$location',
-    'carInfo',
-    'cars',
-    'usSpinnerService',
-    function($scope, $location, carInfo, cars, usSpinnerService) {
-
-        $scope.car = carInfo;
-
-        /* Sort orders table */
-        $scope.sortType = 'from';
-        $scope.sortReverse = false;
-        $scope.searchOrders = '';
-
-        /* Modal pop-up */
-        $scope.showModal = false;
-        $scope.toggleModal = function () {
-            $scope.showModal = !$scope.showModal;
-        };
-
-        $scope.removeCar = function (id) {
-            cars.removeCar(id).success(function(data) {
-                usSpinnerService.stop('mainSpinner');
-                $scope.showModal = false;
-                $location.path('/cars');
-            });
-        }
-
-        $scope.addOrder = function () {
-
-            var obj = {
-                from: new Date($scope.from),
-                to: new Date($scope.to),
-                startLocation: $scope.startLocation,
-                finishLocation: $scope.finishLocation,
-                addInfo: $scope.addInfo,
-                firstName: $scope.firstName,
-                lastName: $scope.lastName,
-                dateBirth: new Date($scope.dateBirth),
-                docNumber: $scope.docNumber,
-                phoneNumber: $scope.phoneNumber
-            };
-
-            /*$scope.from = '';
-            $scope.to = '';
-            $scope.startLocation = '';
-            $scope.finishLocation = '';
-            $scope.addInfo = '';
-            $scope.firstName = '';
-            $scope.lastName = '';
-            $scope.dateBirth = '';
-            $scope.docNumber = '';
-            $scope.phoneNumber = '';*/
-
-            cars.addOrder(carInfo._id, obj).success(function(data) {
-                usSpinnerService.stop('mainSpinner');
-                $scope.car.orders.push(data);
-            });
-
-        }
-    }
-]);
-
-var aboutCarModule = angular.module('aboutCarModule', [
-    'angularSpinner',
-    'ui.router'
-]);
-
-aboutCarModule.config([
-    '$stateProvider',
-    function($stateProvider) {
-        $stateProvider.state('aboutCar', {
-            url: '/cars/aboutCar_{id}',
-            templateUrl: 'app/aboutCar(addOrder)/aboutCar.html',
-            controller: 'aboutCarCtrl',
-            resolve : {
-            	carInfo: ['$stateParams', 'cars', function($stateParams, cars) {
-            		return cars.getCarInfo($stateParams.id);
-            	}]
-            }
-        });
-    }
-]);
-
-angular.module('addCarModule').controller('addCarCtrl', [
-    '$scope',
-    'cars',
-    'fileReader',
-    function ($scope, cars, fileReader) {
-
-        $scope.max = 100;
-        $scope.progress = 0;
-        $scope.currentYear = new Date().getFullYear();
-
-        $scope.getFile = function () {
-            fileReader.readAsDataUrl($scope.file, $scope).then(function(result) {
-                $scope.imageSrc = result;
-            });
-        };
-
-        $scope.$on('fileProgress', function(progress) {
-            $scope.progress = progress.loaded / progress.total;
-        });
-
-        $scope.addCar = function() {
-
-            var obj = {
-                model: angular.uppercase($scope.model),
-                year: $scope.year,
-                doors: $scope.doors,
-                airConditioner: $scope.airConditioner,
-                autoTransmission: $scope.autoTransmission,
-                vin: angular.uppercase($scope.vin),
-                price: $scope.price,
-                image: $scope.imageSrc || '/img/noCar.png',
-                orders: []
-            };
-
-            cars.create(obj);
-        };
-    }
-]);
-
 var addCarModule = angular.module('addCarModule', [
     'ui.router',
     'angularSpinner'
@@ -135,14 +11,6 @@ addCarModule.config([
             templateUrl: 'app/addCar/addCar.html',
             controller: 'addCarCtrl'
         });
-    }
-]);
-
-angular.module('carsModule').controller('carsCtrl', [
-    '$scope',
-    'cars',
-    function ($scope, cars) {
-        $scope.cars = cars.cars;
     }
 ]);
 
@@ -169,29 +37,16 @@ carsModule.config([
     }
 ]);
 
-angular.module('authModule').controller('authCtrl', [
-    '$scope',
-    '$state',
-    'auth',
-    function($scope, $state, auth){
-        $scope.user = {};
+var rentCarsApp = angular.module('rentCarsApp', ['angularSpinner', 'carsModule', 'aboutCarModule',
+												'addCarModule', 'authModule', 'editCarModule',
+												'feedbacksModule', 'ordersModule', 'ui.bootstrap']);
 
-        $scope.register = function(){
-            auth.register($scope.user).error(function(error){
-                $scope.error = error;
-            }).then(function(){
-                $state.go('cars');
-            });
-        };
-
-        $scope.logIn = function(){
-            auth.logIn($scope.user).error(function(error){
-                $scope.error = error;
-            }).then(function(){
-                $state.go('cars');
-            });
-        };
-    }])
+/*
+rentCarsApp.config(['$locationProvider', function($locationProvider) {
+		$locationProvider.html5Mode(true);
+	}
+]);
+*/
 
 var authModule = angular.module('authModule', [
     'ui.router'
@@ -223,67 +78,84 @@ authModule.config([
     }
 ]);
 
-angular.module('rentCarsApp').directive('ngDatePicker', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function (scope) {
+var aboutCarModule = angular.module('aboutCarModule', [
+    'angularSpinner',
+    'ui.router'
+]);
 
-                $(function () {
+aboutCarModule.config([
+    '$stateProvider',
+    function($stateProvider) {
+        $stateProvider.state('aboutCar', {
+            url: '/cars/aboutCar_{id}',
+            templateUrl: 'app/aboutCar(addOrder)/aboutCar.html',
+            controller: 'aboutCarCtrl',
+            resolve : {
+            	carInfo: ['$stateParams', 'cars', function($stateParams, cars) {
+            		return cars.getCarInfo($stateParams.id);
+            	}]
+            }
+        });
+    }
+]);
 
-                var datePickerFrom = $('#addOrderDatePickerFrom');
-                var datePickerTo = $('#addOrderDatePickerTo');
-                var datePickerBirth = $('#addOrderDatePickerBirth');
+var editCarModule = angular.module('editCarModule', [
+    'ui.router'
+]);
 
-                var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
-                var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
-                var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
+editCarModule.config([
+    '$stateProvider',
+    function ($stateProvider) {
+        $stateProvider.state('editCar', {
+            url: '/cars/editCar_{id}',
+            templateUrl: 'app/editCar/editCar.html',
+            controller: 'editCarCtrl',
+            resolve : {
+                carInfo: ['$stateParams', 'cars', function($stateParams, cars) {
+                    return cars.getCarInfo($stateParams.id);
+                }]
+            }
+        });
+    }
+]);
 
-                datePickerFrom.datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm',
-                    minDate: moment()
-                });
+var feedbacksModule = angular.module('feedbacksModule', [
+    'angularSpinner',
+    'ui.router',
+    'slick'
+]);
 
-                datePickerTo.datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm',
-                    minDate: moment().date(moment().date() + 1)
-                });
-                datePickerBirth.datetimepicker({
-                    viewMode: 'years',
-                    format: 'YYYY-MM-DD',
-                    maxDate: moment().subtract(18, 'years'),
-                    minDate: '1900-01-01 00:00'
-                });
+feedbacksModule.config([
+    '$stateProvider',
+    function($stateProvider, $urlRouterProvider) {
+        $stateProvider.state('feedbacks', {
+            url: '/feedbacks',
+            templateUrl: 'app/feedbacks/feedbacks.html',
+            controller: 'feedbacksCtrl',
+            resolve: {
+                feedbacksPromise: ['feedbacks', function(feedbacks){
+                    return feedbacks.getFeedbacks();
+                }]
+            }
+        });
+    }
+]);
 
-                datePickerFrom.on('dp.change', function (e) {
-                    datePickerTo.data('DateTimePicker').minDate(e.date);
-                    scope.from = e.date.format('YYYY-MM-DD HH:mm');
-                });
+var ordersModule = angular.module('ordersModule', [
+    'ui.router'
+]);
 
-                inputDatePickerFrom.on('input', function (e) {
-                    scope.from = inputDatePickerFrom.val();
-                });
-
-                datePickerTo.on('dp.change', function (e) {
-                    datePickerFrom.data('DateTimePicker').maxDate(e.date);
-                    scope.to = e.date.format('YYYY-MM-DD HH:mm');
-                });
-
-                inputDatePickerTo.on('input', function (e) {
-                    scope.to = inputDatePickerTo.val();
-                });
-
-                datePickerBirth.on('dp.change', function (e) {
-                    scope.dateBirth = e.date.format('YYYY-MM-DD');
-                });
-
-                inputDatePickerBirth.on('input', function (e) {
-                    scope.dateBirth = inputDatePickerBirth.val();
-                });
-
-            });
-        }
-    };
-});
+ordersModule.config([
+    '$stateProvider',
+    function ($stateProvider) {
+        $stateProvider.state('orders', {
+            url: '/orders',
+            templateUrl: 'app/orders/orders.html',
+            resolve: {
+            }
+        });
+    }
+]);
 
 angular.module('rentCarsApp').directive('ngFileSelect', function() {
     return {
@@ -297,55 +169,6 @@ angular.module('rentCarsApp').directive('ngFileSelect', function() {
 
         }
     }
-});
-
-angular.module('rentCarsApp').directive('loader', function () {
-    return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-            key: '@'
-        },
-        link: function (scope, element, attributes) {
-
-            scope.$on('us-spinner:spin', function (event, key) {
-                if (key === scope.key) {
-                    element.addClass('loading');
-                }
-            });
-
-            scope.$on('us-spinner:stop', function (event, key) {
-                if (key === scope.key) {
-                    element.removeClass('loading');
-                }
-            });
-
-        },
-        template: '<div class="us-spinner-wrapper"><div us-spinner spinner-key="{{key}}"></div></div>'
-    };
-});
-
-angular.module('rentCarsApp').directive('ngPhoneHelper', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function (scope) {
-
-            var aboutCarPhoneNumber = $('#aboutCarPhoneNumber');
-            aboutCarPhoneNumber.intlTelInput();
-            aboutCarPhoneNumber.on('input', function(e) {
-                scope.phoneNumber = aboutCarPhoneNumber.val();
-                if (!scope.$$phase) scope.$apply();
-            });
-
-            var feedbackPhoneNumber = $('#feedbackPhoneNumber');
-            feedbackPhoneNumber.intlTelInput();
-            feedbackPhoneNumber.on('input', function(e) {
-                scope.o.phoneNumber = feedbackPhoneNumber.val();
-                if (!scope.$$phase) scope.$apply();
-            });
-
-        }
-    };
 });
 
 angular.module('rentCarsApp').directive('ngAttempt', function() {
@@ -427,6 +250,158 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
     };
 });
 
+angular.module('rentCarsApp').directive('ngDatePicker',['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope) {
+
+                $(function () {
+
+                var datePickerFrom = $('#addOrderDatePickerFrom');
+                var datePickerTo = $('#addOrderDatePickerTo');
+                var datePickerBirth = $('#addOrderDatePickerBirth');
+
+                var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
+                var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
+                var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
+
+                datePickerFrom.datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm',
+                    minDate: moment()
+                });
+
+                datePickerTo.datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm',
+                    minDate: moment().date(moment().date() + 1)
+                });
+                datePickerBirth.datetimepicker({
+                    viewMode: 'years',
+                    format: 'YYYY-MM-DD',
+                    maxDate: moment().subtract(18, 'years'),
+                    minDate: '1900-01-01 00:00'
+                });
+
+                datePickerFrom.on('dp.change', function (e) {
+                    datePickerTo.data('DateTimePicker').minDate(e.date);
+                    scope.from = e.date.format('YYYY-MM-DD HH:mm');
+                });
+
+                inputDatePickerFrom.on('input', function (e) {
+                    scope.from = inputDatePickerFrom.val();
+                });
+
+                datePickerTo.on('dp.change', function (e) {
+                    datePickerFrom.data('DateTimePicker').maxDate(e.date);
+                    scope.to = e.date.format('YYYY-MM-DD HH:mm');
+                });
+
+                inputDatePickerTo.on('input', function (e) {
+                    scope.to = inputDatePickerTo.val();
+                });
+
+                datePickerBirth.on('dp.change', function (e) {
+                    scope.dateBirth = e.date.format('YYYY-MM-DD');
+                });
+
+                inputDatePickerBirth.on('input', function (e) {
+                    scope.dateBirth = inputDatePickerBirth.val();
+                });
+
+            });
+        }
+    };
+}]);
+
+angular.module('addCarModule').controller('addCarCtrl', [
+    '$scope',
+    'cars',
+    'fileReader',
+    function ($scope, cars, fileReader) {
+
+        $scope.max = 100;
+        $scope.progress = 0;
+        $scope.currentYear = new Date().getFullYear();
+
+        $scope.getFile = function () {
+            fileReader.readAsDataUrl($scope.file, $scope).then(function(result) {
+                $scope.imageSrc = result;
+            });
+        };
+
+        $scope.$on('fileProgress', function(progress) {
+            $scope.progress = progress.loaded / progress.total;
+        });
+
+        $scope.addCar = function() {
+
+            var obj = {
+                model: angular.uppercase($scope.model),
+                year: $scope.year,
+                doors: $scope.doors,
+                airConditioner: $scope.airConditioner,
+                autoTransmission: $scope.autoTransmission,
+                vin: angular.uppercase($scope.vin),
+                price: $scope.price,
+                image: $scope.imageSrc || '/img/noCar.png',
+                orders: []
+            };
+
+            cars.create(obj);
+        };
+    }
+]);
+
+angular.module('rentCarsApp').directive('loader', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            key: '@'
+        },
+        link: function (scope, element, attributes) {
+
+            scope.$on('us-spinner:spin', function (event, key) {
+                if (key === scope.key) {
+                    element.addClass('loading');
+                }
+            });
+
+            scope.$on('us-spinner:stop', function (event, key) {
+                if (key === scope.key) {
+                    element.removeClass('loading');
+                }
+            });
+
+        },
+        template: '<div class="us-spinner-wrapper"><div us-spinner spinner-key="{{key}}"></div></div>'
+    };
+});
+
+angular.module('rentCarsApp').directive('ngPhoneHelper', [
+    '$parse',
+    function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope) {
+
+                var aboutCarPhoneNumber = $('#aboutCarPhoneNumber');
+                aboutCarPhoneNumber.intlTelInput();
+                aboutCarPhoneNumber.on('input', function(e) {
+                    scope.phoneNumber = aboutCarPhoneNumber.val();
+                    if (!scope.$$phase) scope.$apply();
+                });
+
+                var feedbackPhoneNumber = $('#feedbackPhoneNumber');
+                feedbackPhoneNumber.intlTelInput();
+                feedbackPhoneNumber.on('input', function(e) {
+                    scope.o.phoneNumber = feedbackPhoneNumber.val();
+                    if (!scope.$$phase) scope.$apply();
+                });
+
+            }
+        };
+}]);
+
 angular.module('editCarModule').controller('editCarCtrl', [
     '$scope',
     'cars',
@@ -457,23 +432,67 @@ angular.module('editCarModule').controller('editCarCtrl', [
     }
 ]);
 
-var editCarModule = angular.module('editCarModule', [
-    'ui.router'
-]);
+angular.module('aboutCarModule').controller('aboutCarCtrl', [
+    '$scope',
+    '$location',
+    'carInfo',
+    'cars',
+    'usSpinnerService',
+    function($scope, $location, carInfo, cars, usSpinnerService) {
 
-editCarModule.config([
-    '$stateProvider',
-    function ($stateProvider) {
-        $stateProvider.state('editCar', {
-            url: '/cars/editCar_{id}',
-            templateUrl: 'app/editCar/editCar.html',
-            controller: 'editCarCtrl',
-            resolve : {
-                carInfo: ['$stateParams', 'cars', function($stateParams, cars) {
-                    return cars.getCarInfo($stateParams.id);
-                }]
-            }
-        });
+        $scope.car = carInfo;
+
+        /* Sort orders table */
+        $scope.sortType = 'from';
+        $scope.sortReverse = false;
+        $scope.searchOrders = '';
+
+        /* Modal pop-up */
+        $scope.showModal = false;
+        $scope.toggleModal = function () {
+            $scope.showModal = !$scope.showModal;
+        };
+
+        $scope.removeCar = function (id) {
+            cars.removeCar(id).success(function(data) {
+                usSpinnerService.stop('mainSpinner');
+                $scope.showModal = false;
+                $location.path('/cars');
+            });
+        }
+
+        $scope.addOrder = function () {
+
+            var obj = {
+                from: new Date($scope.from),
+                to: new Date($scope.to),
+                startLocation: $scope.startLocation,
+                finishLocation: $scope.finishLocation,
+                addInfo: $scope.addInfo,
+                firstName: $scope.firstName,
+                lastName: $scope.lastName,
+                dateBirth: new Date($scope.dateBirth),
+                docNumber: $scope.docNumber,
+                phoneNumber: $scope.phoneNumber
+            };
+
+            /*$scope.from = '';
+            $scope.to = '';
+            $scope.startLocation = '';
+            $scope.finishLocation = '';
+            $scope.addInfo = '';
+            $scope.firstName = '';
+            $scope.lastName = '';
+            $scope.dateBirth = '';
+            $scope.docNumber = '';
+            $scope.phoneNumber = '';*/
+
+            cars.addOrder(carInfo._id, obj).success(function(data) {
+                usSpinnerService.stop('mainSpinner');
+                $scope.car.orders.push(data);
+            });
+
+        }
     }
 ]);
 
@@ -507,27 +526,29 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
     }]
 );
 
-var feedbacksModule = angular.module('feedbacksModule', [
-    'angularSpinner',
-    'ui.router',
-    'slick'
-]);
+angular.module('authModule').controller('authCtrl', [
+    '$scope',
+    '$state',
+    'auth',
+    function($scope, $state, auth){
+        $scope.user = {};
 
-feedbacksModule.config([
-    '$stateProvider',
-    function($stateProvider, $urlRouterProvider) {
-        $stateProvider.state('feedbacks', {
-            url: '/feedbacks',
-            templateUrl: 'app/feedbacks/feedbacks.html',
-            controller: 'feedbacksCtrl',
-            resolve: {
-                feedbacksPromise: ['feedbacks', function(feedbacks){
-                    return feedbacks.getFeedbacks();
-                }]
-            }
-        });
-    }
-]);
+        $scope.register = function(){
+            auth.register($scope.user).error(function(error){
+                $scope.error = error;
+            }).then(function(){
+                $state.go('cars');
+            });
+        };
+
+        $scope.logIn = function(){
+            auth.logIn($scope.user).error(function(error){
+                $scope.error = error;
+            }).then(function(){
+                $state.go('cars');
+            });
+        };
+    }])
 
 angular.module('feedbacksModule').factory('feedbacks', [
     '$http',
@@ -600,19 +621,11 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
     }
 ]);
 
-var ordersModule = angular.module('ordersModule', [
-    'ui.router'
-]);
-
-ordersModule.config([
-    '$stateProvider',
-    function ($stateProvider) {
-        $stateProvider.state('orders', {
-            url: '/orders',
-            templateUrl: 'app/orders/orders.html',
-            resolve: {
-            }
-        });
+angular.module('carsModule').controller('carsCtrl', [
+    '$scope',
+    'cars',
+    function ($scope, cars) {
+        $scope.cars = cars.cars;
     }
 ]);
 
@@ -796,14 +809,3 @@ angular.module('rentCarsApp').factory('fileReader', [
         };
     }
 ]);
-
-var rentCarsApp = angular.module('rentCarsApp', ['angularSpinner', 'carsModule', 'aboutCarModule',
-												'addCarModule', 'authModule', 'editCarModule',
-												'feedbacksModule', 'ordersModule', 'ui.bootstrap']);
-
-/*
-rentCarsApp.config(['$locationProvider', function($locationProvider) {
-		$locationProvider.html5Mode(true);
-	}
-]);
-*/

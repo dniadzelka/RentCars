@@ -3,44 +3,47 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+
+
         concat: {
+
             js: {
-                src: [
-                    //'public/libs/*.js',
-                    //'public/libs/carosel/*.js',
-                    'public/app/aboutCar(addOrder)/*.js',
-                    'public/app/addCar/*.js',
-                    'public/app/allCars/*.js',
-                    'public/app/authentification/*.js',
-                    'public/app/directives/*.js',
-                    'public/app/directives/formValidation/*.js',
-                    'public/app/directives/modalPopUp/*.js',
-                    'public/app/editCar/*.js',
-                    'public/app/feedbacks/*.js',
-                    'public/app/navigationBar/*.js',
-                    'public/app/orders/*.js',
-                    'public/app/services(global)/*.js',
-                    'public/app/*.js'
-                ],
+                src: (function (pattern) {
+                    var scriptsPaths = grunt.file.expand(pattern);
+                    return scriptsPaths.sort(function (a, b) {
+                        var am = a.match(/Module/g) || [],
+                        bm = b.match(/Module/g) || [];
+                        return (bm.length - am.length);
+                    });
+                })([
+                    'public/app/**/*.js'
+                ]),
+
                 dest: 'public/production/production.js'
+            },
+
+            js_libs: {
+                src: [
+                    'public/libs/**/*.js',
+                    '!public/libs/**/angular.min.js',
+                    '!public/libs/**/jquery.min.js',
+                    '!public/libs/**/moment.min.js'
+                ],
+                dest: 'public/production/production_libs.js'
             },
 
             css: {
                 src: [
-                    'public/libs/*.css',
-                    'public/libs/carosel/*.css',
-                    'public/app/aboutCar(addOrder)/*.css',
-                    'public/app/addCar/*.css',
-                    'public/app/allCars/*.css',
-                    'public/app/authentification/*.css',
-                    'public/app/editCar/*.css',
-                    'public/app/feedbacks/*.css',
-                    'public/app/footer/*.css',
-                    'public/app/mainApp/*.css',
-                    'public/app/navigationBar/*.css',
-                    'public/app/orders/*.css'
+                    'public/app/**/*.css'
                 ],
                 dest: 'public/production/production.css'
+            },
+
+            css_libs: {
+                src: [
+                    'public/libs/**/*.css'
+                ],
+                dest: 'public/production/production_libs.css'
             }
         },
 
