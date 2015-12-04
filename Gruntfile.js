@@ -34,7 +34,8 @@ module.exports = function(grunt) {
 
             css: {
                 src: [
-                    'public/app/**/*.css'
+                    'public/app/**/*.css',
+                    'public/fonts/**/*.css'
                 ],
                 dest: 'public/production/production.css'
             },

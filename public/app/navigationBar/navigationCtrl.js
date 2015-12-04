@@ -26,7 +26,7 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
             }
             doSearchService($scope.searchExpression.text).then(function (data) {
                 usSpinnerService.stop('mainSpinner');
-                $scope.data = data;
+                $scope.data = data.data;
                 $rootScope.globalSearch = true;
             }, function (reason) {
                 usSpinnerService.stop('mainSpinner');
