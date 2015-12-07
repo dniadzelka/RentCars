@@ -1,8 +1,9 @@
 angular.module('feedbacksModule').controller('feedbacksCtrl', [
     '$scope',
+    '$location',
     'feedbacks',
     'usSpinnerService',
-    function($scope, feedbacks, usSpinnerService) {
+    function($scope, $location, feedbacks, usSpinnerService) {
 
         $scope.o = {};
         $scope.feedbacks = feedbacks.feedbacks;
@@ -22,6 +23,8 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
             }
             feedbacks.createFeedback(obj).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
+                //feedbacks.getFeedbacks();
+                //$scope.feedbacks = feedbacks.feedbacks;
                 $scope.toggleModal();
             });
         }

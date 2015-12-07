@@ -22,16 +22,6 @@ module.exports = function(grunt) {
                 dest: 'public/production/production.js'
             },
 
-            js_libs: {
-                src: [
-                    'public/libs/**/*.js',
-                    '!public/libs/**/angular.min.js',
-                    '!public/libs/**/jquery.min.js',
-                    '!public/libs/**/moment.min.js'
-                ],
-                dest: 'public/production/production_libs.js'
-            },
-
             css: {
                 src: [
                     'public/app/**/*.css',
@@ -53,13 +43,24 @@ module.exports = function(grunt) {
                 src: 'public/production/production.js',
                 dest: 'public/production/production.min.js'
             }
+        },
+
+        watch: {
+            scripts: {
+            files: ['public/app/**/*.js'],
+            tasks: ['concat', 'uglify'],
+            options: {
+                spawn: false,
+            }
         }
+    }
 
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['concat', 'uglify']);
+    grunt.registerTask('default', ['concat', 'uglify', 'watch']);
 
 };

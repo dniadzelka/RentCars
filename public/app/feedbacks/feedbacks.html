@@ -5,7 +5,7 @@
 
     <div class="row" ng-show="feedbacks.length">
         <div class="col-md-10 col-md-offset-1">
-            <slick settings="slickConfig"
+            <slick ng-if="feedbacks.length" settings="slickConfig"
                 infinite=true
                 slides-to-show=3
                 slides-to-scroll=3

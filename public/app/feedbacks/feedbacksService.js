@@ -1,8 +1,7 @@
 angular.module('feedbacksModule').factory('feedbacks', [
     '$http',
-    '$location',
     'usSpinnerService',
-    function($http, $location, usSpinnerService) {
+    function($http, usSpinnerService) {
 
         var obj = {
             feedbacks : []

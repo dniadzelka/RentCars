@@ -414,12 +414,13 @@ angular.module('editCarModule').controller('editCarCtrl', [
         $scope.car = carInfo;
 
         $scope.max = 100;
-        $scope.progress = 0;
+        $scope.progress = 100;
         $scope.currentYear = new Date().getFullYear();
 
         $scope.getFile = function () {
             fileReader.readAsDataUrl($scope.file, $scope).then(function(result) {
                 $scope.imageSrc = result;
+                $scope.car.image = result;
             });
         };
 
@@ -499,9 +500,10 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
 angular.module('feedbacksModule').controller('feedbacksCtrl', [
     '$scope',
+    '$location',
     'feedbacks',
     'usSpinnerService',
-    function($scope, feedbacks, usSpinnerService) {
+    function($scope, $location, feedbacks, usSpinnerService) {
 
         $scope.o = {};
         $scope.feedbacks = feedbacks.feedbacks;
@@ -521,6 +523,8 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
             }
             feedbacks.createFeedback(obj).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
+                //feedbacks.getFeedbacks();
+                //$scope.feedbacks = feedbacks.feedbacks;
                 $scope.toggleModal();
             });
         }
@@ -556,9 +560,8 @@ angular.module('authModule').controller('authCtrl', [
 
 angular.module('feedbacksModule').factory('feedbacks', [
     '$http',
-    '$location',
     'usSpinnerService',
-    function($http, $location, usSpinnerService) {
+    function($http, usSpinnerService) {
 
         var obj = {
             feedbacks : []
