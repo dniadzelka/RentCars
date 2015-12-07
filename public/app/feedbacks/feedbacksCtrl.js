@@ -4,7 +4,6 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
     'feedbacks',
     'usSpinnerService',
     function($scope, $location, feedbacks, usSpinnerService) {
-
         $scope.o = {};
         $scope.feedbacks = feedbacks.feedbacks;
 

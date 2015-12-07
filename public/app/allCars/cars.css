@@ -1,16 +1,23 @@
 .carImg {
     max-width: 100%;
-    max-height: 170px;
+    margin-bottom: 15px;
+    max-height: auto;
     display:block;
-    margin:auto;
 }
 
 .carItem {
-    height: 380px;
-    padding-left: 10px;
-    padding-right: 10px;
+    min-height: 350px;
     border-radius: 10px;
     background-color: #F6F4F1;
+    transition: 0.3s;
+}
+
+.innerDivCarItem {
+    font-size: 1.1em;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: black;
+    transition: 0.3s;
 }
 
 .carItem .carModel {
@@ -18,17 +25,31 @@
     padding-bottom: 5px;
 }
 
+.carModel {
+    color: black;
+    opacity: 0.7;
+}
+
 .carItem a {
     text-decoration: none;
     decoration: none;
 }
 
+.innerDivCarItem:hover {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 .carItem:hover {
+    padding-left: 0px;
+    padding-right: 0px;
     background-color: #e2dcd2;
 }
 
 .innerDivCarItem {
-    height: 380px;
+    width: 95%;
+    min-height: 350px;
+    margin: 0 auto;
 }
 
 .noCars {

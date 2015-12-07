@@ -318,7 +318,6 @@ angular.module('addCarModule').controller('addCarCtrl', [
     'cars',
     'fileReader',
     function ($scope, cars, fileReader) {
-
         $scope.max = 100;
         $scope.progress = 0;
         $scope.currentYear = new Date().getFullYear();
@@ -504,7 +503,6 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
     'feedbacks',
     'usSpinnerService',
     function($scope, $location, feedbacks, usSpinnerService) {
-
         $scope.o = {};
         $scope.feedbacks = feedbacks.feedbacks;
 

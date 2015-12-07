@@ -9,16 +9,16 @@
                 <div ng-repeat="item in cars | orderBy: 'price'" class="col-md-3">
                     <div class="carItem">
                         <a href="#/cars/aboutCar_{{item._id}}">
+                            <h3 class="text-center carModel">
+                                {{item.model}}
+                            </h3>
                             <div class="innerDivCarItem">
-                                <h2 class="text-center carModel">
-                                    {{item.model}}
-                                </h2>
                                 <img class="carImg" ng-src="{{item.image}}">
-                                <p>Year: {{item.year}}</p>
-                                <p>Doors: {{item.doors}}</p>
-                                <p ng-show="item.airConditioner">Air Conditioner</p>
-                                <p ng-show="item.autoTransmission">Automatic Transmission</p>
-                                <p>Price per day: ${{item.price}}</p>
+                                <p><b>Year:</b> <i>{{item.year}}</i></p>
+                                <p><b>Doors:</b> <i>{{item.doors}}</i></p>
+                                <p ng-show="item.airConditioner"><i>Air Conditioner</i></p>
+                                <p ng-show="item.autoTransmission"><i>Automatic Transmission</i></p>
+                                <p><b>Price per day:</b> <i>${{item.price}}</i></p>
                             </div>
                         </a>
                     </div>
