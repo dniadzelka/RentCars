@@ -157,7 +157,7 @@ textarea {
 }
 
 .feedbackItem {
-    height : 400px;
+    min-height: 400px;
     margin-left: 10px;
     margin-right: 10px;
     border-radius: 10px;
@@ -172,11 +172,15 @@ textarea {
 }
 
 .feedbackImg {
-    padding-left: 20px;
-    padding-top: 20px;
+    padding-top: 10px;
+}
+
+.feedbackUserName {
+    font-size: 1.2em;
 }
 
 .feedbackText {
+    font-size: 1.4em;
     padding: 20px;
 }
 

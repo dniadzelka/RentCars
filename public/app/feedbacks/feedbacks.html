@@ -5,23 +5,14 @@
 
     <div class="row" ng-show="feedbacks.length">
         <div class="col-md-10 col-md-offset-1">
-            <slick ng-if="feedbacks.length" settings="slickConfig"
-                infinite=true
-                slides-to-show=3
-                slides-to-scroll=3
-                speed=600
-                touch-move=true
-                slides-to-scroll=3
-                autoplay=true
-                autoplaySpeed=3000>
-
+            <slick>
                 <div ng-repeat="item in feedbacks" class="row feedbackItem">
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-12">
                         <img ng-src="img/user.png" class="feedbackImg">
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-lg-9 col-md-12">
                         <div class="feedbackText">
-                            <span><i class="fa fa-user"></i> {{item.name}}</span>
+                            <span class="feedbackUserName"><i class="fa fa-user"></i> {{item.name}}</span>
                             <p>{{item.text}}</p>
                         </div>
                     </div>
@@ -62,7 +53,7 @@
 
             <div class="form-group" ng-class="{'has-error': feedbackForm.text.$invalid && (feedbackForm.text.$dirty || attempt.feedbackForm.attempted)}">
                 <label for="text">Text</label>
-                <textarea type="text" ng-model="o.text" placeholder="Type your feedback" rows="5" class="form-control" name="text" required></textarea>
+                <textarea maxlength="355" type="text" ng-model="o.text" placeholder="Type your feedback" rows="5" class="form-control" name="text" required></textarea>
                 <span class="help-block" ng-show="feedbackForm.text.$error.required">Required</span>
             </div>
 
