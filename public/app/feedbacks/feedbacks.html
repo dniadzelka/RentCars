@@ -1,28 +1,27 @@
 <div class="wrappered">
     <div class="page-header">
-        <h1 class="text-center">Feedbacks</h1>
+        <h1 class="text-center feedbackHeader">
+            Feedbacks
+            <a ng-click="toggleModal()" class="btn feedback-btn">
+                <i class="fa fa-comment-o"></i>
+                <span class="spanBtnKeepFeedback">Keep feedback</span>
+            </a>
+        </h1>
     </div>
 
-    <div class="row" ng-show="feedbacks.length">
-        <div class="col-md-10 col-md-offset-1">
-            <slick>
-                <div ng-repeat="item in feedbacks" class="row feedbackItem">
-                    <div class="col-lg-3 col-md-12">
-                        <img ng-src="img/user.png" class="feedbackImg">
-                    </div>
-                    <div class="col-lg-9 col-md-12">
-                        <div class="feedbackText">
-                            <span class="feedbackUserName"><i class="fa fa-user"></i> {{item.name}}</span>
-                            <p>{{item.text}}</p>
-                        </div>
-                    </div>
+
+
+        <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+            <uib-slide class="container feedback-block" ng-repeat="line in testArray track by $index" ng-class="{active: $index==0};">
+                <div ng-repeat="item in feedbacks.slice(3*$index, 3*$index + 3)" class="col-md-4 col-sm-12 col-xs-12 feedbackItem" ng-click="">
+                    <img ng-src="img/user.png" class="feedbackImg">
+                    <article>
+                        <span class="feedbackUserName"><i class="fa fa-user"></i> {{item.name}}</span>
+                        <p class="feedbackText">{{item.text}}</p>
+                    </article>
                 </div>
-            </slick>
-            <button class="btn btn-primary pull-right" ng-click="toggleModal()">Keep feedback</button>
-        </div>
-    </div>
-
-
+            </uib-slide>
+        </uib-carousel>
 
 
     <ng-modal-pop-up title="Keep feedback" visible="showModal">
@@ -37,16 +36,7 @@
             <div class="form-group" ng-class="{'has-error': feedbackForm.phoneNumber.$invalid && (feedbackForm.phoneNumber.$dirty || attempt.feedbackForm.attempted)}">
                 <label for="phoneNumber">Phone number</label>
                 <br>
-                <input type="tel"
-                    autocomplete="off"
-                    id="feedbackPhoneNumber"
-                    ng-model="o.phoneNumber"
-                    placeholder="Phone number"
-                    class="form-control"
-                    name="phoneNumber"
-                    ng-phone-helper maxlength="30"
-                    minlength="14"
-                    required>
+                <input type="tel" autocomplete="off" id="feedbackPhoneNumber" ng-model="o.phoneNumber" placeholder="Phone number" class="form-control" name="phoneNumber" ng-phone-helper maxlength="30" minlength="14" required>
                 <span class="help-block" ng-show="feedbackForm.phoneNumber.$error.required">Required</span>
                 <span class="help-block" ng-show="feedbackForm.phoneNumber.$error.minlength">Too short phone number.</span>
             </div>
@@ -69,9 +59,6 @@
         <small>
             There is no feedback in our service!
             <br> You can be the first :)
-            <br>
-            <br>
-            <button class="btn btn-primary" ng-click="toggleModal()">Keep feedback</button>
         </small>
     </h2>
 

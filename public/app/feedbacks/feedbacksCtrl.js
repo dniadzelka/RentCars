@@ -7,11 +7,19 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
         $scope.o = {};
         $scope.feedbacks = feedbacks.feedbacks;
 
+
+
         /* Modal pop-up */
         $scope.showModal = false;
         $scope.toggleModal = function () {
             $scope.showModal = !$scope.showModal;
         };
+
+        $scope.testArray = [1, 2];
+
+        /* Carousel */
+        $scope.myInterval = 3000;
+        $scope.noWrapSlides = false;
 
         $scope.addFeedback = function () {
             var obj = {
@@ -22,8 +30,7 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
             }
             feedbacks.createFeedback(obj).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
-                //feedbacks.getFeedbacks();
-                //$scope.feedbacks = feedbacks.feedbacks;
+                feedbacks.getFeedbacks();
                 $scope.toggleModal();
             });
         }
