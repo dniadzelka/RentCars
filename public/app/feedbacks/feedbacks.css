@@ -58,10 +58,9 @@ a.right.carousel-control {
     padding: 0 70px;
 }
 
-
-
 .feedbackItem {
     background-color: #F6F4F1;
+    height: 250px;
 }
 
 .feedbackHeader {

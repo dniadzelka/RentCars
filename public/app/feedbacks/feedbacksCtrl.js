@@ -15,10 +15,8 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
             $scope.showModal = !$scope.showModal;
         };
 
-        $scope.testArray = [1, 2];
-
         /* Carousel */
-        $scope.myInterval = 3000;
+        $scope.myInterval = 301231231312;
         $scope.noWrapSlides = false;
 
         $scope.addFeedback = function () {

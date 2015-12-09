@@ -39,7 +39,8 @@ carsModule.config([
 
 var rentCarsApp = angular.module('rentCarsApp', ['angularSpinner', 'carsModule', 'aboutCarModule',
 												'addCarModule', 'authModule', 'editCarModule',
-												'feedbacksModule', 'ordersModule', 'ui.bootstrap']);
+												'feedbacksModule', 'ordersModule', 'ui.bootstrap',
+												'ngAnimate']);
 
 /*
 rentCarsApp.config(['$locationProvider', function($locationProvider) {
@@ -157,17 +158,30 @@ ordersModule.config([
     }
 ]);
 
-angular.module('rentCarsApp').directive('ngFileSelect', function() {
+angular.module('rentCarsApp').directive('loader', function () {
     return {
-        link: function($scope, el) {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            key: '@'
+        },
+        link: function (scope, element, attributes) {
 
-            el.bind('change', function(e) {
-                $scope.file = e.target.files[0];
-                $scope.getFile();
-            })
+            scope.$on('us-spinner:spin', function (event, key) {
+                if (key === scope.key) {
+                    element.addClass('loading');
+                }
+            });
 
-        }
-    }
+            scope.$on('us-spinner:stop', function (event, key) {
+                if (key === scope.key) {
+                    element.removeClass('loading');
+                }
+            });
+
+        },
+        template: '<div class="us-spinner-wrapper"><div us-spinner spinner-key="{{key}}"></div></div>'
+    };
 });
 
 angular.module('rentCarsApp').directive('ngAttempt', function() {
@@ -313,6 +327,19 @@ angular.module('rentCarsApp').directive('ngDatePicker',[
         };
 }]);
 
+angular.module('rentCarsApp').directive('ngFileSelect', function() {
+    return {
+        link: function($scope, el) {
+
+            el.bind('change', function(e) {
+                $scope.file = e.target.files[0];
+                $scope.getFile();
+            })
+
+        }
+    }
+});
+
 angular.module('addCarModule').controller('addCarCtrl', [
     '$scope',
     'cars',
@@ -350,32 +377,6 @@ angular.module('addCarModule').controller('addCarCtrl', [
         };
     }
 ]);
-
-angular.module('rentCarsApp').directive('loader', function () {
-    return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-            key: '@'
-        },
-        link: function (scope, element, attributes) {
-
-            scope.$on('us-spinner:spin', function (event, key) {
-                if (key === scope.key) {
-                    element.addClass('loading');
-                }
-            });
-
-            scope.$on('us-spinner:stop', function (event, key) {
-                if (key === scope.key) {
-                    element.removeClass('loading');
-                }
-            });
-
-        },
-        template: '<div class="us-spinner-wrapper"><div us-spinner spinner-key="{{key}}"></div></div>'
-    };
-});
 
 angular.module('rentCarsApp').directive('ngPhoneHelper', [
     '$parse',
@@ -497,6 +498,24 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     }
 ]);
 
+angular.module('feedbacksModule').filter('array', function() {
+    function getDecimal(num) {
+        var str = "" + num;
+        var zeroPos = str.indexOf(".");
+        if (zeroPos == -1) return 0;
+        str = str.slice(zeroPos);
+        return +str;
+    }
+
+    return function (input) {
+        if (getDecimal(input) === 0) {
+            return new Array(Math.floor(input));
+        } else {
+            return new Array(Math.floor(input));
+        }
+    };
+});
+
 angular.module('feedbacksModule').controller('feedbacksCtrl', [
     '$scope',
     '$location',
@@ -514,10 +533,8 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
             $scope.showModal = !$scope.showModal;
         };
 
-        $scope.testArray = [1, 2];
-
         /* Carousel */
-        $scope.myInterval = 3000;
+        $scope.myInterval = 301231231312;
         $scope.noWrapSlides = false;
 
         $scope.addFeedback = function () {
