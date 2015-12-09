@@ -181,13 +181,12 @@ textarea {
 }
 
 .feedbackImg {
-    padding-top: 10px;
     width: 25%;
     float: left;
 }
 
 .feedbackItem article {
-    display: inline-block;
+    text-align: left;
     float: right;
     width: 70%;
 }
@@ -205,21 +204,62 @@ a.right.carousel-control {
 }
 
 .feedback-block {
-    padding: 0 70px;
+    padding: 0 200px;
+}
+
+@media (max-width: 1400px) {
+    .feedback-block {
+        padding: 0 120px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .feedback-block {
+        padding: 0 100px;
+    }
+}
+
+@media (max-width: 600px) {
+    .feedback-block {
+        padding: 0 60px;
+    }
 }
 
 .feedbackItem {
-    background-color: #F6F4F1;
-    height: 250px;
+    text-overflow: ellipsis;
+    border-radius: 10px;
+    padding-top: 10px;
+    height: 300px;
+}
+
+.feedbackItem:hover {
+    cursor: pointer;
+    background-color: #343a3c;
+    color: white;
+}
+
+.feedbackText {
+    font-size: 20px;
+    height: 200px;
+}
+
+.feedbackTextModal {
+    font-size: 20px;
 }
 
 .feedbackHeader {
+    padding-top: 50px;
+    padding-bottom: 100px;
     position: relative;
 }
 
 .feedbackUserName {
-    display: inline-block;
-    font-size: 1em;
+    font-size: 25px;
+    width: 100%;
+}
+
+.carousel-indicators {
+    display: none;
 }
 
 * {

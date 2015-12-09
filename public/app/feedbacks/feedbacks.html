@@ -1,32 +1,33 @@
 <div class="wrappered">
-    <div class="page-header">
-        <h1 class="text-center feedbackHeader">
-            Feedbacks
-            <a ng-click="toggleModal()" class="btn feedback-btn">
-                <i class="fa fa-comment-o"></i>
-                <span class="spanBtnKeepFeedback">Keep feedback</span>
-            </a>
-        </h1>
-    </div>
+    <h1 class="text-center feedbackHeader">
+        Feedbacks
+        <a ng-click="toggleModalKeep()" class="btn feedback-btn">
+            <i class="fa fa-comment-o"></i>
+            <span class="spanBtnKeepFeedback">Keep feedback</span>
+        </a>
+    </h1>
 
-
-
-        <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
-            <uib-slide class="feedback-block" ng-repeat="line in (feedbacks.length/3 | array) track by $index" ng-class="{active: $index==0};">
-                <div ng-repeat="item in feedbacks.slice(3*$index, 3*$index + 3)" class="col-md-4 col-sm-12 col-xs-12 feedbackItem" ng-click="">
-                    <div class="feedbackImg">
-                        <img ng-src="img/user.png">
-                    </div>
-                    <article>
-                        <span class="feedbackUserName"><i class="fa fa-user"></i> {{item.name}}</span>
-                        <p class="feedbackText">{{item.text}}</p>
-                    </article>
+    <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+        <uib-slide class="feedback-block" ng-repeat="line in (feedbacks.length/3 | array) track by $index" ng-class="{active: $index==0};">
+            <div ng-repeat="item in feedbacks.slice(3*$index, 3*$index + 3)" class="col-lg-4 col-md-12 col-sm-12 col-xs-12 feedbackItem" ng-click="toggleModalGet(item)">
+                <div class="feedbackImg">
+                    <img ng-src="img/user.png">
                 </div>
-            </uib-slide>
-        </uib-carousel>
+                <article>
+                    <span class="feedbackUserName pull-left"><i class="fa fa-user"></i> {{item.name}}</span>
+                    <p class="feedbackTextModal">{{item.text}}</p>
+                </article>
+            </div>
+        </uib-slide>
+    </uib-carousel>
+
+    <ng-modal-pop-up title="Feedback" visible="showModalGet">
+        <span class="feedbackUserName pull-left"><i class="fa fa-user"></i>{{currentFeedback.name}}</span>
+        <p class="feedbackTextModal">{{currentFeedback.text}}</p>
+    </ng-modal-pop-up>
 
 
-    <ng-modal-pop-up title="Keep feedback" visible="showModal">
+    <ng-modal-pop-up title="Keep feedback" visible="showModalKeep">
         <form name="feedbackForm" ng-attempt ng-validation="addFeedback()" novalidate>
 
             <div class="form-group" ng-class="{'has-error': feedbackForm.name.$invalid && (feedbackForm.name.$dirty || attempt.feedbackForm.attempted)}">
@@ -45,7 +46,7 @@
 
             <div class="form-group" ng-class="{'has-error': feedbackForm.text.$invalid && (feedbackForm.text.$dirty || attempt.feedbackForm.attempted)}">
                 <label for="text">Text</label>
-                <textarea maxlength="355" type="text" ng-model="o.text" placeholder="Type your feedback" rows="5" class="form-control" name="text" required></textarea>
+                <textarea maxlength="255" ng-model="o.text" placeholder="Type your feedback" rows="5" class="form-control" name="text" required></textarea>
                 <span class="help-block" ng-show="feedbackForm.text.$error.required">Required</span>
             </div>
 

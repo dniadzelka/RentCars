@@ -9,9 +9,13 @@ angular.module('feedbacksModule').filter('array', function() {
 
     return function (input) {
         if (getDecimal(input) === 0) {
-            return new Array(Math.floor(input));
+            if (Math.floor(input) === 0) {
+                return new Array(1);
+            } else {
+                return new Array(Math.floor(input));
+            }
         } else {
-            return new Array(Math.floor(input));
+            return new Array(Math.floor(input) + 1);
         }
     };
 });

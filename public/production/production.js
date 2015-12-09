@@ -509,9 +509,13 @@ angular.module('feedbacksModule').filter('array', function() {
 
     return function (input) {
         if (getDecimal(input) === 0) {
-            return new Array(Math.floor(input));
+            if (Math.floor(input) === 0) {
+                return new Array(1);
+            } else {
+                return new Array(Math.floor(input));
+            }
         } else {
-            return new Array(Math.floor(input));
+            return new Array(Math.floor(input) + 1);
         }
     };
 });
@@ -525,16 +529,20 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
         $scope.o = {};
         $scope.feedbacks = feedbacks.feedbacks;
 
-
-
         /* Modal pop-up */
-        $scope.showModal = false;
-        $scope.toggleModal = function () {
-            $scope.showModal = !$scope.showModal;
+        $scope.showModalKeep = false;
+        $scope.toggleModalKeep = function () {
+            $scope.showModalKeep = !$scope.showModalKeep;
+        };
+
+        $scope.showModalGet = false;
+        $scope.toggleModalGet = function (item) {
+            $scope.currentFeedback = item;
+            $scope.showModalGet = !$scope.showModalGet;
         };
 
         /* Carousel */
-        $scope.myInterval = 301231231312;
+        $scope.myInterval = 3000;
         $scope.noWrapSlides = false;
 
         $scope.addFeedback = function () {
@@ -547,7 +555,7 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
             feedbacks.createFeedback(obj).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
                 feedbacks.getFeedbacks();
-                $scope.toggleModal();
+                $scope.toggleModalKeep();
             });
         }
     }]
