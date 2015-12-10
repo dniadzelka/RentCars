@@ -15,17 +15,17 @@
                 </div>
                 <article>
                     <span class="feedbackUserName pull-left">{{item.name}}</span>
-                    <div>
-                        <p class="feedbackText">{{item.text}}</p>
-                    </div>
+                    <p class="feedbackText">{{item.text}}</p>
                 </article>
             </div>
         </uib-slide>
     </uib-carousel>
 
-    <ng-modal-pop-up title="Feedback" visible="showModalGet">
-        <span class="feedbackUserName pull-left"><i class="fa fa-user"></i>{{currentFeedback.name}}</span>
+    <ng-modal-pop-up title="{{currentFeedback.name}}" visible="showModalGet">
         <p class="feedbackTextModal">{{currentFeedback.text}}</p>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
     </ng-modal-pop-up>
 
 
@@ -48,7 +48,7 @@
 
             <div class="form-group" ng-class="{'has-error': feedbackForm.text.$invalid && (feedbackForm.text.$dirty || attempt.feedbackForm.attempted)}">
                 <label for="text">Text</label>
-                <textarea maxlength="2000" ng-model="o.text" placeholder="Type your feedback" rows="5" class="form-control" name="text" required></textarea>
+                <textarea maxlength="2000" ng-model="o.text" placeholder="Max 2000 characters only" rows="5" class="form-control" name="text" required></textarea>
                 <span class="help-block" ng-show="feedbackForm.text.$error.required">Required</span>
             </div>
 

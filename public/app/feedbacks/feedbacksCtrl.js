@@ -5,6 +5,7 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
     'usSpinnerService',
     function($scope, $location, feedbacks, usSpinnerService) {
         $scope.o = {};
+        $scope.currentFeedback = {};
         $scope.feedbacks = feedbacks.feedbacks;
 
         /* Modal pop-up */

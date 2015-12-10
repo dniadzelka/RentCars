@@ -6,10 +6,12 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
         replace: true,
         scope: true,
         link: function(scope, element, attrs) {
-            scope.title = attrs.title;
+            scope.title = null;
             scope.$watch(attrs.visible, function(value) {
-                if (value === true)
+                if (value === true) {
+                    scope.title = attrs.title;
                     $(element).modal('show');
+                }
                 else
                     $(element).modal('hide');
             });
