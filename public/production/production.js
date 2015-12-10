@@ -638,7 +638,7 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
                 $rootScope.globalSearch = true;
             }, function (reason) {
                 usSpinnerService.stop('mainSpinner');
-                alert('Some error in input search!');
+                console.error(reason.data);
             });
         }
 

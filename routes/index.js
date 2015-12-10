@@ -51,6 +51,7 @@ router.get('/getFeedbacks', function(req, res, next) {
 router.get('/getSearchResult', function(req, res, next) {
 
     var reg = new RegExp(req.query.expression, 'i');
+
     Order.find().or([
         { startLocation : reg},
         { finishLocation : reg},

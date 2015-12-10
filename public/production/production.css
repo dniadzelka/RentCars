@@ -336,6 +336,7 @@ footer h5 {
 }
 
 .us-spinner-wrapper.loading {
+    z-index: 1000;
     pointer-events: auto;
     background: rgba(0, 0, 0, 0.3);
 }
