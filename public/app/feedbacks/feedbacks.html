@@ -7,15 +7,17 @@
         </a>
     </h1>
 
-    <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+    <uib-carousel interval="myInterval" class="feedbackCarousel" no-wrap="noWrapSlides">
         <uib-slide class="feedback-block" ng-repeat="line in (feedbacks.length/3 | array) track by $index" ng-class="{active: $index==0};">
             <div ng-repeat="item in feedbacks.slice(3*$index, 3*$index + 3)" class="col-lg-4 col-md-12 col-sm-12 col-xs-12 feedbackItem" ng-click="toggleModalGet(item)">
                 <div class="feedbackImg">
                     <img ng-src="img/user.png">
                 </div>
                 <article>
-                    <span class="feedbackUserName pull-left"><i class="fa fa-user"></i> {{item.name}}</span>
-                    <p class="feedbackTextModal">{{item.text}}</p>
+                    <span class="feedbackUserName pull-left">{{item.name}}</span>
+                    <div>
+                        <p class="feedbackText">{{item.text}}</p>
+                    </div>
                 </article>
             </div>
         </uib-slide>
@@ -46,7 +48,7 @@
 
             <div class="form-group" ng-class="{'has-error': feedbackForm.text.$invalid && (feedbackForm.text.$dirty || attempt.feedbackForm.attempted)}">
                 <label for="text">Text</label>
-                <textarea maxlength="255" ng-model="o.text" placeholder="Type your feedback" rows="5" class="form-control" name="text" required></textarea>
+                <textarea maxlength="2000" ng-model="o.text" placeholder="Type your feedback" rows="5" class="form-control" name="text" required></textarea>
                 <span class="help-block" ng-show="feedbackForm.text.$error.required">Required</span>
             </div>
 
