@@ -1,9 +1,8 @@
 angular.module('feedbacksModule').controller('feedbacksCtrl', [
     '$scope',
-    '$location',
     'feedbacks',
     'usSpinnerService',
-    function($scope, $location, feedbacks, usSpinnerService) {
+    function($scope, feedbacks, usSpinnerService) {
         $scope.o = {};
         $scope.currentFeedback = {};
         $scope.feedbacks = feedbacks.feedbacks;

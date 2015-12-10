@@ -1,9 +1,8 @@
 angular.module('rentCarsApp').factory('cars', [
     '$http',
     '$location',
-    'auth',
     'usSpinnerService',
-    function($http, $location, auth, usSpinnerService) {
+    function($http, $location, usSpinnerService) {
 
         var obj = {
             cars: []

@@ -1,6 +1,6 @@
-angular.module('feedbacksModule').filter('array', function() {
+angular.module('feedbacksModule').filter('array', [function() {
     function getDecimal(num) {
-        var str = "" + num;
+        var str = '' + num;
         var zeroPos = str.indexOf(".");
         if (zeroPos == -1) return 0;
         str = str.slice(zeroPos);
@@ -18,4 +18,4 @@ angular.module('feedbacksModule').filter('array', function() {
             return new Array(Math.floor(input) + 1);
         }
     };
-});
+}]);

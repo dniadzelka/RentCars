@@ -1,7 +1,5 @@
 var feedbacksModule = angular.module('feedbacksModule', [
-    'angularSpinner',
-    'ui.router',
-    'slick'
+    'ui.router'
 ]);
 
 feedbacksModule.config([

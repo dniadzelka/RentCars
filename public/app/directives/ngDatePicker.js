@@ -1,6 +1,4 @@
-angular.module('rentCarsApp').directive('ngDatePicker',[
-    '$parse',
-    function ($parse) {
+angular.module('rentCarsApp').directive('ngDatePicker',[function () {
         return {
             restrict: 'A',
             link: function (scope) {

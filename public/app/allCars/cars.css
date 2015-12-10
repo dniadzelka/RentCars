@@ -36,6 +36,15 @@
     margin-right: auto;
 }
 
+@media (max-width: 360px) {
+    .carImg {
+        height: 100px;
+    }
+    .carItem {
+        height: 310px;
+    }
+}
+
 .noCars {
     margin-top: 10%;
 }

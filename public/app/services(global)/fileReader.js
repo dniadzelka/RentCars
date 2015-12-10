@@ -1,7 +1,6 @@
 angular.module('rentCarsApp').factory('fileReader', [
     '$q',
-    '$log',
-    function($q, $log) {
+    function($q) {
 
         var onLoad = function(reader, deferred, scope) {
             return function() {

@@ -25,10 +25,24 @@
                         ng-model-options="{ debounce: 400 }">
                     </input>
                 </li>
-                <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
-                <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-                <li ng-class="{ active: isActive('/register')}" ng-hide="isLoggedIn()"><a href="#/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li ng-class="{ active: isActive('/login')}" ng-hide="isLoggedIn()"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                <li ng-show="isLoggedIn()"><a><i class="glyphicon glyphicon-user"></i> {{ currentUser() }} </a></li>
+                <li ng-show="isLoggedIn()">
+                    <a href="" ng-click="logOut()">
+                        <i class="glyphicon glyphicon-log-out"></i>
+                        <span class="logOutNavBar">Log Out</span>
+                    </a>
+                </li>
+                <li ng-class="{ active: isActive('/register')}" ng-hide="isLoggedIn()">
+                    <a href="#/register">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="signUpNavBar">Sign Up</span>
+                    </a>
+                </li>
+                <li ng-class="{ active: isActive('/login')}" ng-hide="isLoggedIn()">
+                    <a href="#/login">
+                        <i class="glyphicon glyphicon-log-in"></i>
+                        <span class="logInNavBar">Login</span>
+                    </a>
                 </li>
             </ul>
         </div>

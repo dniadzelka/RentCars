@@ -1,4 +1,4 @@
-angular.module('rentCarsApp').directive('loader', function () {
+angular.module('rentCarsApp').directive('loader', [function () {
     return {
         restrict: 'E',
         replace: true,
@@ -22,4 +22,4 @@ angular.module('rentCarsApp').directive('loader', function () {
         },
         template: '<div class="us-spinner-wrapper"><div us-spinner spinner-key="{{key}}"></div></div>'
     };
-});
+}]);

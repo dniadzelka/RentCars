@@ -8,7 +8,7 @@
     </h1>
 
     <uib-carousel interval="myInterval" class="feedbackCarousel" no-wrap="noWrapSlides">
-        <uib-slide class="feedback-block" ng-repeat="line in (feedbacks.length/3 | array) track by $index" ng-class="{active: $index==0};">
+        <uib-slide class="feedback-block" ng-repeat="line in (feedbacks.length/3 | array) track by $index">
             <div ng-repeat="item in feedbacks.slice(3*$index, 3*$index + 3)" class="col-lg-4 col-md-12 col-sm-12 col-xs-12 feedbackItem" ng-click="toggleModalGet(item)">
                 <div class="feedbackImg">
                     <img ng-src="img/user.png">

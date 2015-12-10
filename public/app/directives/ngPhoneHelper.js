@@ -1,6 +1,4 @@
-angular.module('rentCarsApp').directive('ngPhoneHelper', [
-    '$parse',
-    function ($parse) {
+angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
         return {
             restrict: 'A',
             link: function (scope) {

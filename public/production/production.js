@@ -1,6 +1,5 @@
 var addCarModule = angular.module('addCarModule', [
-    'ui.router',
-    'angularSpinner'
+    'ui.router'
 ]);
 
 addCarModule.config([
@@ -42,12 +41,11 @@ var rentCarsApp = angular.module('rentCarsApp', ['angularSpinner', 'carsModule',
 												'feedbacksModule', 'ordersModule', 'ui.bootstrap',
 												'ngAnimate']);
 
-/*
-rentCarsApp.config(['$locationProvider', function($locationProvider) {
+
+/*rentCarsApp.config(['$locationProvider', function($locationProvider) {
 		$locationProvider.html5Mode(true);
 	}
-]);
-*/
+]);*/
 
 var authModule = angular.module('authModule', [
     'ui.router'
@@ -80,7 +78,6 @@ authModule.config([
 ]);
 
 var aboutCarModule = angular.module('aboutCarModule', [
-    'angularSpinner',
     'ui.router'
 ]);
 
@@ -121,9 +118,7 @@ editCarModule.config([
 ]);
 
 var feedbacksModule = angular.module('feedbacksModule', [
-    'angularSpinner',
-    'ui.router',
-    'slick'
+    'ui.router'
 ]);
 
 feedbacksModule.config([
@@ -158,7 +153,7 @@ ordersModule.config([
     }
 ]);
 
-angular.module('rentCarsApp').directive('loader', function () {
+angular.module('rentCarsApp').directive('loader', [function () {
     return {
         restrict: 'E',
         replace: true,
@@ -182,7 +177,7 @@ angular.module('rentCarsApp').directive('loader', function () {
         },
         template: '<div class="us-spinner-wrapper"><div us-spinner spinner-key="{{key}}"></div></div>'
     };
-});
+}]);
 
 angular.module('rentCarsApp').directive('ngAttempt', function() {
     return {
@@ -265,9 +260,7 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
     };
 });
 
-angular.module('rentCarsApp').directive('ngDatePicker',[
-    '$parse',
-    function ($parse) {
+angular.module('rentCarsApp').directive('ngDatePicker',[function () {
         return {
             restrict: 'A',
             link: function (scope) {
@@ -329,10 +322,9 @@ angular.module('rentCarsApp').directive('ngDatePicker',[
         };
 }]);
 
-angular.module('rentCarsApp').directive('ngFileSelect', function() {
+angular.module('rentCarsApp').directive('ngFileSelect', [function() {
     return {
         link: function($scope, el) {
-
             el.bind('change', function(e) {
                 $scope.file = e.target.files[0];
                 $scope.getFile();
@@ -340,7 +332,7 @@ angular.module('rentCarsApp').directive('ngFileSelect', function() {
 
         }
     }
-});
+}]);
 
 angular.module('addCarModule').controller('addCarCtrl', [
     '$scope',
@@ -380,9 +372,7 @@ angular.module('addCarModule').controller('addCarCtrl', [
     }
 ]);
 
-angular.module('rentCarsApp').directive('ngPhoneHelper', [
-    '$parse',
-    function ($parse) {
+angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
         return {
             restrict: 'A',
             link: function (scope) {
@@ -500,9 +490,9 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     }
 ]);
 
-angular.module('feedbacksModule').filter('array', function() {
+angular.module('feedbacksModule').filter('array', [function() {
     function getDecimal(num) {
-        var str = "" + num;
+        var str = '' + num;
         var zeroPos = str.indexOf(".");
         if (zeroPos == -1) return 0;
         str = str.slice(zeroPos);
@@ -520,14 +510,13 @@ angular.module('feedbacksModule').filter('array', function() {
             return new Array(Math.floor(input) + 1);
         }
     };
-});
+}]);
 
 angular.module('feedbacksModule').controller('feedbacksCtrl', [
     '$scope',
-    '$location',
     'feedbacks',
     'usSpinnerService',
-    function($scope, $location, feedbacks, usSpinnerService) {
+    function($scope, feedbacks, usSpinnerService) {
         $scope.o = {};
         $scope.currentFeedback = {};
         $scope.feedbacks = feedbacks.feedbacks;
@@ -735,9 +724,8 @@ angular.module('rentCarsApp').factory('auth', [
 angular.module('rentCarsApp').factory('cars', [
     '$http',
     '$location',
-    'auth',
     'usSpinnerService',
-    function($http, $location, auth, usSpinnerService) {
+    function($http, $location, usSpinnerService) {
 
         var obj = {
             cars: []
@@ -795,7 +783,7 @@ angular.module('rentCarsApp').factory('doSearchService', [
     function ($http, usSpinnerService) {
         var getSearchResults = function (expression) {
             usSpinnerService.spin('mainSpinner');
-            return $http.get('/getSearchResult', { params : { "expression" : expression } } );
+            return $http.get('/getSearchResult', { params : { 'expression' : expression } } );
         };
         return getSearchResults;
     }
@@ -803,8 +791,7 @@ angular.module('rentCarsApp').factory('doSearchService', [
 
 angular.module('rentCarsApp').factory('fileReader', [
     '$q',
-    '$log',
-    function($q, $log) {
+    function($q) {
 
         var onLoad = function(reader, deferred, scope) {
             return function() {

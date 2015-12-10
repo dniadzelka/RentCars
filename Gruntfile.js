@@ -24,15 +24,15 @@ module.exports = function(grunt) {
 
             css: {
                 src: [
-                    'public/app/**/*.css',
-                    'public/fonts/**/*.css'
+                    'public/app/**/*.css'
                 ],
                 dest: 'public/production/production.css'
             },
 
             css_libs: {
                 src: [
-                    'public/libs/**/*.css'
+                    'public/libs/**/*.css',
+                    'public/fonts/**/*.css'
                 ],
                 dest: 'public/production/production_libs.css'
             }

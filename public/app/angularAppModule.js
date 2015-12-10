@@ -3,9 +3,8 @@ var rentCarsApp = angular.module('rentCarsApp', ['angularSpinner', 'carsModule',
 												'feedbacksModule', 'ordersModule', 'ui.bootstrap',
 												'ngAnimate']);
 
-/*
-rentCarsApp.config(['$locationProvider', function($locationProvider) {
+
+/*rentCarsApp.config(['$locationProvider', function($locationProvider) {
 		$locationProvider.html5Mode(true);
 	}
-]);
-*/
+]);*/
