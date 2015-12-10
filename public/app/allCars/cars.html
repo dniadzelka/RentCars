@@ -4,23 +4,27 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
             <div class="row">
-                <div ng-repeat="item in cars | orderBy: 'price'" class="col-md-3">
-                    <div class="carItem">
-                        <a href="#/cars/aboutCar_{{item._id}}">
-                            <h3 class="text-center carModel">
-                                {{item.model}}
-                            </h3>
-                            <div class="innerDivCarItem">
-                                <img class="carImg" ng-src="{{item.image}}">
-                                <p><b>Year:</b> <i>{{item.year}}</i></p>
-                                <p><b>Doors:</b> <i>{{item.doors}}</i></p>
-                                <p ng-show="item.airConditioner"><i>Air Conditioner</i></p>
-                                <p ng-show="item.autoTransmission"><i>Automatic Transmission</i></p>
-                                <p><b>Price per day:</b> <i>${{item.price}}</i></p>
-                            </div>
-                        </a>
+                <div ng-repeat="item in cars | orderBy: 'price'" class="col-lg-3 col-md-6">
+                    <div class="carItem" ng-click="toAboutCarPage(item._id)">
+                        <h3 class="text-center carModel">
+                            {{item.model}}
+                        </h3>
+                        <div class="allcarsCarInfo">
+                            <img class="carImg" ng-src="{{item.image}}">
+                            <p><b>Year:</b> <i>{{item.year}}</i></p>
+                            <p><b>Doors:</b> <i>{{item.doors}}</i></p>
+                            <p><b>Air Conditioner:</b>
+                                <i ng-show="item.airConditioner">yes</i>
+                                <i ng-hide="item.airConditioner">no</i>
+                            </p>
+                            <p><b>Automatic Transmission:</b>
+                                <i ng-show="item.autoTransmission">no</i>
+                                <i ng-hide="item.airConditioner">no</i>
+                            </p>
+                            <p><b>Price per day:</b> <i>${{item.price}}</i></p>
+                        </div>
                     </div>
                 </div>
                 <h2 ng-hide="cars.length" class="text-center noCars">
