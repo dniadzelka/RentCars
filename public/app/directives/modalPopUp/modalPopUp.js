@@ -5,8 +5,15 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
         transclude: true,
         replace: true,
         scope: true,
+
+        /**
+        * Directive 'ngModalPopUp' activate modalWindow when @param attrs.visible equals true
+        * In scope.title we pass title of modalWindow that will display in header
+        * In transclude template we define body and footer of modalWindow
+        */
+
         link: function(scope, element, attrs) {
-            
+
             scope.title = null;
 
             scope.$watch(attrs.visible, function(value) {

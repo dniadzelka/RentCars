@@ -4,6 +4,11 @@ angular.module('rentCarsApp').directive('ngDatePicker',[function () {
             link: function (scope) {
                     $(function () {
 
+                        /**
+                        * Directive 'ngDatePicker' is used to customize input form for dates.
+                        * Apply scope to controller, when data in input changes.
+                        */
+
                     var datePickerFrom = $('#addOrderDatePickerFrom');
                     var datePickerTo = $('#addOrderDatePickerTo');
                     var datePickerBirth = $('#addOrderDatePickerBirth');

@@ -18,7 +18,9 @@
                 </div>
                 <article>
                     <span class="feedbackUserName pull-left">{{::item.name}}</span>
-                    <p class="feedbackText">{{::item.text}}</p>
+                    <div class="feedbackTextWrapper" ng-ellipsis>
+                        <p class="feedbackText">{{::item.text}}</p>
+                    </div>
                 </article>
 
             </div>

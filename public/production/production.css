@@ -154,7 +154,7 @@ textarea {
     position: absolute;
     font-size: 20px;
     border: 2px solid #d3d3d3;
-    transition: all .3s ease-in-out 0s;
+    transition: all 0.3s ease-in;
     border-radius: 20px;
 }
 
@@ -193,7 +193,14 @@ a.right.carousel-control {
 
 .glyphicon-chevron-left,
 .glyphicon-chevron-right {
+    transition: all 0.3s ease-in;
     color: #343a3c;
+    opacity: 0.7;
+}
+
+.glyphicon-chevron-left:hover,
+.glyphicon-chevron-right:hover {
+    opacity: 1;
 }
 
 .feedbackCarousel {
@@ -212,21 +219,20 @@ a.right.carousel-control {
 }
 
 .feedbackItem:hover {
+    transition: all 0.3s ease-in;
     cursor: pointer;
     background-color: #343a3c;
     color: white;
 }
 
-.feedbackText {
-    overflow: hidden;
-    display: -webkit-box;
+.feedbackTextWrapper {
+    display: block;
+    height: 240px;
     width: 100%;
-    -webkit-box-orient: vertical;
-    font-size: 19px;
-    line-height: 20px;
-    max-height: 180px;
-    -webkit-line-clamp: 9;
+}
 
+.feedbackText {
+    font-size: 20px;
 }
 
 .feedbackTextModal {
@@ -248,6 +254,12 @@ a.right.carousel-control {
     display: none;
 }
 
+@media (max-width: 1400px) {
+    .feedback-block {
+        padding: 0 120px;
+    }
+}
+
 @media (max-width: 1199px) {
     .feedbackCarousel {
         height: 750px;
@@ -255,11 +267,8 @@ a.right.carousel-control {
     .feedbackItem {
         height: 230px;
     }
-}
-
-@media (max-width: 1400px) {
-    .feedback-block {
-        padding: 0 120px;
+    .feedbackTextWrapper {
+        height: 180px;
     }
 }
 
@@ -282,10 +291,8 @@ a.right.carousel-control {
     .feedbackItem article {
         width: 80%;
     }
-    .feedbackText {
-        line-height: 20px;
-        max-height: 140px;
-        -webkit-line-clamp: 7;
+    .feedbackTextWrapper {
+        height: 200px;
     }
 }
 

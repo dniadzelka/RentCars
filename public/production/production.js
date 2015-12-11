@@ -137,15 +137,55 @@ feedbacksModule.config([
     }
 ]);
 
-angular.module('rentCarsApp').directive('ngFileSelect', [function() {
-    return {
-        link: function($scope, el) {
-            el.bind('change', function(e) {
-                $scope.file = e.target.files[0];
-                $scope.getFile();
-            })
-        }
-    }
+angular.module('rentCarsApp').directive('ngEllipsis', [function () {
+        return {
+            restrict: 'A',
+            link: function () {
+
+                /**
+                * Directive 'ngEllipsis' is used to customize ellipsis in overflow-text paragraph.
+                */
+
+                $(document).ready(function() {
+                	$(".feedbackTextWrapper").dotdotdot({
+                            /*	The text to add as ellipsis. */
+		                    ellipsis : '... ',
+
+                    		/*	How to cut off the text/html: 'word'/'letter'/'children' */
+                    		wrap : 'word',
+
+                    		/*	Wrap-option fallback to 'letter' for long words */
+                    		fallbackToLetter: true,
+
+                    		/*	jQuery-selector for the element to keep and put after the ellipsis. */
+                    		after : null,
+
+                    		/*	Whether to update the ellipsis: true/'window' */
+                    		watch : true,
+
+                    		/*	Optionally set a max-height, if null, the height will be measured. */
+                    		height : null,
+
+                    		/*	Deviation for the height-option. */
+                    		tolerance : 0,
+
+                    		/*	Callback function that is fired after the ellipsis is added,
+                    			receives two parameters: isTruncated(boolean), orgContent(string). */
+                    		callback : function( isTruncated, orgContent ) {},
+
+                    		lastCharacter : {
+
+                    			/*	Remove these characters from the end of the truncated text. */
+                    			remove : [ ' ', ',', ';', '.', '!', '?' ],
+
+                    			/*	Don't add an ellipsis if this array contains
+                    				the last character of the truncated text. */
+                    			noEllipsis	: []
+                    		}
+                    });
+                });
+            }
+        };
 }]);
 
 angular.module('carsModule').controller('carsCtrl', [
@@ -186,13 +226,19 @@ angular.module('rentCarsApp').directive('ngAttempt', function() {
 
         }],
 
-        link: function (scope, elem, attr, ctrl) {
+        /**
+        * Directive 'ngAttempt' binds to the form’s submit event.
+        * We don't want to highlight input field with error before user click submit or edit field to invali ($dirty).
+        * So, we will add flag, if user use attempt to submit form.
+        */
+
+        link: function (scope, elem, attr, formController) {
             var formName = attr.name;
             scope.attempt = scope.attempt || {};
-            scope.attempt[formName] = ctrl;
+            scope.attempt[formName] = formController;
 
             elem.bind('submit', function(event) {
-                ctrl.setAttempted();
+                formController.setAttempted();
                 //we must to check phase
                 //we will have error if $apply during $digest
                 if (!scope.$$phase) scope.$apply();
@@ -206,6 +252,13 @@ angular.module('rentCarsApp').directive('ngValidation', ['$parse', function ($pa
     return {
         restrict: 'A',
         require: 'form',
+
+        /**
+        * Directive 'ngValidation' binds to the form’s submit event,
+        * and if the @param formController is not valid, cancels the event.
+        * We will do this to display no disable buttons!
+        */
+
         link: function (scope, elem, attributes, formController) {
             //Converts Angular expression into a function
             var fn = $parse(attributes.ngValidation);
@@ -231,8 +284,15 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
         transclude: true,
         replace: true,
         scope: true,
+
+        /**
+        * Directive 'ngModalPopUp' activate modalWindow when @param attrs.visible equals true
+        * In scope.title we pass title of modalWindow that will display in header
+        * In transclude template we define body and footer of modalWindow
+        */
+
         link: function(scope, element, attrs) {
-            
+
             scope.title = null;
 
             scope.$watch(attrs.visible, function(value) {
@@ -264,6 +324,11 @@ angular.module('rentCarsApp').directive('ngDatePicker',[function () {
             restrict: 'A',
             link: function (scope) {
                     $(function () {
+
+                        /**
+                        * Directive 'ngDatePicker' is used to customize input form for dates.
+                        * Apply scope to controller, when data in input changes.
+                        */
 
                     var datePickerFrom = $('#addOrderDatePickerFrom');
                     var datePickerTo = $('#addOrderDatePickerTo');
@@ -358,6 +423,23 @@ angular.module('addCarModule').controller('addCarCtrl', [
     }
 ]);
 
+angular.module('rentCarsApp').directive('ngFileSelect', [function() {
+    return {
+        link: function($scope, elem) {
+
+            /**
+            * Directive 'ngFileSelect' binds to the form’s input file event,
+            * and if the @param elem  changes, defines $scope.file.
+            */
+
+            elem.bind('change', function(e) {
+                $scope.file = e.target.files[0];
+                $scope.getFile();
+            })
+        }
+    }
+}]);
+
 angular.module('rentCarsApp').directive('loader', [function () {
     return {
         restrict: 'E',
@@ -365,6 +447,12 @@ angular.module('rentCarsApp').directive('loader', [function () {
         scope: {
             key: '@'
         },
+
+        /**
+        * Directive 'loader' activate spinner when event 'us-spinner:spin' happen,
+        * and stop spinner when event 'us-spinner:stop' happen.
+        */
+
         link: function (scope, element, attributes) {
 
             scope.$on('us-spinner:spin', function (event, key) {
@@ -388,6 +476,11 @@ angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
         return {
             restrict: 'A',
             link: function (scope) {
+
+                /**
+                * Directive 'ngPhoneHelper' is used to customize input form for phone numbers.
+                * Apply scope to controller, when data in input changes.
+                */
 
                 var aboutCarPhoneNumber = $('#aboutCarPhoneNumber');
                 var feedbackPhoneNumber = $('#feedbackPhoneNumber');
@@ -506,13 +599,14 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 angular.module('feedbacksModule').filter('array', [function() {
 
     /**
-    * Filter "array" create empty array which size depends from @param {Number} input
+    * Filter 'array' create empty array which size depends from @param {Number} input
     * @return {Array} with size equals to nearest integer for @param {Number} input
     */
 
     return function (input) {
         return new Array(Math.ceil(input));
     };
+    
 }]);
 
 angular.module('feedbacksModule').controller('feedbacksCtrl', [
