@@ -9,12 +9,12 @@
                 <div ng-repeat="item in cars | orderBy: 'price'" class="col-lg-3 col-md-6">
                     <div class="carItem" ng-click="toAboutCarPage(item._id)">
                         <h3 class="text-center carModel">
-                            {{item.model}}
+                            {{::item.model}}
                         </h3>
                         <div class="allcarsCarInfo">
                             <img class="carImg" ng-src="{{item.image}}">
-                            <p><b>Year:</b> <i>{{item.year}}</i></p>
-                            <p><b>Doors:</b> <i>{{item.doors}}</i></p>
+                            <p><b>Year:</b> <i>{{::item.year}}</i></p>
+                            <p><b>Doors:</b> <i>{{::item.doors}}</i></p>
                             <p><b>Air Conditioner:</b>
                                 <i ng-show="item.airConditioner">yes</i>
                                 <i ng-hide="item.airConditioner">no</i>
@@ -23,7 +23,7 @@
                                 <i ng-show="item.autoTransmission">no</i>
                                 <i ng-hide="item.airConditioner">no</i>
                             </p>
-                            <p><b>Price per day:</b> <i>${{item.price}}</i></p>
+                            <p><b>Price per day:</b> <i>${{::item.price}}</i></p>
                         </div>
                     </div>
                 </div>

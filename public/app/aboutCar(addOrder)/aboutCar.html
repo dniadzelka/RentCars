@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2 class="text-center aboutCarTitle">
-                {{car.model}}, {{car.year}}
+                {{::car.model}}, {{::car.year}}
                 <a href="" ng-click="toggleModal()"><span class="fa fa-trash-o pull-right deleteCar"></span></a>
                 <a href="#/cars/editCar_{{car._id}}"><span class="fa fa-pencil pull-right editCar"></span></a>
             </h2>
@@ -10,7 +10,7 @@
     </div>
 
     <ng-modal-pop-up title="Delete car" visible="showModal">
-        <h3>Do you realy want to delete {{car.model}}, {{car.year}}?</h3>
+        <h3>Do you realy want to delete {{::car.model}}, {{::car.year}}?</h3>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-danger" ng-click="removeCar(car._id)">Delete car</button>
@@ -19,7 +19,7 @@
 
         <h2 ng-hide="car.orders.length" class="text-center">
         <small>
-            There are no orders for "{{car.model}}" car!
+            There are no orders for "{{::car.model}}" car!
         </small>
         <hr>
     </h2>
@@ -118,16 +118,16 @@
 
                 <tbody>
                     <tr ng-repeat="order in car.orders | orderBy:sortType:sortReverse | filter:searchOrders">
-                        <td>{{ order.from }}</td>
-                        <td>{{ order.to }}</td>
-                        <td>{{ order.startLocation }}</td>
-                        <td>{{ order.finishLocation }}</td>
-                        <td>{{ order.addInfo }}</td>
-                        <td>{{ order.firstName }}</td>
-                        <td>{{ order.lastName }}</td>
-                        <td>{{ order.dateBirth }}</td>
-                        <td>{{ order.docNumber }}</td>
-                        <td>{{ order.phoneNumber }}</td>
+                        <td>{{ ::order.from }}</td>
+                        <td>{{ ::order.to }}</td>
+                        <td>{{ ::order.startLocation }}</td>
+                        <td>{{ ::order.finishLocation }}</td>
+                        <td>{{ ::order.addInfo }}</td>
+                        <td>{{ ::order.firstName }}</td>
+                        <td>{{ ::order.lastName }}</td>
+                        <td>{{ ::order.dateBirth }}</td>
+                        <td>{{ ::order.docNumber }}</td>
+                        <td>{{ ::order.phoneNumber }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -138,7 +138,7 @@
         <form name="addOrderForm" ng-attempt ng-validation="addOrder()" novalidate>
             <div class="col-md-8 col-md-offset-2" ng-date-picker>
                 <div class="col-md-12 addCarHeader">
-                    <h3>Add a new order for "{{car.model}}" car:</h3>
+                    <h3>Add a new order for "{{::car.model}}" car:</h3>
                 </div>
 
                 <div class="col-md-6">
