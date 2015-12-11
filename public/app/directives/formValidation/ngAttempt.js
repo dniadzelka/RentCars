@@ -2,12 +2,14 @@ angular.module('rentCarsApp').directive('ngAttempt', function() {
     return {
         restrict: 'A',
         controller: ['$scope', function($scope) {
-            this.attempted = false;
 
+            this.attempted = false;
             this.setAttempted = function() {
                 this.attempted = true;
             };
+
         }],
+
         link: function (scope, elem, attr, ctrl) {
             var formName = attr.name;
             scope.attempt = scope.attempt || {};

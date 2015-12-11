@@ -11,8 +11,8 @@ carsModule.config([
             templateUrl: 'app/allCars/cars.html',
             controller: 'carsCtrl',
             resolve: {
-               carsPromise: ['cars', function(cars){
-                   return cars.getAll();
+               carsPromise: ['carsService', function(carsService){
+                   return carsService.getAll();
                }]
             }
         });

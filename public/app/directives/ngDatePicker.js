@@ -2,7 +2,6 @@ angular.module('rentCarsApp').directive('ngDatePicker',[function () {
         return {
             restrict: 'A',
             link: function (scope) {
-
                     $(function () {
 
                     var datePickerFrom = $('#addOrderDatePickerFrom');

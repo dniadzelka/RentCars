@@ -1,22 +1,22 @@
-angular.module('rentCarsApp').factory('cars', [
+angular.module('rentCarsApp').factory('carsService', [
     '$http',
     '$location',
     'usSpinnerService',
     function($http, $location, usSpinnerService) {
 
-        var obj = {
+        var carsObj = {
             cars: []
         };
 
-        obj.getAll = function () {
+        carsObj.getAll = function () {
             usSpinnerService.spin('mainSpinner');
             return $http.get('/getAllcars').success(function(data) {
                 usSpinnerService.stop('mainSpinner');
-                angular.copy(data, obj.cars);
+                angular.copy(data, carsObj.cars);
             });
         };
 
-        obj.create = function (car) {
+        carsObj.create = function (car) {
             usSpinnerService.spin('mainSpinner');
             return $http.post('/postCar', car).success(function(data){
                 usSpinnerService.stop('mainSpinner');
@@ -24,7 +24,7 @@ angular.module('rentCarsApp').factory('cars', [
             });
         };
 
-        obj.editCar = function (id, car) {
+        carsObj.editCar = function (id, car) {
             usSpinnerService.spin('mainSpinner');
             return $http.put('/editCar_' + id, car).success(function(data){
                 usSpinnerService.stop('mainSpinner');
@@ -32,24 +32,25 @@ angular.module('rentCarsApp').factory('cars', [
             });
         };
 
-        obj.getCarInfo = function (id) {
+        carsObj.getCarInfo = function (id) {
             usSpinnerService.spin('mainSpinner');
-            return $http.get('/allcars/getCar_' + id).then(function(res) {
+            return $http.get('/allcars/getCar_' + id).then(function(response) {
                 usSpinnerService.stop('mainSpinner');
-                return res.data;
+                return response.data;
             });
         };
 
-        obj.addOrder = function (id, order) {
+        carsObj.addOrder = function (id, order) {
             usSpinnerService.spin('mainSpinner');
             return $http.post('/allcars/' + id + '/allorders', order);
         }
 
-        obj.removeCar = function (id) {
+        carsObj.removeCar = function (id) {
             usSpinnerService.spin('mainSpinner');
             return $http.delete('/allcars/deleteCar_' + id);
         }
 
-        return obj;
+        return carsObj;
+
     }
 ]);

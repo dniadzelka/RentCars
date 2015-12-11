@@ -5,7 +5,6 @@ angular.module('rentCarsApp').directive('ngFileSelect', [function() {
                 $scope.file = e.target.files[0];
                 $scope.getFile();
             })
-
         }
     }
 }]);

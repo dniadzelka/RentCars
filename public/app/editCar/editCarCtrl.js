@@ -1,13 +1,12 @@
 angular.module('editCarModule').controller('editCarCtrl', [
     '$scope',
-    'cars',
+    'carsService',
     'fileReader',
     'carInfo',
 
-    function ($scope, cars, fileReader, carInfo) {
+    function ($scope, carsService, fileReader, carInfo) {
 
         $scope.car = carInfo;
-
         $scope.max = 100;
         $scope.progress = 100;
         $scope.currentYear = new Date().getFullYear();
@@ -24,7 +23,7 @@ angular.module('editCarModule').controller('editCarCtrl', [
         });
 
         $scope.editCar = function() {
-            cars.editCar($scope.car._id, $scope.car);
+            carsService.editCar($scope.car._id, $scope.car);
         };
     }
 ]);

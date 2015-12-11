@@ -1,21 +1,11 @@
 angular.module('feedbacksModule').filter('array', [function() {
-    function getDecimal(num) {
-        var str = '' + num;
-        var zeroPos = str.indexOf(".");
-        if (zeroPos == -1) return 0;
-        str = str.slice(zeroPos);
-        return +str;
-    }
+
+    /**
+    * Filter "array" create empty array which size depends from @param {Number} input
+    * @return {Array} with size equals to nearest integer for @param {Number} input
+    */
 
     return function (input) {
-        if (getDecimal(input) === 0) {
-            if (Math.floor(input) === 0) {
-                return new Array(1);
-            } else {
-                return new Array(Math.floor(input));
-            }
-        } else {
-            return new Array(Math.floor(input) + 1);
-        }
+        return new Array(Math.ceil(input));
     };
 }]);

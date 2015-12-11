@@ -26,8 +26,8 @@ carsModule.config([
             templateUrl: 'app/allCars/cars.html',
             controller: 'carsCtrl',
             resolve: {
-               carsPromise: ['cars', function(cars){
-                   return cars.getAll();
+               carsPromise: ['carsService', function(carsService){
+                   return carsService.getAll();
                }]
             }
         });
@@ -38,7 +38,7 @@ carsModule.config([
 
 var rentCarsApp = angular.module('rentCarsApp', ['angularSpinner', 'carsModule', 'aboutCarModule',
 												'addCarModule', 'authModule', 'editCarModule',
-												'feedbacksModule', 'ordersModule', 'ui.bootstrap',
+												'feedbacksModule', 'clientsModule', 'ui.bootstrap',
 												'ngAnimate']);
 
 
@@ -58,8 +58,8 @@ authModule.config([
             url: '/login',
             templateUrl: 'app/authentification/login.html',
             controller: 'authCtrl',
-            onEnter: ['$state', 'auth', function($state, auth){
-                if(auth.isLoggedIn()){
+            onEnter: ['$state', 'authService', function($state, authService){
+                if(authService.isLoggedIn()){
                     $state.go('cars');
                 }
             }]
@@ -68,8 +68,8 @@ authModule.config([
             url: '/register',
             templateUrl: 'app/authentification/register.html',
             controller: 'authCtrl',
-            onEnter: ['$state', 'auth', function($state, auth){
-                if(auth.isLoggedIn()){
+            onEnter: ['$state', 'authService', function($state, authService){
+                if(authService.isLoggedIn()){
                     $state.go('cars');
                 }
             }]
@@ -89,8 +89,8 @@ aboutCarModule.config([
             templateUrl: 'app/aboutCar(addOrder)/aboutCar.html',
             controller: 'aboutCarCtrl',
             resolve : {
-            	carInfo: ['$stateParams', 'cars', function($stateParams, cars) {
-            		return cars.getCarInfo($stateParams.id);
+            	carInfo: ['$stateParams', 'carsService', function($stateParams, carsService) {
+            		return carsService.getCarInfo($stateParams.id);
             	}]
             }
         });
@@ -109,8 +109,8 @@ editCarModule.config([
             templateUrl: 'app/editCar/editCar.html',
             controller: 'editCarCtrl',
             resolve : {
-                carInfo: ['$stateParams', 'cars', function($stateParams, cars) {
-                    return cars.getCarInfo($stateParams.id);
+                carInfo: ['$stateParams', 'carsService', function($stateParams, carsService) {
+                    return carsService.getCarInfo($stateParams.id);
                 }]
             }
         });
@@ -129,66 +129,63 @@ feedbacksModule.config([
             templateUrl: 'app/feedbacks/feedbacks.html',
             controller: 'feedbacksCtrl',
             resolve: {
-                feedbacksPromise: ['feedbacks', function(feedbacks){
-                    return feedbacks.getFeedbacks();
+                feedbacksPromise: ['feedbacksService', function(feedbacksService){
+                    return feedbacksService.getFeedbacks();
                 }]
             }
         });
     }
 ]);
 
-var ordersModule = angular.module('ordersModule', [
-    'ui.router'
-]);
+angular.module('rentCarsApp').directive('ngFileSelect', [function() {
+    return {
+        link: function($scope, el) {
+            el.bind('change', function(e) {
+                $scope.file = e.target.files[0];
+                $scope.getFile();
+            })
+        }
+    }
+}]);
 
-ordersModule.config([
-    '$stateProvider',
-    function ($stateProvider) {
-        $stateProvider.state('orders', {
-            url: '/orders',
-            templateUrl: 'app/orders/orders.html',
-            resolve: {
-            }
-        });
+angular.module('carsModule').controller('carsCtrl', [
+    '$scope',
+    '$location',
+    'carsService',
+    function ($scope, $location, carsService) {
+        $scope.cars = carsService.cars;
+        $scope.toAboutCarPage = function (id) {
+            $location.path('/cars/aboutCar_' + id);
+        }
     }
 ]);
 
-angular.module('rentCarsApp').directive('loader', [function () {
-    return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-            key: '@'
-        },
-        link: function (scope, element, attributes) {
+var clients = angular.module('clientsModule', [
+    'ui.router'
+]);
 
-            scope.$on('us-spinner:spin', function (event, key) {
-                if (key === scope.key) {
-                    element.addClass('loading');
-                }
-            });
-
-            scope.$on('us-spinner:stop', function (event, key) {
-                if (key === scope.key) {
-                    element.removeClass('loading');
-                }
-            });
-
-        },
-        template: '<div class="us-spinner-wrapper"><div us-spinner spinner-key="{{key}}"></div></div>'
-    };
-}]);
+clients.config([
+    '$stateProvider',
+    function ($stateProvider) {
+        $stateProvider.state('clients', {
+            url: '/clients',
+            templateUrl: 'app/clients/clients.html'
+        });
+    }
+]);
 
 angular.module('rentCarsApp').directive('ngAttempt', function() {
     return {
         restrict: 'A',
         controller: ['$scope', function($scope) {
-            this.attempted = false;
 
+            this.attempted = false;
             this.setAttempted = function() {
                 this.attempted = true;
             };
+
         }],
+
         link: function (scope, elem, attr, ctrl) {
             var formName = attr.name;
             scope.attempt = scope.attempt || {};
@@ -235,7 +232,9 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
         replace: true,
         scope: true,
         link: function(scope, element, attrs) {
+            
             scope.title = null;
+
             scope.$watch(attrs.visible, function(value) {
                 if (value === true) {
                     scope.title = attrs.title;
@@ -264,7 +263,6 @@ angular.module('rentCarsApp').directive('ngDatePicker',[function () {
         return {
             restrict: 'A',
             link: function (scope) {
-
                     $(function () {
 
                     var datePickerFrom = $('#addOrderDatePickerFrom');
@@ -322,23 +320,11 @@ angular.module('rentCarsApp').directive('ngDatePicker',[function () {
         };
 }]);
 
-angular.module('rentCarsApp').directive('ngFileSelect', [function() {
-    return {
-        link: function($scope, el) {
-            el.bind('change', function(e) {
-                $scope.file = e.target.files[0];
-                $scope.getFile();
-            })
-
-        }
-    }
-}]);
-
 angular.module('addCarModule').controller('addCarCtrl', [
     '$scope',
-    'cars',
+    'carsService',
     'fileReader',
-    function ($scope, cars, fileReader) {
+    function ($scope, carsService, fileReader) {
         $scope.max = 100;
         $scope.progress = 0;
         $scope.currentYear = new Date().getFullYear();
@@ -354,8 +340,8 @@ angular.module('addCarModule').controller('addCarCtrl', [
         });
 
         $scope.addCar = function() {
-
-            var obj = {
+            
+            var newCar = {
                 model: angular.uppercase($scope.model),
                 year: $scope.year,
                 doors: $scope.doors,
@@ -367,10 +353,36 @@ angular.module('addCarModule').controller('addCarCtrl', [
                 orders: []
             };
 
-            cars.create(obj);
+            carsService.create(newCar);
         };
     }
 ]);
+
+angular.module('rentCarsApp').directive('loader', [function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            key: '@'
+        },
+        link: function (scope, element, attributes) {
+
+            scope.$on('us-spinner:spin', function (event, key) {
+                if (key === scope.key) {
+                    element.addClass('loading');
+                }
+            });
+
+            scope.$on('us-spinner:stop', function (event, key) {
+                if (key === scope.key) {
+                    element.removeClass('loading');
+                }
+            });
+
+        },
+        template: '<div class="us-spinner-wrapper"><div us-spinner spinner-key="{{key}}"></div></div>'
+    };
+}]);
 
 angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
         return {
@@ -378,16 +390,17 @@ angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
             link: function (scope) {
 
                 var aboutCarPhoneNumber = $('#aboutCarPhoneNumber');
-                aboutCarPhoneNumber.intlTelInput();
-                aboutCarPhoneNumber.on('input', function(e) {
-                    scope.phoneNumber = aboutCarPhoneNumber.val();
+                var feedbackPhoneNumber = $('#feedbackPhoneNumber');
+
+                feedbackPhoneNumber.intlTelInput();
+                feedbackPhoneNumber.on('input', function(e) {
+                    scope.feedback.phoneNumber = feedbackPhoneNumber.val();
                     if (!scope.$$phase) scope.$apply();
                 });
 
-                var feedbackPhoneNumber = $('#feedbackPhoneNumber');
-                feedbackPhoneNumber.intlTelInput();
-                feedbackPhoneNumber.on('input', function(e) {
-                    scope.o.phoneNumber = feedbackPhoneNumber.val();
+                aboutCarPhoneNumber.intlTelInput();
+                aboutCarPhoneNumber.on('input', function(e) {
+                    scope.phoneNumber = aboutCarPhoneNumber.val();
                     if (!scope.$$phase) scope.$apply();
                 });
 
@@ -397,14 +410,13 @@ angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
 
 angular.module('editCarModule').controller('editCarCtrl', [
     '$scope',
-    'cars',
+    'carsService',
     'fileReader',
     'carInfo',
 
-    function ($scope, cars, fileReader, carInfo) {
+    function ($scope, carsService, fileReader, carInfo) {
 
         $scope.car = carInfo;
-
         $scope.max = 100;
         $scope.progress = 100;
         $scope.currentYear = new Date().getFullYear();
@@ -421,7 +433,7 @@ angular.module('editCarModule').controller('editCarCtrl', [
         });
 
         $scope.editCar = function() {
-            cars.editCar($scope.car._id, $scope.car);
+            carsService.editCar($scope.car._id, $scope.car);
         };
     }
 ]);
@@ -430,12 +442,12 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     '$scope',
     '$location',
     'carInfo',
-    'cars',
+    'carsService',
     'usSpinnerService',
-    function($scope, $location, carInfo, cars, usSpinnerService) {
+    function($scope, $location, carInfo, carsService, usSpinnerService) {
 
         $scope.car = carInfo;
-
+        
         /* Sort orders table */
         $scope.sortType = 'from';
         $scope.sortReverse = false;
@@ -443,12 +455,13 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
         /* Modal pop-up */
         $scope.showModal = false;
+
         $scope.toggleModal = function () {
             $scope.showModal = !$scope.showModal;
         };
 
         $scope.removeCar = function (id) {
-            cars.removeCar(id).success(function(data) {
+            carsService.removeCar(id).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
                 $scope.showModal = false;
                 $location.path('/cars');
@@ -457,7 +470,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
         $scope.addOrder = function () {
 
-            var obj = {
+            var newOrder = {
                 from: new Date($scope.from),
                 to: new Date($scope.to),
                 startLocation: $scope.startLocation,
@@ -481,7 +494,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
             $scope.docNumber = '';
             $scope.phoneNumber = '';*/
 
-            cars.addOrder(carInfo._id, obj).success(function(data) {
+            carsService.addOrder(carInfo._id, newOrder).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
                 $scope.car.orders.push(data);
             });
@@ -491,62 +504,55 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 ]);
 
 angular.module('feedbacksModule').filter('array', [function() {
-    function getDecimal(num) {
-        var str = '' + num;
-        var zeroPos = str.indexOf(".");
-        if (zeroPos == -1) return 0;
-        str = str.slice(zeroPos);
-        return +str;
-    }
+
+    /**
+    * Filter "array" create empty array which size depends from @param {Number} input
+    * @return {Array} with size equals to nearest integer for @param {Number} input
+    */
 
     return function (input) {
-        if (getDecimal(input) === 0) {
-            if (Math.floor(input) === 0) {
-                return new Array(1);
-            } else {
-                return new Array(Math.floor(input));
-            }
-        } else {
-            return new Array(Math.floor(input) + 1);
-        }
+        return new Array(Math.ceil(input));
     };
 }]);
 
 angular.module('feedbacksModule').controller('feedbacksCtrl', [
     '$scope',
-    'feedbacks',
+    'feedbacksService',
     'usSpinnerService',
-    function($scope, feedbacks, usSpinnerService) {
-        $scope.o = {};
-        $scope.currentFeedback = {};
-        $scope.feedbacks = feedbacks.feedbacks;
+    function($scope, feedbacksService, usSpinnerService) {
 
-        /* Modal pop-up */
-        $scope.showModalKeep = false;
-        $scope.toggleModalKeep = function () {
-            $scope.showModalKeep = !$scope.showModalKeep;
-        };
-
-        $scope.showModalGet = false;
-        $scope.toggleModalGet = function (item) {
-            $scope.currentFeedback = item;
-            $scope.showModalGet = !$scope.showModalGet;
-        };
+        $scope.feedback = {};
+        $scope.clickedFeedback = {};
+        $scope.allFeedbacks = feedbacksService.feedbacks;
 
         /* Carousel */
         $scope.myInterval = 3000;
         $scope.noWrapSlides = false;
+        $scope.itemsForSlide = 3;
+
+        /* Modal pop-up */
+        $scope.showModalKeep = false;
+        $scope.showModalGet = false;
+
+        $scope.toggleModalKeep = function () {
+            $scope.showModalKeep = !$scope.showModalKeep;
+        };
+
+        $scope.toggleModalGet = function (item) {
+            $scope.clickedFeedback = item;
+            $scope.showModalGet = !$scope.showModalGet;
+        };
 
         $scope.addFeedback = function () {
-            var obj = {
-                name : $scope.o.name,
-                phoneNumber: $scope.o.phoneNumber,
-                text: $scope.o.text,
+            var newFeedback = {
+                name : $scope.feedback.name,
+                phoneNumber: $scope.feedback.phoneNumber,
+                text: $scope.feedback.text,
                 approved: false
             }
-            feedbacks.createFeedback(obj).success(function(data) {
+            feedbacksService.createFeedback(newFeedback).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
-                feedbacks.getFeedbacks();
+                feedbacksService.getFeedbacks();
                 $scope.toggleModalKeep();
             });
         }
@@ -556,13 +562,14 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
 angular.module('authModule').controller('authCtrl', [
     '$scope',
     '$state',
-    'auth',
+    'authService',
     'usSpinnerService',
-    function($scope, $state, auth, usSpinnerService){
+    function($scope, $state, authService, usSpinnerService){
+
         $scope.user = {};
 
         $scope.register = function(){
-            auth.register($scope.user).error(function(error){
+            authService.register($scope.user).error(function(error){
                 usSpinnerService.stop('mainSpinner');
                 $scope.error = error;
             }).then(function(){
@@ -571,7 +578,7 @@ angular.module('authModule').controller('authCtrl', [
         };
 
         $scope.logIn = function(){
-            auth.logIn($scope.user).error(function(error){
+            authService.logIn($scope.user).error(function(error){
                 usSpinnerService.stop('mainSpinner');
                 $scope.error = error;
             }).then(function(){
@@ -580,46 +587,48 @@ angular.module('authModule').controller('authCtrl', [
         };
     }])
 
-angular.module('feedbacksModule').factory('feedbacks', [
+angular.module('feedbacksModule').factory('feedbacksService', [
     '$http',
     'usSpinnerService',
     function($http, usSpinnerService) {
 
-        var obj = {
+        var feedbacksObj = {
             feedbacks : []
         };
 
-        obj.getFeedbacks = function () {
+        feedbacksObj.getFeedbacks = function () {
             usSpinnerService.spin('mainSpinner');
             return $http.get('/getFeedbacks').success(function(data) {
-                angular.copy(data, obj.feedbacks);
+                angular.copy(data, feedbacksObj.feedbacks);
                 usSpinnerService.stop('mainSpinner');
             });
         }
 
-        obj.createFeedback = function (feedback) {
+        feedbacksObj.createFeedback = function (feedback) {
             usSpinnerService.spin('mainSpinner');
             return $http.post('/postFeedback', feedback);
         }
 
-        return obj;
+        return feedbacksObj;
     }
 ]);
 
 angular.module('rentCarsApp').controller('navigationCtrl', [
     '$scope',
     '$location',
-    'auth',
+    'authService',
     'doSearchService',
     '$rootScope',
     'usSpinnerService',
-    function ($scope, $location, auth, doSearchService, $rootScope, usSpinnerService) {
-        $scope.navigation = {url: 'app/navigationBar/navBar.html'};
-        $scope.isLoggedIn = auth.isLoggedIn;
-        $scope.currentUser = auth.currentUser;
-        $scope.logOut = auth.logOut;
+    function ($scope, $location, authService, doSearchService, $rootScope, usSpinnerService) {
 
+        $rootScope.globalSearch = false;
+        $scope.navigation = {url: 'app/navigationBar/navBar.html'};
         $scope.searchExpression = {};
+        $scope.isLoggedIn = authService.isLoggedIn;
+        $scope.currentUser = authService.currentUser;
+        $scope.logOut = authService.logOut;
+        $scope.data = null;
 
         /* Sort orders table */
         $scope.sortType = 'from';
@@ -627,19 +636,22 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
         $scope.searchOrders = '';
 
         $scope.doSearch = function () {
+
             if ($scope.searchExpression.text === '') {
                 $scope.data = null;
                 $rootScope.globalSearch = false;
                 return;
             }
-            doSearchService($scope.searchExpression.text).then(function (data) {
+
+            doSearchService($scope.searchExpression.text).then(function (response) {
                 usSpinnerService.stop('mainSpinner');
-                $scope.data = data.data;
+                $scope.data = response.data;
                 $rootScope.globalSearch = true;
             }, function (reason) {
                 usSpinnerService.stop('mainSpinner');
                 console.error(reason.data);
             });
+
         }
 
         $scope.isActive = function (viewLocation) {
@@ -650,96 +662,84 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
     }
 ]);
 
-angular.module('carsModule').controller('carsCtrl', [
-    '$scope',
-    '$location',
-    'cars',
-    function ($scope, $location, cars) {
-        $scope.cars = cars.cars;
-        $scope.toAboutCarPage = function (id) {
-            $location.path('/cars/aboutCar_' + id);
-        }
-    }
-]);
-
-angular.module('rentCarsApp').factory('auth', [
+angular.module('rentCarsApp').factory('authService', [
     '$http',
     '$window',
     'usSpinnerService',
     function($http, $window, usSpinnerService) {
-        var auth = {};
 
-        auth.saveToken = function (token){
+        var authObj = {};
+
+        authObj.saveToken = function (token) {
             $window.localStorage['rent-cars-token'] = token;
         };
 
-        auth.getToken = function (){
+        authObj.getToken = function () {
             return $window.localStorage['rent-cars-token'];
         };
 
-        auth.isLoggedIn = function(){
-            var token = auth.getToken();
-            if(token){
+        authObj.isLoggedIn = function() {
+            var token = authObj.getToken();
+            if (token) {
                 var payload = JSON.parse($window.atob(token.split('.')[1]));
-
                 return payload.exp > Date.now() / 1000;
             } else {
                 return false;
             }
         };
 
-        auth.currentUser = function(){
-            if(auth.isLoggedIn()){
-                var token = auth.getToken();
+        authObj.currentUser = function() {
+            if (authObj.isLoggedIn()) {
+                var token = authObj.getToken();
                 var payload = JSON.parse($window.atob(token.split('.')[1]));
-
                 return payload.username;
             }
         };
 
-        auth.register = function(user){
+        authObj.register = function(user) {
             usSpinnerService.spin('mainSpinner');
             return $http.post('/register', user).success(function(data){
                 usSpinnerService.stop('mainSpinner');
-                auth.saveToken(data.token);
+                authObj.saveToken(data.token);
             });
         };
 
-        auth.logIn = function(user){
+        authObj.logIn = function(user) {
             usSpinnerService.spin('mainSpinner');
             return $http.post('/login', user).success(function(data){
                 usSpinnerService.stop('mainSpinner');
-                auth.saveToken(data.token);
+                authObj.saveToken(data.token);
             });
         };
 
-        auth.logOut = function(){
+        authObj.logOut = function() {
             $window.localStorage.removeItem('rent-cars-token');
         };
 
-        return auth;
+        return authObj;
+        
     }
 ]);
 
-angular.module('rentCarsApp').factory('cars', [
+angular.module('rentCarsApp').factory('carsService', [
     '$http',
     '$location',
     'usSpinnerService',
     function($http, $location, usSpinnerService) {
 
-        var obj = {
+        var carsObj = {
             cars: []
         };
 
-        obj.getAll = function () {
+        carsObj.getAll = function () {
             usSpinnerService.spin('mainSpinner');
             return $http.get('/getAllcars').success(function(data) {
                 usSpinnerService.stop('mainSpinner');
-                angular.copy(data, obj.cars);
+                angular.copy(data, carsObj.cars);
             });
         };
 
-        obj.create = function (car) {
+        carsObj.create = function (car) {
             usSpinnerService.spin('mainSpinner');
             return $http.post('/postCar', car).success(function(data){
                 usSpinnerService.stop('mainSpinner');
@@ -747,7 +747,7 @@ angular.module('rentCarsApp').factory('cars', [
             });
         };
 
-        obj.editCar = function (id, car) {
+        carsObj.editCar = function (id, car) {
             usSpinnerService.spin('mainSpinner');
             return $http.put('/editCar_' + id, car).success(function(data){
                 usSpinnerService.stop('mainSpinner');
@@ -755,25 +755,26 @@ angular.module('rentCarsApp').factory('cars', [
             });
         };
 
-        obj.getCarInfo = function (id) {
+        carsObj.getCarInfo = function (id) {
             usSpinnerService.spin('mainSpinner');
-            return $http.get('/allcars/getCar_' + id).then(function(res) {
+            return $http.get('/allcars/getCar_' + id).then(function(response) {
                 usSpinnerService.stop('mainSpinner');
-                return res.data;
+                return response.data;
             });
         };
 
-        obj.addOrder = function (id, order) {
+        carsObj.addOrder = function (id, order) {
             usSpinnerService.spin('mainSpinner');
             return $http.post('/allcars/' + id + '/allorders', order);
         }
 
-        obj.removeCar = function (id) {
+        carsObj.removeCar = function (id) {
             usSpinnerService.spin('mainSpinner');
             return $http.delete('/allcars/deleteCar_' + id);
         }
 
-        return obj;
+        return carsObj;
+
     }
 ]);
 
@@ -828,15 +829,14 @@ angular.module('rentCarsApp').factory('fileReader', [
 
         var readAsDataURL = function(file, scope) {
             var deferred = $q.defer();
-
             var reader = getReader(deferred, scope);
             reader.readAsDataURL(file);
-
             return deferred.promise;
         };
 
         return {
             readAsDataUrl: readAsDataURL
         };
+        
     }
 ]);

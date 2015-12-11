@@ -1,8 +1,8 @@
 angular.module('addCarModule').controller('addCarCtrl', [
     '$scope',
-    'cars',
+    'carsService',
     'fileReader',
-    function ($scope, cars, fileReader) {
+    function ($scope, carsService, fileReader) {
         $scope.max = 100;
         $scope.progress = 0;
         $scope.currentYear = new Date().getFullYear();
@@ -18,8 +18,8 @@ angular.module('addCarModule').controller('addCarCtrl', [
         });
 
         $scope.addCar = function() {
-
-            var obj = {
+            
+            var newCar = {
                 model: angular.uppercase($scope.model),
                 year: $scope.year,
                 doors: $scope.doors,
@@ -31,7 +31,7 @@ angular.module('addCarModule').controller('addCarCtrl', [
                 orders: []
             };
 
-            cars.create(obj);
+            carsService.create(newCar);
         };
     }
 ]);

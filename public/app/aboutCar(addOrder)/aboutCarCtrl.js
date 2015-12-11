@@ -2,12 +2,12 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     '$scope',
     '$location',
     'carInfo',
-    'cars',
+    'carsService',
     'usSpinnerService',
-    function($scope, $location, carInfo, cars, usSpinnerService) {
+    function($scope, $location, carInfo, carsService, usSpinnerService) {
 
         $scope.car = carInfo;
-
+        
         /* Sort orders table */
         $scope.sortType = 'from';
         $scope.sortReverse = false;
@@ -15,12 +15,13 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
         /* Modal pop-up */
         $scope.showModal = false;
+
         $scope.toggleModal = function () {
             $scope.showModal = !$scope.showModal;
         };
 
         $scope.removeCar = function (id) {
-            cars.removeCar(id).success(function(data) {
+            carsService.removeCar(id).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
                 $scope.showModal = false;
                 $location.path('/cars');
@@ -29,7 +30,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
         $scope.addOrder = function () {
 
-            var obj = {
+            var newOrder = {
                 from: new Date($scope.from),
                 to: new Date($scope.to),
                 startLocation: $scope.startLocation,
@@ -53,7 +54,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
             $scope.docNumber = '';
             $scope.phoneNumber = '';*/
 
-            cars.addOrder(carInfo._id, obj).success(function(data) {
+            carsService.addOrder(carInfo._id, newOrder).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
                 $scope.car.orders.push(data);
             });

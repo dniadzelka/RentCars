@@ -1,38 +1,41 @@
 angular.module('feedbacksModule').controller('feedbacksCtrl', [
     '$scope',
-    'feedbacks',
+    'feedbacksService',
     'usSpinnerService',
-    function($scope, feedbacks, usSpinnerService) {
-        $scope.o = {};
-        $scope.currentFeedback = {};
-        $scope.feedbacks = feedbacks.feedbacks;
+    function($scope, feedbacksService, usSpinnerService) {
 
-        /* Modal pop-up */
-        $scope.showModalKeep = false;
-        $scope.toggleModalKeep = function () {
-            $scope.showModalKeep = !$scope.showModalKeep;
-        };
-
-        $scope.showModalGet = false;
-        $scope.toggleModalGet = function (item) {
-            $scope.currentFeedback = item;
-            $scope.showModalGet = !$scope.showModalGet;
-        };
+        $scope.feedback = {};
+        $scope.clickedFeedback = {};
+        $scope.allFeedbacks = feedbacksService.feedbacks;
 
         /* Carousel */
         $scope.myInterval = 3000;
         $scope.noWrapSlides = false;
+        $scope.itemsForSlide = 3;
+
+        /* Modal pop-up */
+        $scope.showModalKeep = false;
+        $scope.showModalGet = false;
+
+        $scope.toggleModalKeep = function () {
+            $scope.showModalKeep = !$scope.showModalKeep;
+        };
+
+        $scope.toggleModalGet = function (item) {
+            $scope.clickedFeedback = item;
+            $scope.showModalGet = !$scope.showModalGet;
+        };
 
         $scope.addFeedback = function () {
-            var obj = {
-                name : $scope.o.name,
-                phoneNumber: $scope.o.phoneNumber,
-                text: $scope.o.text,
+            var newFeedback = {
+                name : $scope.feedback.name,
+                phoneNumber: $scope.feedback.phoneNumber,
+                text: $scope.feedback.text,
                 approved: false
             }
-            feedbacks.createFeedback(obj).success(function(data) {
+            feedbacksService.createFeedback(newFeedback).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
-                feedbacks.getFeedbacks();
+                feedbacksService.getFeedbacks();
                 $scope.toggleModalKeep();
             });
         }

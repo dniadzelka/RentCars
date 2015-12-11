@@ -10,8 +10,8 @@ aboutCarModule.config([
             templateUrl: 'app/aboutCar(addOrder)/aboutCar.html',
             controller: 'aboutCarCtrl',
             resolve : {
-            	carInfo: ['$stateParams', 'cars', function($stateParams, cars) {
-            		return cars.getCarInfo($stateParams.id);
+            	carInfo: ['$stateParams', 'carsService', function($stateParams, carsService) {
+            		return carsService.getCarInfo($stateParams.id);
             	}]
             }
         });

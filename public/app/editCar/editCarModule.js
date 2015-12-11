@@ -10,8 +10,8 @@ editCarModule.config([
             templateUrl: 'app/editCar/editCar.html',
             controller: 'editCarCtrl',
             resolve : {
-                carInfo: ['$stateParams', 'cars', function($stateParams, cars) {
-                    return cars.getCarInfo($stateParams.id);
+                carInfo: ['$stateParams', 'carsService', function($stateParams, carsService) {
+                    return carsService.getCarInfo($stateParams.id);
                 }]
             }
         });

@@ -1,17 +1,19 @@
 angular.module('rentCarsApp').controller('navigationCtrl', [
     '$scope',
     '$location',
-    'auth',
+    'authService',
     'doSearchService',
     '$rootScope',
     'usSpinnerService',
-    function ($scope, $location, auth, doSearchService, $rootScope, usSpinnerService) {
-        $scope.navigation = {url: 'app/navigationBar/navBar.html'};
-        $scope.isLoggedIn = auth.isLoggedIn;
-        $scope.currentUser = auth.currentUser;
-        $scope.logOut = auth.logOut;
+    function ($scope, $location, authService, doSearchService, $rootScope, usSpinnerService) {
 
+        $rootScope.globalSearch = false;
+        $scope.navigation = {url: 'app/navigationBar/navBar.html'};
         $scope.searchExpression = {};
+        $scope.isLoggedIn = authService.isLoggedIn;
+        $scope.currentUser = authService.currentUser;
+        $scope.logOut = authService.logOut;
+        $scope.data = null;
 
         /* Sort orders table */
         $scope.sortType = 'from';
@@ -19,19 +21,22 @@ angular.module('rentCarsApp').controller('navigationCtrl', [
         $scope.searchOrders = '';
 
         $scope.doSearch = function () {
+
             if ($scope.searchExpression.text === '') {
                 $scope.data = null;
                 $rootScope.globalSearch = false;
                 return;
             }
-            doSearchService($scope.searchExpression.text).then(function (data) {
+
+            doSearchService($scope.searchExpression.text).then(function (response) {
                 usSpinnerService.stop('mainSpinner');
-                $scope.data = data.data;
+                $scope.data = response.data;
                 $rootScope.globalSearch = true;
             }, function (reason) {
                 usSpinnerService.stop('mainSpinner');
                 console.error(reason.data);
             });
+
         }
 
         $scope.isActive = function (viewLocation) {

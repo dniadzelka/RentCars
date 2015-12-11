@@ -10,8 +10,8 @@ feedbacksModule.config([
             templateUrl: 'app/feedbacks/feedbacks.html',
             controller: 'feedbacksCtrl',
             resolve: {
-                feedbacksPromise: ['feedbacks', function(feedbacks){
-                    return feedbacks.getFeedbacks();
+                feedbacksPromise: ['feedbacksService', function(feedbacksService){
+                    return feedbacksService.getFeedbacks();
                 }]
             }
         });
