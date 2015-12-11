@@ -1,0 +1,11 @@
+.login-form, .signup-form {
+    background-color: #f2f2f2;
+    margin-top: 12%;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.signin-submit,
+.login-submit {
+    width: 100%;
+}

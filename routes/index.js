@@ -157,7 +157,7 @@ router.post('/register', function(req, res, next) {
     User.find({username : user.username}, function (err, docs) {
         if (docs.length) {
             var errorMessage = 'User "' + user.username + '" is already exist!';
-            return res.status(500).json({
+            return res.status(409).json({
                 message: errorMessage
             });
         } else {

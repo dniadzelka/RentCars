@@ -1,20 +1,28 @@
 <div class="wrappered">
-    <div ng-show="error" class="alert alert-danger row">
-        <span>{{ error.message }}</span>
-    </div>
 
     <div class="row">
-        <div class="col-md-2 col-md-offset-5 login-form">
-            <form ng-submit="logIn()">
-                <h3 class="text-center">Sign in</h3>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+        <div class="col-lg-2 col-lg-offset-5 col-md-4 col-md-offset-4 login-form">
+            <form name="loginForm" ng-attempt ng-validation="logIn()" novalidate>
+
+                <h3 class="text-center">Log in</h3>
+
+                <div class="form-group" ng-class="{'has-error': loginForm.logInUserName.$invalid && (loginForm.logInUserName.$dirty || attempt.loginForm.attempted)}">
+                    <input minlength="3" maxlength="16" type="text" class="form-control" name="logInUserName" placeholder="Username" ng-model="user.username" required></input>
+                    <span class="help-block" ng-show="loginForm.logInUserName.$error.minlength">Username must have 16 characters as maximum</span>
+                    <span class="help-block" ng-show="loginForm.logInUserName.$error.maxlength">Username must have 3 characters as minimum</span>
+                    <span class="help-block" ng-show="loginForm.logInUserName.$error.required"></span>
                 </div>
 
-                <button type="submit" class="btn btn-primary signin-submit">Sign in</button>
+                <div class="form-group" ng-class="{'has-error': loginForm.logInPassword.$invalid && (loginForm.logInUserName.$dirty || attempt.loginForm.attempted)}">
+                    <input minlength="3" maxlength="16" type="text" class="form-control" name="logInPassword" placeholder="Username" ng-model="user.password" required></input>
+                    <span class="help-block" ng-show="loginForm.logInPassword.$error.minlength">Password must have 16 characters as maximum</span>
+                    <span class="help-block" ng-show="loginForm.logInPassword.$error.maxlength">Password must have 3 characters as minimum</span>
+                    <span class="help-block" ng-show="loginForm.logInPassword.$error.required"></span>
+                    <span class="has-error" ng-show="error">{{ error.message }}</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary login-submit">Log in</button>
+
             </form>
         </div>
     </div>

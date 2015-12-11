@@ -3,10 +3,6 @@
     margin-bottom: 20px;
 }
 
-.aboutCarTitle {
-    margin-bottom: 30px;
-}
-
 .ordersAboutCar {
     width: 100%;
 }
@@ -18,7 +14,25 @@
 }
 
 .editCar, .deleteCar {
+    position: absolute;
     font-size: 10px;
 }
 
+.deleteCar {
+    margin-left: 20px;
+}
+
+.editCar {
+    margin-left: 50px;
+}
+
 .intl-tel-input input.iti-invalid-key {background-color: #FFC7C7;}
+
+@media (max-width: 600px) {
+    .deleteCar {
+        margin-left: 10px;
+    }
+    .editCar {
+        margin-left: 40px;
+    }
+}

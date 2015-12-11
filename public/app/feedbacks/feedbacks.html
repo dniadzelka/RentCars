@@ -1,11 +1,13 @@
 <div class="wrappered">
-    <h1 class="text-center feedbackHeader">
-        Feedbacks
-        <a ng-click="toggleModalKeep()" class="btn feedback-btn">
-            <i class="fa fa-comment-o"></i>
-            <span class="spanBtnKeepFeedback">Keep feedback</span>
-        </a>
-    </h1>
+    <div class="page-header">
+        <h1 class="text-center feedbackHeader">
+            Feedbacks
+            <a ng-click="toggleModalKeep()" class="btn feedback-btn">
+                <i class="fa fa-comment-o"></i>
+                <span class="spanBtnKeepFeedback">Keep feedback</span>
+            </a>
+        </h1>
+    </div>
 
     <uib-carousel interval="myInterval" class="feedbackCarousel" no-wrap="noWrapSlides">
     <uib-slide class="feedback-block" ng-repeat="line in (allFeedbacks.length / itemsForSlide | array) track by $index">

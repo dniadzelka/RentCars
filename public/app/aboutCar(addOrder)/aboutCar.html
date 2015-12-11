@@ -1,13 +1,11 @@
 <div class="wrappered">
-    <div class="row">
-        <div class="col-md-12">
+        <div class="page-header">
             <h2 class="text-center aboutCarTitle">
                 {{::car.model}}, {{::car.year}}
-                <a href="" ng-click="toggleModal()"><span class="fa fa-trash-o pull-right deleteCar"></span></a>
-                <a href="#/cars/editCar_{{car._id}}"><span class="fa fa-pencil pull-right editCar"></span></a>
+                <a href="" ng-click="toggleModal()"><div class="fa fa-trash-o deleteCar"></div></a>
+                <a href="#/cars/editCar_{{car._id}}"><div class="fa fa-pencil editCar"></div></a>
             </h2>
         </div>
-    </div>
 
     <ng-modal-pop-up title="Delete car" visible="showModal">
         <h3>Do you realy want to delete {{::car.model}}, {{::car.year}}?</h3>
