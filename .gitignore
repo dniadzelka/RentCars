@@ -1,10 +1,5 @@
-logs/*
-!.gitkeep
+.gitkeep
 node_modules/
 bower_components/
 db/
-tmp
-.DS_Store
-.idea
 npm-debug.log
-bower.json
