@@ -8,15 +8,13 @@
 
                 <div class="form-group" ng-class="{'has-error': (signUpForm.signUpUserName.$invalid && (signUpForm.signUpUserName.$dirty || attempt.signUpForm.attempted)) || error}">
                     <input minlength="3" maxlength="16" type="text" class="form-control" name="signUpUserName" placeholder="Username" ng-model="user.username" required></input>
-                    <span class="help-block" ng-show="signUpForm.signUpUserName.$error.minlength">Username must have 16 characters as maximum</span>
-                    <span class="help-block" ng-show="signUpForm.signUpUserName.$error.maxlength">Username must have 3 characters as minimum</span>
+                    <span class="help-block" ng-show="signUpForm.signUpUserName.$error.minlength">Username must have 3 characters as minimum</span>
                     <span class="help-block" ng-show="signUpForm.signUpUserName.$error.required"></span>
                 </div>
 
                 <div class="form-group" ng-class="{'has-error': (signUpForm.signUpPassword.$invalid && (signUpForm.signUpPassword.$dirty || attempt.signUpForm.attempted)) || error}">
                     <input minlength="3" maxlength="16" type="password" class="form-control" name="signUpPassword" placeholder="Password" ng-model="user.password" required></input>
-                    <span class="help-block" ng-show="signUpForm.signUpPassword.$error.minlength">Password must have 16 characters as maximum</span>
-                    <span class="help-block" ng-show="signUpForm.signUpPassword.$error.maxlength">Password must have 3 characters as minimum</span>
+                    <span class="help-block" ng-show="signUpForm.signUpPassword.$error.minlength">Password must have 3 characters as minimum</span>
                     <span class="help-block" ng-show="signUpForm.signUpPassword.$error.required"></span>
                     <span class="help-block" ng-show="error">{{ error.message }}</span>
                 </div>

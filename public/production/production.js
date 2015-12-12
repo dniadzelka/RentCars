@@ -585,14 +585,14 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
         $scope.clickedFeedback = {};
         $scope.allFeedbacks = feedbacksService.feedbacks;
 
-        /* Carousel */
-        $scope.myInterval = 3000;
-        $scope.noWrapSlides = false;
-        $scope.itemsForSlide = 3;
-
         /* Modal pop-up */
         $scope.showModalKeep = false;
         $scope.showModalGet = false;
+
+        /* Carousel */
+        $scope.myInterval = false;
+        $scope.noWrapSlides = false;
+        $scope.itemsForSlide = 3;
 
         $scope.toggleModalKeep = function () {
             $scope.showModalKeep = !$scope.showModalKeep;

@@ -233,6 +233,10 @@ a.right.carousel-control {
     height: 280px;
 }
 
+.feedback-block {
+    height: 280px;
+}
+
 .feedbackItem:hover {
     transition: all 0.3s ease-in;
     cursor: pointer;
@@ -273,7 +277,10 @@ a.right.carousel-control {
 
 @media (max-width: 1199px) {
     .feedbackCarousel {
-        height: 750px;
+        height: 690px;
+    }
+    .feedback-block {
+        height: 690px;
     }
     .feedbackItem {
         height: 230px;

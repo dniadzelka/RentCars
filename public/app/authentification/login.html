@@ -8,15 +8,13 @@
 
                 <div class="form-group" ng-class="{'has-error': loginForm.logInUserName.$invalid && (loginForm.logInUserName.$dirty || attempt.loginForm.attempted)}">
                     <input minlength="3" maxlength="16" type="text" class="form-control" name="logInUserName" placeholder="Username" ng-model="user.username" required></input>
-                    <span class="help-block" ng-show="loginForm.logInUserName.$error.minlength">Username must have 16 characters as maximum</span>
-                    <span class="help-block" ng-show="loginForm.logInUserName.$error.maxlength">Username must have 3 characters as minimum</span>
+                    <span class="help-block" ng-show="loginForm.logInUserName.$error.minlength">Username must have 3 characters as minimum</span>
                     <span class="help-block" ng-show="loginForm.logInUserName.$error.required"></span>
                 </div>
 
                 <div class="form-group" ng-class="{'has-error': loginForm.logInPassword.$invalid && (loginForm.logInUserName.$dirty || attempt.loginForm.attempted)}">
-                    <input minlength="3" maxlength="16" type="text" class="form-control" name="logInPassword" placeholder="Username" ng-model="user.password" required></input>
-                    <span class="help-block" ng-show="loginForm.logInPassword.$error.minlength">Password must have 16 characters as maximum</span>
-                    <span class="help-block" ng-show="loginForm.logInPassword.$error.maxlength">Password must have 3 characters as minimum</span>
+                    <input minlength="3" maxlength="16" type="password" class="form-control" name="logInPassword" placeholder="Username" ng-model="user.password" required></input>
+                    <span class="help-block" ng-show="loginForm.logInPassword.$error.minlength">Password must have 3 characters as minimum</span>
                     <span class="help-block" ng-show="loginForm.logInPassword.$error.required"></span>
                     <span class="has-error" ng-show="error">{{ error.message }}</span>
                 </div>
