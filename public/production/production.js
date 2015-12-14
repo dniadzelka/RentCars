@@ -138,69 +138,66 @@ feedbacksModule.config([
 ]);
 
 angular.module('rentCarsApp').directive('ngDatePicker',[function () {
-        return {
-            restrict: 'A',
-            link: function (scope) {
-                    $(function () {
+        return function (scope) {
+            $(function () {
 
-                        /**
-                        * Directive 'ngDatePicker' is used to customize input form for dates.
-                        * Apply scope to controller, when data in input changes.
-                        */
+                /**
+                * Directive 'ngDatePicker' is used to customize input form for dates.
+                * Apply scope to controller, when data in input changes.
+                */
 
-                    var datePickerFrom = $('#addOrderDatePickerFrom');
-                    var datePickerTo = $('#addOrderDatePickerTo');
-                    var datePickerBirth = $('#addOrderDatePickerBirth');
+                var datePickerFrom = $('#addOrderDatePickerFrom');
+                var datePickerTo = $('#addOrderDatePickerTo');
+                var datePickerBirth = $('#addOrderDatePickerBirth');
 
-                    var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
-                    var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
-                    var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
+                var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
+                var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
+                var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
 
-                    datePickerFrom.datetimepicker({
-                        format: 'YYYY-MM-DD HH:mm',
-                        minDate: moment()
-                    });
-
-                    datePickerTo.datetimepicker({
-                        format: 'YYYY-MM-DD HH:mm',
-                        minDate: moment().date(moment().date() + 1)
-                    });
-                    datePickerBirth.datetimepicker({
-                        viewMode: 'years',
-                        format: 'YYYY-MM-DD',
-                        maxDate: moment().subtract(18, 'years'),
-                        minDate: '1900-01-01 00:00'
-                    });
-
-                    datePickerFrom.on('dp.change', function (e) {
-                        datePickerTo.data('DateTimePicker').minDate(e.date);
-                        scope.from = e.date.format('YYYY-MM-DD HH:mm');
-                    });
-
-                    inputDatePickerFrom.on('input', function (e) {
-                        scope.from = inputDatePickerFrom.val();
-                    });
-
-                    datePickerTo.on('dp.change', function (e) {
-                        datePickerFrom.data('DateTimePicker').maxDate(e.date);
-                        scope.to = e.date.format('YYYY-MM-DD HH:mm');
-                    });
-
-                    inputDatePickerTo.on('input', function (e) {
-                        scope.to = inputDatePickerTo.val();
-                    });
-
-                    datePickerBirth.on('dp.change', function (e) {
-                        scope.dateBirth = e.date.format('YYYY-MM-DD');
-                    });
-
-                    inputDatePickerBirth.on('input', function (e) {
-                        scope.dateBirth = inputDatePickerBirth.val();
-                    });
-
+                datePickerFrom.datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm',
+                    minDate: moment()
                 });
-            }
-        };
+
+                datePickerTo.datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm',
+                    minDate: moment().date(moment().date() + 1)
+                });
+                datePickerBirth.datetimepicker({
+                    viewMode: 'years',
+                    format: 'YYYY-MM-DD',
+                    maxDate: moment().subtract(18, 'years'),
+                    minDate: '1900-01-01 00:00'
+                });
+
+                datePickerFrom.on('dp.change', function (e) {
+                    datePickerTo.data('DateTimePicker').minDate(e.date);
+                    scope.from = e.date.format('YYYY-MM-DD HH:mm');
+                });
+
+                inputDatePickerFrom.on('input', function (e) {
+                    scope.from = inputDatePickerFrom.val();
+                });
+
+                datePickerTo.on('dp.change', function (e) {
+                    datePickerFrom.data('DateTimePicker').maxDate(e.date);
+                    scope.to = e.date.format('YYYY-MM-DD HH:mm');
+                });
+
+                inputDatePickerTo.on('input', function (e) {
+                    scope.to = inputDatePickerTo.val();
+                });
+
+                datePickerBirth.on('dp.change', function (e) {
+                    scope.dateBirth = e.date.format('YYYY-MM-DD');
+                });
+
+                inputDatePickerBirth.on('input', function (e) {
+                    scope.dateBirth = inputDatePickerBirth.val();
+                });
+
+            });
+        }
 }]);
 
 angular.module('aboutCarModule').filter('dateTimeFormat', [function() {
@@ -384,17 +381,22 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
                     $(element).modal('hide');
             });
 
-            $(element).on('shown.bs.modal', function() {
-                if (!scope.$$phase) scope.$apply(function() {
-                    scope.$parent[attrs.visible] = true;
-                });
+            $(element).on({
+
+                'shown.bs.modal': function () {
+                    if (!scope.$$phase) scope.$apply( function () {
+                        scope.$parent[attrs.visible] = true;
+                    });
+                },
+
+                'hidden.bs.modal': function () {
+                    if (!scope.$$phase) scope.$apply( function () {
+                       scope.$parent[attrs.visible] = false;
+                   });
+                }
+
             });
 
-            $(element).on('hidden.bs.modal', function() {
-                 if (!scope.$$phase) scope.$apply(function() {
-                    scope.$parent[attrs.visible] = false;
-                });
-            });
         }
     };
 });
@@ -464,30 +466,23 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     }
 ]);
 
-angular.module('rentCarsApp').directive('ngEllipsis', ['$document',
-    function ($document) {
-        return {
-            restrict: 'A',
-            link: function () {
+angular.module('rentCarsApp').directive('ngEllipsis', ['$document', function ($document) {
+        return function () {
+            /* Directive 'ngEllipsis' is used to customize ellipsis in overflow-text paragraph. */
 
-                /* Directive 'ngEllipsis' is used to customize ellipsis in overflow-text paragraph. */
-
-                $document.ready(function() {
-                	$(".feedbackTextWrapper").dotdotdot(
-                        {   watch : true	}
-                    );
-                });
-            }
-        };
+            $document.ready(function() {
+                $('.feedbackTextWrapper').dotdotdot(
+                    {   watch : true	}
+                );
+            });
+        }
 }]);
 
 angular.module('rentCarsApp').directive('ngFileSelect', [function() {
-    return {
-        link: function($scope, elem) {
-
+        return function($scope, elem) {
             /**
             * Directive 'ngFileSelect' binds to the form’s input file event,
-            * and if the @param elem  changes, defines $scope.file.
+                * and if the @param elem  changes, defines $scope.file.
             */
 
             elem.bind('change', function(e) {
@@ -495,7 +490,6 @@ angular.module('rentCarsApp').directive('ngFileSelect', [function() {
                 $scope.getFile();
             })
         }
-    }
 }]);
 
 angular.module('rentCarsApp').directive('loader', [function () {
@@ -531,32 +525,25 @@ angular.module('rentCarsApp').directive('loader', [function () {
 }]);
 
 angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
-        return {
-            restrict: 'A',
-            link: function (scope) {
+        return function (scope) {
 
-                /**
-                * Directive 'ngPhoneHelper' is used to customize input form for phone numbers.
-                * Apply scope to controller, when data in input changes.
-                */
+            /**
+            * Directive 'ngPhoneHelper' is used to customize input form for phone numbers.
+            * Apply scope to controller, when data in input changes.
+            */
 
-                var aboutCarPhoneNumber = $('#aboutCarPhoneNumber');
-                var feedbackPhoneNumber = $('#feedbackPhoneNumber');
+            var phoneNumbers = $('.phoneNumber');
 
-                feedbackPhoneNumber.intlTelInput();
-                feedbackPhoneNumber.on('input', function(e) {
-                    scope.feedback.phoneNumber = feedbackPhoneNumber.val();
-                    if (!scope.$$phase) scope.$apply();
-                });
+            phoneNumbers.intlTelInput();
 
-                aboutCarPhoneNumber.intlTelInput();
-                aboutCarPhoneNumber.on('input', function(e) {
-                    scope.phoneNumber = aboutCarPhoneNumber.val();
-                    if (!scope.$$phase) scope.$apply();
-                });
+            phoneNumbers.on('input', function(e) {
+                scope.phoneNumber = e.target.value;
+                scope.feedback.phoneNumber = e.target.value;
+                if (!scope.$$phase) scope.$apply();
+            });
 
-            }
-        };
+        }
+
 }]);
 
 angular.module('editCarModule').controller('editCarCtrl', [

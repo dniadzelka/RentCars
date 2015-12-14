@@ -1,28 +1,21 @@
 angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
-        return {
-            restrict: 'A',
-            link: function (scope) {
+        return function (scope) {
 
-                /**
-                * Directive 'ngPhoneHelper' is used to customize input form for phone numbers.
-                * Apply scope to controller, when data in input changes.
-                */
+            /**
+            * Directive 'ngPhoneHelper' is used to customize input form for phone numbers.
+            * Apply scope to controller, when data in input changes.
+            */
 
-                var aboutCarPhoneNumber = $('#aboutCarPhoneNumber');
-                var feedbackPhoneNumber = $('#feedbackPhoneNumber');
+            var phoneNumbers = $('.phoneNumber');
 
-                feedbackPhoneNumber.intlTelInput();
-                feedbackPhoneNumber.on('input', function(e) {
-                    scope.feedback.phoneNumber = feedbackPhoneNumber.val();
-                    if (!scope.$$phase) scope.$apply();
-                });
+            phoneNumbers.intlTelInput();
 
-                aboutCarPhoneNumber.intlTelInput();
-                aboutCarPhoneNumber.on('input', function(e) {
-                    scope.phoneNumber = aboutCarPhoneNumber.val();
-                    if (!scope.$$phase) scope.$apply();
-                });
+            phoneNumbers.on('input', function(e) {
+                scope.phoneNumber = e.target.value;
+                scope.feedback.phoneNumber = e.target.value;
+                if (!scope.$$phase) scope.$apply();
+            });
 
-            }
-        };
+        }
+
 }]);

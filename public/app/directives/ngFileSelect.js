@@ -1,10 +1,8 @@
 angular.module('rentCarsApp').directive('ngFileSelect', [function() {
-    return {
-        link: function($scope, elem) {
-
+        return function($scope, elem) {
             /**
             * Directive 'ngFileSelect' binds to the form’s input file event,
-            * and if the @param elem  changes, defines $scope.file.
+                * and if the @param elem  changes, defines $scope.file.
             */
 
             elem.bind('change', function(e) {
@@ -12,5 +10,4 @@ angular.module('rentCarsApp').directive('ngFileSelect', [function() {
                 $scope.getFile();
             })
         }
-    }
 }]);

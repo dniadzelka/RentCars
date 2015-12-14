@@ -25,17 +25,22 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
                     $(element).modal('hide');
             });
 
-            $(element).on('shown.bs.modal', function() {
-                if (!scope.$$phase) scope.$apply(function() {
-                    scope.$parent[attrs.visible] = true;
-                });
+            $(element).on({
+
+                'shown.bs.modal': function () {
+                    if (!scope.$$phase) scope.$apply( function () {
+                        scope.$parent[attrs.visible] = true;
+                    });
+                },
+
+                'hidden.bs.modal': function () {
+                    if (!scope.$$phase) scope.$apply( function () {
+                       scope.$parent[attrs.visible] = false;
+                   });
+                }
+
             });
 
-            $(element).on('hidden.bs.modal', function() {
-                 if (!scope.$$phase) scope.$apply(function() {
-                    scope.$parent[attrs.visible] = false;
-                });
-            });
         }
     };
 });
