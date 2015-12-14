@@ -48,6 +48,15 @@ router.get('/getFeedbacks', function(req, res, next) {
     });
 });
 
+router.get('/getClients', function(req, res, next) {
+    Feedback.find(function(err, feedbacks) {
+        if (err) {
+            return next(err);
+        }
+        res.json(feedbacks);
+    });
+});
+
 router.get('/getSearchResult', function(req, res, next) {
 
     var reg = new RegExp(req.query.expression, 'i');

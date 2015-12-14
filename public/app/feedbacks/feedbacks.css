@@ -66,16 +66,13 @@ a.right.carousel-control {
 
 .feedback-block {
     padding: 0 200px;
+    height: 280px;
 }
 
 .feedbackItem {
     border-radius: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    height: 280px;
-}
-
-.feedback-block {
     height: 280px;
 }
 

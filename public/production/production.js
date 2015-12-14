@@ -137,32 +137,146 @@ feedbacksModule.config([
     }
 ]);
 
-angular.module('rentCarsApp').directive('ngEllipsis', ['$document',
-    function ($document) {
+angular.module('rentCarsApp').directive('ngDatePicker',[function () {
         return {
             restrict: 'A',
-            link: function () {
+            link: function (scope) {
+                    $(function () {
 
-                /* Directive 'ngEllipsis' is used to customize ellipsis in overflow-text paragraph. */
+                        /**
+                        * Directive 'ngDatePicker' is used to customize input form for dates.
+                        * Apply scope to controller, when data in input changes.
+                        */
 
-                $document.ready(function() {
-                	$(".feedbackTextWrapper").dotdotdot(
-                        {   watch : true	}
-                    );
+                    var datePickerFrom = $('#addOrderDatePickerFrom');
+                    var datePickerTo = $('#addOrderDatePickerTo');
+                    var datePickerBirth = $('#addOrderDatePickerBirth');
+
+                    var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
+                    var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
+                    var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
+
+                    datePickerFrom.datetimepicker({
+                        format: 'YYYY-MM-DD HH:mm',
+                        minDate: moment()
+                    });
+
+                    datePickerTo.datetimepicker({
+                        format: 'YYYY-MM-DD HH:mm',
+                        minDate: moment().date(moment().date() + 1)
+                    });
+                    datePickerBirth.datetimepicker({
+                        viewMode: 'years',
+                        format: 'YYYY-MM-DD',
+                        maxDate: moment().subtract(18, 'years'),
+                        minDate: '1900-01-01 00:00'
+                    });
+
+                    datePickerFrom.on('dp.change', function (e) {
+                        datePickerTo.data('DateTimePicker').minDate(e.date);
+                        scope.from = e.date.format('YYYY-MM-DD HH:mm');
+                    });
+
+                    inputDatePickerFrom.on('input', function (e) {
+                        scope.from = inputDatePickerFrom.val();
+                    });
+
+                    datePickerTo.on('dp.change', function (e) {
+                        datePickerFrom.data('DateTimePicker').maxDate(e.date);
+                        scope.to = e.date.format('YYYY-MM-DD HH:mm');
+                    });
+
+                    inputDatePickerTo.on('input', function (e) {
+                        scope.to = inputDatePickerTo.val();
+                    });
+
+                    datePickerBirth.on('dp.change', function (e) {
+                        scope.dateBirth = e.date.format('YYYY-MM-DD');
+                    });
+
+                    inputDatePickerBirth.on('input', function (e) {
+                        scope.dateBirth = inputDatePickerBirth.val();
+                    });
+
                 });
             }
         };
 }]);
 
-angular.module('carsModule').controller('carsCtrl', [
+angular.module('aboutCarModule').filter('dateTimeFormat', [function() {
+
+    /**
+    * Filter 'dateTimeFormat' formats date to 'YYYY-MM-DD HH:mm' format
+    */
+
+    return function (input) {
+        return moment(input).format('YYYY-MM-DD HH:mm');
+    };
+}]);
+
+angular.module('authModule').controller('authCtrl', [
     '$scope',
-    '$location',
+    '$state',
+    'authService',
+    'usSpinnerService',
+    function($scope, $state, authService, usSpinnerService){
+
+        $scope.user = {};
+
+        $scope.register = function(){
+            authService.register($scope.user).error(function(error){
+                usSpinnerService.stop('mainSpinner');
+                $scope.error = error;
+            }).then(function(){
+                $state.go('cars');
+            });
+        };
+
+        $scope.logIn = function(){
+            authService.logIn($scope.user).error(function(error){
+                usSpinnerService.stop('mainSpinner');
+                $scope.error = error;
+            }).then(function(){
+                $state.go('cars');
+            });
+        };
+    }])
+
+angular.module('addCarModule').controller('addCarCtrl', [
+    '$scope',
     'carsService',
-    function ($scope, $location, carsService) {
-        $scope.cars = carsService.cars;
-        $scope.toAboutCarPage = function (id) {
-            $location.path('/cars/aboutCar_' + id);
-        }
+    'fileReader',
+    function ($scope, carsService, fileReader) {
+        $scope.max = 100;
+        $scope.progress = 0;
+        $scope.currentYear = new Date().getFullYear();
+
+        $scope.getFile = function () {
+            fileReader.readAsDataUrl($scope.file, $scope).then(function(result) {
+                $scope.imageSrc = result;
+            });
+        };
+
+        $scope.$on('fileProgress', function(progress) {
+            $scope.progress = progress.loaded / progress.total;
+        });
+
+        $scope.addCar = function() {
+            
+            var newCar = {
+                model: angular.uppercase($scope.model),
+                year: $scope.year,
+                doors: $scope.doors,
+                airConditioner: $scope.airConditioner,
+                autoTransmission: $scope.autoTransmission,
+                vin: angular.uppercase($scope.vin),
+                price: $scope.price,
+                image: $scope.imageSrc || '/img/noCar.png',
+                orders: []
+            };
+
+            carsService.create(newCar);
+        };
     }
 ]);
 
@@ -285,109 +399,87 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
     };
 });
 
-angular.module('rentCarsApp').directive('ngDatePicker',[function () {
+angular.module('aboutCarModule').controller('aboutCarCtrl', [
+    '$scope',
+    '$location',
+    'carInfo',
+    'carsService',
+    'usSpinnerService',
+    function($scope, $location, carInfo, carsService, usSpinnerService) {
+
+        $scope.car = carInfo;
+
+        /* Sort orders table */
+        $scope.sortType = 'from';
+        $scope.sortReverse = false;
+        $scope.searchOrders = '';
+
+        /* Modal pop-up */
+        $scope.showModal = false;
+
+        $scope.toggleModal = function () {
+            $scope.showModal = !$scope.showModal;
+        };
+
+        $scope.removeCar = function (id) {
+            carsService.removeCar(id).success(function(data) {
+                usSpinnerService.stop('mainSpinner');
+                $scope.showModal = false;
+                $location.path('/cars');
+            });
+        }
+
+        $scope.addOrder = function () {
+
+            var newOrder = {
+                from: new Date($scope.from),
+                to: new Date($scope.to),
+                startLocation: $scope.startLocation,
+                finishLocation: $scope.finishLocation,
+                addInfo: $scope.addInfo,
+                firstName: angular.uppercase($scope.firstName),
+                lastName: angular.uppercase($scope.lastName),
+                dateBirth: new Date($scope.dateBirth),
+                docNumber: angular.uppercase($scope.docNumber),
+                phoneNumber: $scope.phoneNumber
+            };
+
+            /*$scope.from = '';
+            $scope.to = '';
+            $scope.startLocation = '';
+            $scope.finishLocation = '';
+            $scope.addInfo = '';
+            $scope.firstName = '';
+            $scope.lastName = '';
+            $scope.dateBirth = '';
+            $scope.docNumber = '';
+            $scope.phoneNumber = '';*/
+
+            carsService.addOrder(carInfo._id, newOrder).success(function(data) {
+                usSpinnerService.stop('mainSpinner');
+                $scope.car.orders.push(data);
+            });
+
+        }
+    }
+]);
+
+angular.module('rentCarsApp').directive('ngEllipsis', ['$document',
+    function ($document) {
         return {
             restrict: 'A',
-            link: function (scope) {
-                    $(function () {
+            link: function () {
 
-                        /**
-                        * Directive 'ngDatePicker' is used to customize input form for dates.
-                        * Apply scope to controller, when data in input changes.
-                        */
+                /* Directive 'ngEllipsis' is used to customize ellipsis in overflow-text paragraph. */
 
-                    var datePickerFrom = $('#addOrderDatePickerFrom');
-                    var datePickerTo = $('#addOrderDatePickerTo');
-                    var datePickerBirth = $('#addOrderDatePickerBirth');
-
-                    var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
-                    var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
-                    var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
-
-                    datePickerFrom.datetimepicker({
-                        format: 'YYYY-MM-DD HH:mm',
-                        minDate: moment()
-                    });
-
-                    datePickerTo.datetimepicker({
-                        format: 'YYYY-MM-DD HH:mm',
-                        minDate: moment().date(moment().date() + 1)
-                    });
-                    datePickerBirth.datetimepicker({
-                        viewMode: 'years',
-                        format: 'YYYY-MM-DD',
-                        maxDate: moment().subtract(18, 'years'),
-                        minDate: '1900-01-01 00:00'
-                    });
-
-                    datePickerFrom.on('dp.change', function (e) {
-                        datePickerTo.data('DateTimePicker').minDate(e.date);
-                        scope.from = e.date.format('YYYY-MM-DD HH:mm');
-                    });
-
-                    inputDatePickerFrom.on('input', function (e) {
-                        scope.from = inputDatePickerFrom.val();
-                    });
-
-                    datePickerTo.on('dp.change', function (e) {
-                        datePickerFrom.data('DateTimePicker').maxDate(e.date);
-                        scope.to = e.date.format('YYYY-MM-DD HH:mm');
-                    });
-
-                    inputDatePickerTo.on('input', function (e) {
-                        scope.to = inputDatePickerTo.val();
-                    });
-
-                    datePickerBirth.on('dp.change', function (e) {
-                        scope.dateBirth = e.date.format('YYYY-MM-DD');
-                    });
-
-                    inputDatePickerBirth.on('input', function (e) {
-                        scope.dateBirth = inputDatePickerBirth.val();
-                    });
-
+                $document.ready(function() {
+                	$(".feedbackTextWrapper").dotdotdot(
+                        {   watch : true	}
+                    );
                 });
             }
         };
 }]);
-
-angular.module('addCarModule').controller('addCarCtrl', [
-    '$scope',
-    'carsService',
-    'fileReader',
-    function ($scope, carsService, fileReader) {
-        $scope.max = 100;
-        $scope.progress = 0;
-        $scope.currentYear = new Date().getFullYear();
-
-        $scope.getFile = function () {
-            fileReader.readAsDataUrl($scope.file, $scope).then(function(result) {
-                $scope.imageSrc = result;
-            });
-        };
-
-        $scope.$on('fileProgress', function(progress) {
-            $scope.progress = progress.loaded / progress.total;
-        });
-
-        $scope.addCar = function() {
-            
-            var newCar = {
-                model: angular.uppercase($scope.model),
-                year: $scope.year,
-                doors: $scope.doors,
-                airConditioner: $scope.airConditioner,
-                autoTransmission: $scope.autoTransmission,
-                vin: angular.uppercase($scope.vin),
-                price: $scope.price,
-                image: $scope.imageSrc || '/img/noCar.png',
-                orders: []
-            };
-
-            carsService.create(newCar);
-        };
-    }
-]);
 
 angular.module('rentCarsApp').directive('ngFileSelect', [function() {
     return {
@@ -497,67 +589,14 @@ angular.module('editCarModule').controller('editCarCtrl', [
     }
 ]);
 
-angular.module('aboutCarModule').controller('aboutCarCtrl', [
+angular.module('carsModule').controller('carsCtrl', [
     '$scope',
     '$location',
-    'carInfo',
     'carsService',
-    'usSpinnerService',
-    function($scope, $location, carInfo, carsService, usSpinnerService) {
-
-        $scope.car = carInfo;
-        
-        /* Sort orders table */
-        $scope.sortType = 'from';
-        $scope.sortReverse = false;
-        $scope.searchOrders = '';
-
-        /* Modal pop-up */
-        $scope.showModal = false;
-
-        $scope.toggleModal = function () {
-            $scope.showModal = !$scope.showModal;
-        };
-
-        $scope.removeCar = function (id) {
-            carsService.removeCar(id).success(function(data) {
-                usSpinnerService.stop('mainSpinner');
-                $scope.showModal = false;
-                $location.path('/cars');
-            });
-        }
-
-        $scope.addOrder = function () {
-
-            var newOrder = {
-                from: new Date($scope.from),
-                to: new Date($scope.to),
-                startLocation: $scope.startLocation,
-                finishLocation: $scope.finishLocation,
-                addInfo: $scope.addInfo,
-                firstName: $scope.firstName,
-                lastName: $scope.lastName,
-                dateBirth: new Date($scope.dateBirth),
-                docNumber: $scope.docNumber,
-                phoneNumber: $scope.phoneNumber
-            };
-
-            /*$scope.from = '';
-            $scope.to = '';
-            $scope.startLocation = '';
-            $scope.finishLocation = '';
-            $scope.addInfo = '';
-            $scope.firstName = '';
-            $scope.lastName = '';
-            $scope.dateBirth = '';
-            $scope.docNumber = '';
-            $scope.phoneNumber = '';*/
-
-            carsService.addOrder(carInfo._id, newOrder).success(function(data) {
-                usSpinnerService.stop('mainSpinner');
-                $scope.car.orders.push(data);
-            });
-
+    function ($scope, $location, carsService) {
+        $scope.cars = carsService.cars;
+        $scope.toAboutCarPage = function (id) {
+            $location.path('/cars/aboutCar_' + id);
         }
     }
 ]);
@@ -619,33 +658,16 @@ angular.module('feedbacksModule').controller('feedbacksCtrl', [
     }]
 );
 
-angular.module('authModule').controller('authCtrl', [
-    '$scope',
-    '$state',
-    'authService',
-    'usSpinnerService',
-    function($scope, $state, authService, usSpinnerService){
+angular.module('aboutCarModule').filter('dateBirthFormat', [function() {
 
-        $scope.user = {};
+    /**
+    * Filter 'dateBirthFormat' formats date to 'YYYY-MM-DD' format
+    */
 
-        $scope.register = function(){
-            authService.register($scope.user).error(function(error){
-                usSpinnerService.stop('mainSpinner');
-                $scope.error = error;
-            }).then(function(){
-                $state.go('cars');
-            });
-        };
-
-        $scope.logIn = function(){
-            authService.logIn($scope.user).error(function(error){
-                usSpinnerService.stop('mainSpinner');
-                $scope.error = error;
-            }).then(function(){
-                $state.go('cars');
-            });
-        };
-    }])
+    return function (input) {
+        return moment(input).format('YYYY-MM-DD');
+    };
+}]);
 
 angular.module('feedbacksModule').factory('feedbacksService', [
     '$http',

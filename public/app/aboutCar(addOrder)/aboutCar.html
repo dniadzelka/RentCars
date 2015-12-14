@@ -116,14 +116,14 @@
 
                 <tbody>
                     <tr ng-repeat="order in car.orders | orderBy:sortType:sortReverse | filter:searchOrders">
-                        <td>{{ ::order.from }}</td>
-                        <td>{{ ::order.to }}</td>
+                        <td>{{ ::order.from | dateTimeFormat }}</td>
+                        <td>{{ ::order.to | dateTimeFormat }}</td>
                         <td>{{ ::order.startLocation }}</td>
                         <td>{{ ::order.finishLocation }}</td>
                         <td>{{ ::order.addInfo }}</td>
                         <td>{{ ::order.firstName }}</td>
                         <td>{{ ::order.lastName }}</td>
-                        <td>{{ ::order.dateBirth }}</td>
+                        <td>{{ ::order.dateBirth | dateBirthFormat }}</td>
                         <td>{{ ::order.docNumber }}</td>
                         <td>{{ ::order.phoneNumber }}</td>
                     </tr>

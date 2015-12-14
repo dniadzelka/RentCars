@@ -7,7 +7,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     function($scope, $location, carInfo, carsService, usSpinnerService) {
 
         $scope.car = carInfo;
-        
+
         /* Sort orders table */
         $scope.sortType = 'from';
         $scope.sortReverse = false;
@@ -36,10 +36,10 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
                 startLocation: $scope.startLocation,
                 finishLocation: $scope.finishLocation,
                 addInfo: $scope.addInfo,
-                firstName: $scope.firstName,
-                lastName: $scope.lastName,
+                firstName: angular.uppercase($scope.firstName),
+                lastName: angular.uppercase($scope.lastName),
                 dateBirth: new Date($scope.dateBirth),
-                docNumber: $scope.docNumber,
+                docNumber: angular.uppercase($scope.docNumber),
                 phoneNumber: $scope.phoneNumber
             };
 
