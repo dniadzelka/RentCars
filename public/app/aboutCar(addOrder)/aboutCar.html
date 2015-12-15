@@ -145,7 +145,7 @@
                         <div class="input-group date" id="addOrderDatePickerFrom">
                             <input type="text"
                                 id="inputDatePickerFrom"
-                                ng-model="from"
+                                ng-model="order.from"
                                 placeholder="YYYY-MM-DD HH:mm"
                                 class="form-control"
                                 name="from"
@@ -161,7 +161,7 @@
                         <div class="input-group date" id="addOrderDatePickerTo">
                             <input type="text"
                                 id="inputDatePickerTo"
-                                ng-model="to"
+                                ng-model="order.to"
                                 placeholder="YYYY-MM-DD HH:mm"
                                 class="form-control"
                                 name="to"
@@ -174,31 +174,31 @@
                     </div>
                     <div class="form-group" ng-class="{'has-error': addOrderForm.startPoint.$invalid && (addOrderForm.startPoint.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="startPoint">Start point</label>
-                        <input type="text" ng-model="startLocation" placeholder="Location start" class="form-control" name="startPoint" required>
+                        <input type="text" ng-model="order.startLocation" placeholder="Location start" class="form-control" name="startPoint" required>
                         <span class="help-block" ng-show="addOrderForm.startPoint.$error.required">Required</span>
                     </div>
                     <div class="form-group" ng-class="{'has-error': addOrderForm.endPoint.$invalid && (addOrderForm.endPoint.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="endPoint">End point</label>
-                        <input type="text" ng-model="finishLocation" placeholder="Location finish" class="form-control" name="endPoint" required>
+                        <input type="text" ng-model="order.finishLocation" placeholder="Location finish" class="form-control" name="endPoint" required>
                         <span class="help-block" ng-show="addOrderForm.endPoint.$error.required">Required</span>
                     </div>
                     <div class="form-group">
                         <label for="addInfo">Additional information</label>
-                        <input type="text" ng-model="addInfo" placeholder="Additional information" class="form-control" name="addInfo">
+                        <input type="text" ng-model="order.addInfo" placeholder="Additional information" class="form-control" name="addInfo">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group" ng-class="{'has-error': addOrderForm.firstName.$invalid && (addOrderForm.firstName.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="firstName">First name</label>
-                        <input minlength="3" maxlength="16" type="text" ng-model="firstName" placeholder="First name" class="form-control" name="firstName" required>
+                        <input minlength="3" maxlength="16" type="text" ng-model="order.firstName" placeholder="First name" class="form-control" name="firstName" required>
                         <span class="help-block" ng-show="addOrderForm.firstName.$error.required">Required</span>
                         <span class="help-block" ng-show="addOrderForm.firstName.$error.minlength">First name must have 3 characters at least.</span>
                         <span class="help-block" ng-show="addOrderForm.firstName.$error.maxlength">First name might have 16 characters as maximum.</span>
                     </div>
                     <div class="form-group" ng-class="{'has-error': addOrderForm.lastName.$invalid && (addOrderForm.lastName.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="lastName">Last name</label>
-                        <input minlength="3" maxlength="16" type="text" ng-model="lastName" placeholder="Last name" class="form-control" name="lastName" required>
+                        <input minlength="3" maxlength="16" type="text" ng-model="order.lastName" placeholder="Last name" class="form-control" name="lastName" required>
                         <span class="help-block" ng-show="addOrderForm.lastName.$error.required">Required</span>
                         <span class="help-block" ng-show="addOrderForm.lastName.$error.minlength">Last name must have 3 characters at least.</span>
                         <span class="help-block" ng-show="addOrderForm.lastName.$error.maxlength">Last name might have 16 characters as maximum.</span>
@@ -208,7 +208,7 @@
                         <div class='input-group date' id='addOrderDatePickerBirth'>
                             <input type="text"
                                 id="inputDatePickerBirth"
-                                ng-model="dateBirth"
+                                ng-model="order.dateBirth"
                                 placeholder="YYYY-MM-DD"
                                 class="form-control"
                                 name="dateBirth"
@@ -221,7 +221,7 @@
                     </div>
                     <div class="form-group" ng-class="{'has-error': addOrderForm.docNumber.$invalid && (addOrderForm.docNumber.$dirty || attempt.addOrderForm.attempted)}">
                         <label for="docNumber">Document number</label>
-                        <input minlength="7" maxlength="16" type="text" ng-model="docNumber" placeholder="Document number" class="form-control" name="docNumber" required>
+                        <input minlength="7" maxlength="16" type="text" ng-model="order.docNumber" placeholder="Document number" class="form-control" name="docNumber" required>
                         <span class="help-block" ng-show="addOrderForm.docNumber.$error.required">Required</span>
                         <span class="help-block" ng-show="addOrderForm.docNumber.$error.minlength">Document number must have 7 characters at least.</span>
                         <span class="help-block" ng-show="addOrderForm.docNumber.$error.maxlength">Document number might have 16 characters as maximum.</span>
@@ -231,7 +231,7 @@
                         <br>
                         <input type="tel"
                             autocomplete="off"
-                            ng-model="phoneNumber"
+                            ng-model="order.phoneNumber"
                             placeholder="Phone number"
                             class="form-control phoneNumber"
                             name="phoneNumber"

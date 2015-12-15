@@ -8,6 +8,8 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
         $scope.car = carInfo;
 
+        $scope.order = {};
+
         /* Sort orders table */
         $scope.sortType = 'from';
         $scope.sortReverse = false;
@@ -31,28 +33,17 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
         $scope.addOrder = function () {
 
             var newOrder = {
-                from: new Date($scope.from),
-                to: new Date($scope.to),
-                startLocation: $scope.startLocation,
-                finishLocation: $scope.finishLocation,
-                addInfo: $scope.addInfo,
-                firstName: angular.uppercase($scope.firstName),
-                lastName: angular.uppercase($scope.lastName),
-                dateBirth: new Date($scope.dateBirth),
-                docNumber: angular.uppercase($scope.docNumber),
-                phoneNumber: $scope.phoneNumber
+                from: new Date($scope.order.from),
+                to: new Date($scope.order.to),
+                startLocation: $scope.order.startLocation,
+                finishLocation: $scope.order.finishLocation,
+                addInfo: $scope.order.addInfo,
+                firstName: angular.uppercase($scope.order.firstName),
+                lastName: angular.uppercase($scope.order.lastName),
+                dateBirth: new Date($scope.order.dateBirth),
+                docNumber: angular.uppercase($scope.order.docNumber),
+                phoneNumber: $scope.order.phoneNumber
             };
-
-            /*$scope.from = '';
-            $scope.to = '';
-            $scope.startLocation = '';
-            $scope.finishLocation = '';
-            $scope.addInfo = '';
-            $scope.firstName = '';
-            $scope.lastName = '';
-            $scope.dateBirth = '';
-            $scope.docNumber = '';
-            $scope.phoneNumber = '';*/
 
             carsService.addOrder(carInfo._id, newOrder).success(function(data) {
                 usSpinnerService.stop('mainSpinner');

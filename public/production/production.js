@@ -405,6 +405,8 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
         $scope.car = carInfo;
 
+        $scope.order = {};
+
         /* Sort orders table */
         $scope.sortType = 'from';
         $scope.sortReverse = false;
@@ -428,28 +430,17 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
         $scope.addOrder = function () {
 
             var newOrder = {
-                from: new Date($scope.from),
-                to: new Date($scope.to),
-                startLocation: $scope.startLocation,
-                finishLocation: $scope.finishLocation,
-                addInfo: $scope.addInfo,
-                firstName: angular.uppercase($scope.firstName),
-                lastName: angular.uppercase($scope.lastName),
-                dateBirth: new Date($scope.dateBirth),
-                docNumber: angular.uppercase($scope.docNumber),
-                phoneNumber: $scope.phoneNumber
+                from: new Date($scope.order.from),
+                to: new Date($scope.order.to),
+                startLocation: $scope.order.startLocation,
+                finishLocation: $scope.order.finishLocation,
+                addInfo: $scope.order.addInfo,
+                firstName: angular.uppercase($scope.order.firstName),
+                lastName: angular.uppercase($scope.order.lastName),
+                dateBirth: new Date($scope.order.dateBirth),
+                docNumber: angular.uppercase($scope.order.docNumber),
+                phoneNumber: $scope.order.phoneNumber
             };
-
-            /*$scope.from = '';
-            $scope.to = '';
-            $scope.startLocation = '';
-            $scope.finishLocation = '';
-            $scope.addInfo = '';
-            $scope.firstName = '';
-            $scope.lastName = '';
-            $scope.dateBirth = '';
-            $scope.docNumber = '';
-            $scope.phoneNumber = '';*/
 
             carsService.addOrder(carInfo._id, newOrder).success(function(data) {
                 usSpinnerService.stop('mainSpinner');
@@ -523,25 +514,32 @@ angular.module('rentCarsApp').directive('loader', [function () {
 }]);
 
 angular.module('rentCarsApp').directive('ngPhoneHelper', [function () {
-        return function (scope) {
+    return function (scope) {
 
-            /**
-            * Directive 'ngPhoneHelper' is used to customize input form for phone numbers.
-            * Apply scope to controller, when data in input changes.
-            */
+        /**
+        * Directive 'ngPhoneHelper' is used to customize input form for phone numbers.
+        * Apply scope to controller, when data in input changes.
+        */
 
-            var phoneNumbers = $('.phoneNumber');
+        var phoneNumbers = $('.phoneNumber');
 
-            phoneNumbers.intlTelInput();
+        phoneNumbers.intlTelInput();
 
-            phoneNumbers.on('input', function(e) {
-                scope.phoneNumber = e.target.value;
+        phoneNumbers.on('input', function(e) {
+
+            if(typeof scope.order !== 'undefined') {
+                scope.order.phoneNumber = e.target.value;
+            };
+
+            if(typeof scope.feedback !== 'undefined') {
                 scope.feedback.phoneNumber = e.target.value;
-                if (!scope.$$phase) scope.$apply();
-            });
+            }
 
-        }
+            if (!scope.$$phase) scope.$apply();
 
+        });
+
+    }
 }]);
 
 angular.module('editCarModule').controller('editCarCtrl', [
