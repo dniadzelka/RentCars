@@ -9,7 +9,7 @@ textarea {
 .feedback-btn {
     margin-left: 20px;
     position: absolute;
-    font-size: 20px;
+    font-size: 18px;
     border: 2px solid #d3d3d3;
     transition: all 0.3s ease-in;
     border-radius: 20px;

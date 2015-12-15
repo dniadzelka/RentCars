@@ -398,10 +398,11 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
 angular.module('aboutCarModule').controller('aboutCarCtrl', [
     '$scope',
     '$location',
+    '$anchorScroll',
     'carInfo',
     'carsService',
     'usSpinnerService',
-    function($scope, $location, carInfo, carsService, usSpinnerService) {
+    function($scope, $location, $anchorScroll, carInfo, carsService, usSpinnerService) {
 
         $scope.car = carInfo;
 
@@ -414,6 +415,14 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
 
         /* Modal pop-up */
         $scope.showModal = false;
+
+        $scope.showAddOrderForm = false;
+
+        $scope.goToAddOrderForm = function () {
+            $scope.showAddOrderForm = true;
+            $location.hash('addOrderFocus');
+            $anchorScroll();
+        }
 
         $scope.toggleModal = function () {
             $scope.showModal = !$scope.showModal;

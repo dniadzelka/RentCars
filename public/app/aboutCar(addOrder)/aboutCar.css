@@ -1,3 +1,26 @@
+.addOrder-btn {
+    font-size: 18px;
+    width: 100%;
+    border: 2px solid #d3d3d3;
+    transition: all 0.3s ease-in;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.addOrder-btn:hover {
+    background-color: #343a3c;
+    text-decoration: none;
+    color: white;
+}
+
+.animate-show{
+  transition: all 0.5s;
+}
+
+.animate-show.ng-hide {
+  opacity: 0;
+}
+
 .addCarHeader {
     margin-top: 20px;
     margin-bottom: 20px;
