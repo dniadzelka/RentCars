@@ -41,12 +41,6 @@ var rentCarsApp = angular.module('rentCarsApp', ['angularSpinner', 'carsModule',
 												'feedbacksModule', 'clientsModule', 'ui.bootstrap',
 												'ngAnimate']);
 
-
-/*rentCarsApp.config(['$locationProvider', function($locationProvider) {
-		$locationProvider.html5Mode(true);
-	}
-]);*/
-
 var authModule = angular.module('authModule', [
     'ui.router'
 ]);
@@ -507,16 +501,20 @@ angular.module('rentCarsApp').directive('loader', [function () {
 
         link: function (scope, element, attributes) {
 
-            scope.$on('us-spinner:spin', function (event, key) {
-                if (key === scope.key) {
-                    element.addClass('loading');
-                }
-            });
+            scope.$on({
 
-            scope.$on('us-spinner:stop', function (event, key) {
-                if (key === scope.key) {
-                    element.removeClass('loading');
+                'us-spinner:spin': function (event, key) {
+                    if (key === scope.key) {
+                        element.addClass('loading');
+                    }
+                },
+
+                'us-spinner:stop': function (event, key) {
+                    if (key === scope.key) {
+                        element.removeClass('loading');
+                    }
                 }
+
             });
 
         },
