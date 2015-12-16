@@ -131,65 +131,14 @@ feedbacksModule.config([
     }
 ]);
 
-angular.module('rentCarsApp').directive('ngDatePicker',[function () {
-        return function (scope) {
-            $(function () {
+angular.module('rentCarsApp').directive('ngEllipsis', ['$document', function ($document) {
+        return function () {
+            /* Directive 'ngEllipsis' is used to customize ellipsis in overflow-text paragraph. */
 
-                /**
-                * Directive 'ngDatePicker' is used to customize input form for dates.
-                * Apply scope to controller, when data in input changes.
-                */
-
-                var datePickerFrom = $('#addOrderDatePickerFrom');
-                var datePickerTo = $('#addOrderDatePickerTo');
-                var datePickerBirth = $('#addOrderDatePickerBirth');
-
-                var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
-                var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
-                var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
-
-                datePickerFrom.datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm',
-                    minDate: moment()
-                });
-
-                datePickerTo.datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm',
-                    minDate: moment().date(moment().date() + 1)
-                });
-                datePickerBirth.datetimepicker({
-                    viewMode: 'years',
-                    format: 'YYYY-MM-DD',
-                    maxDate: moment().subtract(18, 'years'),
-                    minDate: '1900-01-01 00:00'
-                });
-
-                datePickerFrom.on('dp.change', function (e) {
-                    datePickerTo.data('DateTimePicker').minDate(e.date);
-                    scope.from = e.date.format('YYYY-MM-DD HH:mm');
-                });
-
-                inputDatePickerFrom.on('input', function (e) {
-                    scope.from = inputDatePickerFrom.val();
-                });
-
-                datePickerTo.on('dp.change', function (e) {
-                    datePickerFrom.data('DateTimePicker').maxDate(e.date);
-                    scope.to = e.date.format('YYYY-MM-DD HH:mm');
-                });
-
-                inputDatePickerTo.on('input', function (e) {
-                    scope.to = inputDatePickerTo.val();
-                });
-
-                datePickerBirth.on('dp.change', function (e) {
-                    scope.dateBirth = e.date.format('YYYY-MM-DD');
-                });
-
-                inputDatePickerBirth.on('input', function (e) {
-                    scope.dateBirth = inputDatePickerBirth.val();
-                });
-
+            $document.ready(function() {
+                $('.feedbackTextWrapper').dotdotdot(
+                    {   watch : true	}
+                );
             });
         }
 }]);
@@ -395,6 +344,68 @@ angular.module('rentCarsApp').directive('ngModalPopUp', function() {
     };
 });
 
+angular.module('rentCarsApp').directive('ngDatePicker',[function () {
+        return function (scope) {
+            $(function () {
+
+                /**
+                * Directive 'ngDatePicker' is used to customize input form for dates.
+                * Apply scope to controller, when data in input changes.
+                */
+
+                var datePickerFrom = $('#addOrderDatePickerFrom');
+                var datePickerTo = $('#addOrderDatePickerTo');
+                var datePickerBirth = $('#addOrderDatePickerBirth');
+                var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
+                var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
+                var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
+
+                datePickerFrom.datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm',
+                    minDate: moment()
+                });
+
+                datePickerTo.datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm',
+                    minDate: moment().date(moment().date() + 1)
+                });
+                datePickerBirth.datetimepicker({
+                    viewMode: 'years',
+                    format: 'YYYY-MM-DD',
+                    maxDate: moment().subtract(18, 'years'),
+                    minDate: '1900-01-01 00:00'
+                });
+
+                datePickerFrom.on('dp.change', function (e) {
+                    datePickerTo.data('DateTimePicker').minDate(e.date);
+                    scope.order.from = e.date.format('YYYY-MM-DD HH:mm');
+                });
+
+                inputDatePickerFrom.on('input', function (e) {
+                    scope.order.from = inputDatePickerFrom.val();
+                });
+
+                datePickerTo.on('dp.change', function (e) {
+                    datePickerFrom.data('DateTimePicker').maxDate(e.date);
+                    scope.order.to = e.date.format('YYYY-MM-DD HH:mm');
+                });
+
+                inputDatePickerTo.on('input', function (e) {
+                    scope.order.to = inputDatePickerTo.val();
+                });
+
+                datePickerBirth.on('dp.change', function (e) {
+                    scope.order.dateBirth = e.date.format('YYYY-MM-DD');
+                });
+
+                inputDatePickerBirth.on('input', function (e) {
+                    scope.order.dateBirth = inputDatePickerBirth.val();
+                });
+
+            });
+        }
+}]);
+
 angular.module('aboutCarModule').controller('aboutCarCtrl', [
     '$scope',
     '$location',
@@ -402,7 +413,8 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     'carInfo',
     'carsService',
     'usSpinnerService',
-    function($scope, $location, $anchorScroll, carInfo, carsService, usSpinnerService) {
+    'postDigest',
+    function($scope, $location, $anchorScroll, carInfo, carsService, usSpinnerService, postDigest) {
 
         $scope.car = carInfo;
 
@@ -421,7 +433,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
         $scope.goToAddOrderForm = function () {
             $scope.showAddOrderForm = true;
             $location.hash('addOrderFocus');
-            $anchorScroll();
+            postDigest($anchorScroll);
         }
 
         $scope.toggleModal = function () {
@@ -459,18 +471,6 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
         }
     }
 ]);
-
-angular.module('rentCarsApp').directive('ngEllipsis', ['$document', function ($document) {
-        return function () {
-            /* Directive 'ngEllipsis' is used to customize ellipsis in overflow-text paragraph. */
-
-            $document.ready(function() {
-                $('.feedbackTextWrapper').dotdotdot(
-                    {   watch : true	}
-                );
-            });
-        }
-}]);
 
 angular.module('rentCarsApp').directive('ngFileSelect', [function() {
         return function($scope, elem) {
@@ -839,7 +839,7 @@ angular.module('rentCarsApp').factory('carsService', [
 
         carsObj.addOrder = function (id, order) {
             usSpinnerService.spin('mainSpinner');
-            return $http.post('/allcars/' + id + '/allorders', order);
+            return $http.post('/allcars/' + id + '/postOrder', order);
         }
 
         carsObj.removeCar = function (id) {
@@ -912,5 +912,39 @@ angular.module('rentCarsApp').factory('fileReader', [
             readAsDataUrl: readAsDataURL
         };
         
+    }
+]);
+
+angular.module('rentCarsApp').factory('postDigest', [
+    '$rootScope',
+    '$timeout',
+    /**
+    * Identify an digest complete event
+
+    * A digest cycle may have multiple $digest.
+    * I $watch for the first $digest to register a $timeout which would run after the digest cycle ends.
+    * I must unregister the $watch immediately to avoid multiple $timeout callbacks for one digest cycle.
+    * In the $timeout callback I invoke the user callback and register a $watch for the next $digest.
+
+    * If you want to be notified whenever $digest() is called,
+    * you can register a watchExpression function with $watch() with no listener.
+
+    * $timeout will cause another digest cycle to be executed after the function is executed.
+    * If your trigger does not affect anything Angular, you can set the invokeApply argument to false to avoid running another digest cycle.
+
+    * Identify an digest complete event
+    * http://stackoverflow.com/a/21138524
+    */
+    function ($rootScope, $timeout) {
+        function postDigest (callback) {
+            var unregister = $rootScope.$watch(function() {
+                unregister();
+                $timeout(function() {
+                    callback();
+                    postDigest(callback);
+                }, 0, false);
+            });
+        }
+        return postDigest;
     }
 ]);

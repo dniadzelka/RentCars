@@ -15,19 +15,24 @@
         </div>
     </ng-modal-pop-up>
 
-        <h2 ng-hide="car.orders.length" class="text-center">
+
+
+    <div class="col-md-12">
+        <a ng-click="goToAddOrderForm()" class="btn addOrder-btn">
+            <i class="fa fa-car"></i>
+            <span>Add order</span>
+        </a>
+    </div>
+
+    <h2 ng-hide="car.orders.length" class="text-center">
         <small>
             There are no orders for "{{::car.model}}" car!
         </small>
         <hr>
     </h2>
-
+    
     <div class="row" ng-show="car.orders.length">
         <div class="col-md-12">
-            <a ng-click="goToAddOrderForm()" class="btn addOrder-btn">
-                <i class="fa fa-car"></i>
-                <span>Add order</span>
-            </a>
             <form>
                 <div class="form-group">
                     <div class="input-group">

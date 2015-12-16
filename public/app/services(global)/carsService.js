@@ -42,7 +42,7 @@ angular.module('rentCarsApp').factory('carsService', [
 
         carsObj.addOrder = function (id, order) {
             usSpinnerService.spin('mainSpinner');
-            return $http.post('/allcars/' + id + '/allorders', order);
+            return $http.post('/allcars/' + id + '/postOrder', order);
         }
 
         carsObj.removeCar = function (id) {

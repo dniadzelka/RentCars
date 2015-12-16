@@ -107,7 +107,7 @@ router.post('/postFeedback', function(req, res, next) {
     });
 });
 
-router.post('/allcars/:car/allorders', function(req, res, next) {
+router.post('/allcars/:car/postOrder', function(req, res, next) {
     var order = new Order(req.body);
     //reference from order to car
     order.car = req.car;

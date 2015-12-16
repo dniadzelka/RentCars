@@ -5,7 +5,8 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
     'carInfo',
     'carsService',
     'usSpinnerService',
-    function($scope, $location, $anchorScroll, carInfo, carsService, usSpinnerService) {
+    'postDigest',
+    function($scope, $location, $anchorScroll, carInfo, carsService, usSpinnerService, postDigest) {
 
         $scope.car = carInfo;
 
@@ -24,7 +25,7 @@ angular.module('aboutCarModule').controller('aboutCarCtrl', [
         $scope.goToAddOrderForm = function () {
             $scope.showAddOrderForm = true;
             $location.hash('addOrderFocus');
-            $anchorScroll();
+            postDigest($anchorScroll);
         }
 
         $scope.toggleModal = function () {

@@ -10,7 +10,6 @@ angular.module('rentCarsApp').directive('ngDatePicker',[function () {
                 var datePickerFrom = $('#addOrderDatePickerFrom');
                 var datePickerTo = $('#addOrderDatePickerTo');
                 var datePickerBirth = $('#addOrderDatePickerBirth');
-
                 var inputDatePickerFrom = $('#inputAddOrderDatePickerFrom');
                 var inputDatePickerTo = $('#inputAddOrderDatePickerTo');
                 var inputDatePickerBirth = $('#inputAddOrderDatePickerBirth');
@@ -33,28 +32,28 @@ angular.module('rentCarsApp').directive('ngDatePicker',[function () {
 
                 datePickerFrom.on('dp.change', function (e) {
                     datePickerTo.data('DateTimePicker').minDate(e.date);
-                    scope.from = e.date.format('YYYY-MM-DD HH:mm');
+                    scope.order.from = e.date.format('YYYY-MM-DD HH:mm');
                 });
 
                 inputDatePickerFrom.on('input', function (e) {
-                    scope.from = inputDatePickerFrom.val();
+                    scope.order.from = inputDatePickerFrom.val();
                 });
 
                 datePickerTo.on('dp.change', function (e) {
                     datePickerFrom.data('DateTimePicker').maxDate(e.date);
-                    scope.to = e.date.format('YYYY-MM-DD HH:mm');
+                    scope.order.to = e.date.format('YYYY-MM-DD HH:mm');
                 });
 
                 inputDatePickerTo.on('input', function (e) {
-                    scope.to = inputDatePickerTo.val();
+                    scope.order.to = inputDatePickerTo.val();
                 });
 
                 datePickerBirth.on('dp.change', function (e) {
-                    scope.dateBirth = e.date.format('YYYY-MM-DD');
+                    scope.order.dateBirth = e.date.format('YYYY-MM-DD');
                 });
 
                 inputDatePickerBirth.on('input', function (e) {
-                    scope.dateBirth = inputDatePickerBirth.val();
+                    scope.order.dateBirth = inputDatePickerBirth.val();
                 });
 
             });
